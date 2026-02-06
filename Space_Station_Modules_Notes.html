@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Space Station Modules Notes</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0b1220;
+    color:#e5e7eb;
+    line-height:1.7;
+    padding:20px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#020617;
+    padding:26px;
+    border-radius:14px;
+    box-shadow:0 0 25px rgba(148,163,184,0.25);
+    animation:fadeIn 1.1s ease;
+}
+
+.module{
+    padding:18px;
+    border-radius:10px;
+    margin:18px 0;
+}
+
+.red{
+    border-left:6px solid #ef4444;
+    background:rgba(239,68,68,0.05);
+}
+
+.blue{
+    border-left:6px solid #3b82f6;
+    background:rgba(59,130,246,0.05);
+}
+
+.highlight{
+    color:#facc15;
+    font-weight:bold;
+    animation:glow 2s infinite alternate;
+}
+
+.link{
+    border-left:6px solid #22c55e;
+    background:rgba(34,197,94,0.05);
+    padding:18px;
+    border-radius:10px;
+    margin-top:20px;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes glow{
+    from{text-shadow:0 0 4px #facc15;}
+    to{text-shadow:0 0 14px #facc15;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="module red">
+🟥 <b>Habitat Module</b><br><br>
+✔ <span class="highlight">Astronaut / Crew</span> रहने के लिए
+</div>
+
+<div class="module blue">
+🟦 <b>Utility Module</b><br><br>
+✔ <span class="highlight">Operations + Support system</span>
+</div>
+
+<div class="link">
+🔗 <b>दोनों आपस में जुड़े हुए</b><br>
+➡️ <span class="highlight">Continuous & real-time workflow</span>
+</div>
+
+</div>
+
+</body>
+</html>
