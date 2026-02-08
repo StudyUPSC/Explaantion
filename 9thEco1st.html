@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पालमपुर गाँव की कहानी - UPSC प्रीलिम्स रिवीजन</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .card-content {
+            color: #444;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #d35400;
+        }
+        
+        .important {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .fact-box {
+            background-color: #f9f7ff;
+            border: 2px dashed #9b59b6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .keyword {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .keyword:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .color-1 { background: linear-gradient(to right, #3498db, #2980b9); }
+        .color-2 { background: linear-gradient(to right, #2ecc71, #27ae60); }
+        .color-3 { background: linear-gradient(to right, #e74c3c, #c0392b); }
+        .color-4 { background: linear-gradient(to right, #9b59b6, #8e44ad); }
+        .color-5 { background: linear-gradient(to right, #1abc9c, #16a085); }
+        .color-6 { background: linear-gradient(to right, #f39c12, #d35400); }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+        
+        .revision-checklist {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .checklist-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .checklist-item:hover {
+            background-color: #e9ecef;
+        }
+        
+        .checklist-item input {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+        
+        .checklist-item label {
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        
+        .completed {
+            text-decoration: line-through;
+            color: #7f8c8d;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-book-open"></i> पालमपुर गाँव की कहानी</h1>
+        <p class="subtitle">UPSC प्रीलिम्स - संक्षिप्त रिवीजन नोट्स</p>
+    </div>
+    
+    <div class="container">
+        <div class="card" style="animation-delay: 0.1s">
+            <div class="card-title"><i class="fas fa-bullseye color-1"></i> अध्याय का उद्देश्य</div>
+            <div class="card-content">
+                <p>• <span class="highlight">उत्पादन के मूल विचार</span> को समझाना</p>
+                <p>• <span class="highlight">खेती और गैर-कृषि गतिविधियों</span> का तुलनात्मक अध्ययन</p>
+                <p>• उत्पादन में <span class="highlight">संसाधनों के संयोजन</span> को समझना</p>
+                
+                <div class="important">
+                    <strong>महत्वपूर्ण:</strong> यह अध्याय ग्रामीण अर्थव्यवस्था के मूल सिद्धांतों को सरल उदाहरण के माध्यम से समझाता है।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.2s">
+            <div class="card-title"><i class="fas fa-seedling color-2"></i> उत्पादन के कारक</div>
+            <div class="card-content">
+                <p><strong>उत्पादन:</strong> वस्तुओं और सेवाओं का निर्माण</p>
+                <p><strong>चार कारक:</strong></p>
+                <p>1. <span class="highlight">भूमि</span> - प्राकृतिक संसाधन (जल, मिट्टी, वन)</p>
+                <p>2. <span class="highlight">श्रम</span> - मानव श्रम (शारीरिक + बौद्धिक)</p>
+                <p>3. <span class="highlight">पूँजी</span> - 
+                    <br>• स्थायी: औज़ार, मशीन, भवन
+                    <br>• कार्यशील: बीज, खाद, नकद पैसा
+                </p>
+                <p>4. <span class="highlight">मानव पूँजी</span> - ज्ञान, संगठन क्षमता</p>
+                
+                <div class="fact-box">
+                    <strong>पालमपुर में:</strong> 75% लोग खेती पर निर्भर, भूमि स्थिर और दुर्लभ संसाधन है।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.3s">
+            <div class="card-title"><i class="fas fa-tractor color-3"></i> अधिक पैदावार के तरीके</div>
+            <div class="card-content">
+                <p><strong>A. बहुविध फसल प्रणाली:</strong></p>
+                <p>• एक वर्ष में एक भूमि पर एक से अधिक फसल</p>
+                <p>• पालमपुर में 2-3 फसलें</p>
+                <p>• खरीफ़: ज्वार, बाजरा</p>
+                <p>• रबी: गेहूँ</p>
+                <p>• तीसरी फसल: आलू</p>
+                
+                <p><strong>B. आधुनिक कृषि विधियाँ:</strong></p>
+                <p>• <span class="highlight">HYV बीज</span> (उच्च उपज वाले बीज)</p>
+                <p>• सिंचाई सुविधाओं का विस्तार</p>
+                <p>• रासायनिक उर्वरक एवं कीटनाशक</p>
+                <p>• मशीनीकरण (ट्रैक्टर, हार्वेस्टर)</p>
+                
+                <div class="important">
+                    <strong>हरित क्रांति (1960s):</strong> पंजाब, हरियाणा, पश्चिमी UP में शुरुआत, गेहूँ उत्पादन में भारी वृद्धि।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.4s">
+            <div class="card-title"><i class="fas fa-exclamation-triangle color-4"></i> आधुनिक खेती की समस्याएँ</div>
+            <div class="card-content">
+                <p>• <span class="highlight">अधिक पूँजी</span> की आवश्यकता</p>
+                <p>• मिट्टी की <span class="highlight">उर्वरता में कमी</span></p>
+                <p>• <span class="highlight">भू-जल स्तर</span> में गिरावट</p>
+                <p>• <span class="highlight">पर्यावरणीय असंतुलन</span></p>
+                <p>• छोटे किसानों के लिए संसाधनों तक पहुँच सीमित</p>
+                
+                <div class="fact-box">
+                    <strong>निष्कर्ष:</strong> भूमि का सावधानीपूर्वक एवं टिकाऊ उपयोग आवश्यक है।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.5s">
+            <div class="card-title"><i class="fas fa-balance-scale color-5"></i> भूमि वितरण एवं श्रम</div>
+            <div class="card-content">
+                <p><strong>भूमि वितरण (450 परिवार):</strong></p>
+                <p>• 150 परिवार = <span class="highlight">भूमिहीन</span></p>
+                <p>• 240 परिवार = <span class="highlight">छोटे किसान</span> (< 2 हेक्टेयर)</p>
+                <p>• 60 परिवार = <span class="highlight">मझोले व बड़े किसान</span> (> 2 हेक्टेयर)</p>
+                
+                <p><strong>श्रम व्यवस्था:</strong></p>
+                <p>• छोटे किसान → पारिवारिक श्रम</p>
+                <p>• बड़े किसान → खेतिहर मजदूर</p>
+                <p>• मजदूरी: नकद / अनाज, दैनिक / मौसमी</p>
+                <p>• अक्सर <span class="highlight">न्यूनतम मजदूरी से कम</span> भुगतान</p>
+                
+                <div class="important">
+                    <strong>महत्वपूर्ण:</strong> भूमि असमान रूप से वितरित, श्रम सबसे प्रचुर कारक।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.6s">
+            <div class="card-title"><i class="fas fa-chart-line color-6"></i> पूँजी एवं अधिशेष</div>
+            <div class="card-content">
+                <p><strong>खेती के लिए पूँजी:</strong></p>
+                <p>• <span class="highlight">छोटे किसान:</span> साहूकार/बड़े किसान से कर्ज, ऊँची ब्याज दर</p>
+                <p>• <span class="highlight">बड़े किसान:</span> अधिशेष से पूँजी की व्यवस्था</p>
+                
+                <p><strong>अधिशेष कृषि उत्पाद:</strong></p>
+                <p>• कुछ उत्पादन उपभोग के लिए, शेष बाज़ार में बिक्री</p>
+                <p>• <span class="highlight">छोटे किसान → कम अधिशेष</span></p>
+                <p>• <span class="highlight">बड़े किसान → अधिक अधिशेष</span></p>
+                <p>• अधिशेष से: बचत, पूँजी निर्माण, गैर-कृषि निवेश</p>
+                
+                <div class="fact-box">
+                    <strong>पालमपुर में गैर-कृषि गतिविधियाँ (25% लोग):</strong> डेयरी, लघु-स्तरीय विनिर्माण, दुकानदारी, परिवहन सेवाएँ।
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="revision-checklist">
+        <div class="checklist-title"><i class="fas fa-clipboard-check"></i> रिवीजन चेकलिस्ट</div>
+        <div class="checklist-item">
+            <input type="checkbox" id="item1">
+            <label for="item1">उत्पादन के चार कारक याद हैं</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="item2">
+            <label for="item2">हरित क्रांति का स्थान और प्रभाव</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="item3">
+            <label for="item3">बहुविध फसल प्रणाली और HYV बीज</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="item4">
+            <label for="item4">पालमपुर में भूमि वितरण की असमानता</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="item5">
+            <label for="item5">आधुनिक खेती की समस्याएँ</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="item6">
+            <label for="item6">गैर-कृषि गतिविधियों के प्रकार</label>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title"><i class="fas fa-key"></i> परीक्षा के लिए महत्वपूर्ण कीवर्ड</div>
+        <div class="keywords">
+            <div class="keyword color-1">उत्पादन के कारक</div>
+            <div class="keyword color-2">बहुविध फसल प्रणाली</div>
+            <div class="keyword color-3">हरित क्रांति</div>
+            <div class="keyword color-4">HYV बीज</div>
+            <div class="keyword color-5">स्थायी vs कार्यशील पूँजी</div>
+            <div class="keyword color-6">अधिशेष उत्पादन</div>
+            <div class="keyword color-1">गैर-कृषि गतिविधियाँ</div>
+            <div class="keyword color-2">भूमिहीन मजदूर</div>
+            <div class="keyword color-3">सीमांत किसान</div>
+            <div class="keyword color-4">मशीनीकरण</div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p><strong>पालमपुर गाँव की कहानी - UPSC प्रीलिम्स संक्षिप्त रिवीजन</strong></p>
+        <p>केवल सबसे महत्वपूर्ण अवधारणाएँ शामिल | अंतिम रिवीजन के लिए आदर्श</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.8;">© UPSC तैयारी सामग्री</p>
+    </div>
+    
+    <script>
+        // एनिमेशन और इंटरैक्शन
+        document.addEventListener('DOMContentLoaded', function() {
+            // कार्ड एनिमेशन
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${0.1 + index * 0.1}s`;
+            });
+            
+            // कीवर्ड क्लिक करने पर हाइलाइट
+            const keywords = document.querySelectorAll('.keyword');
+            keywords.forEach(keyword => {
+                keyword.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    
+                    // रंग बदलने का एनिमेशन
+                    const originalBg = this.style.background;
+                    this.style.background = 'linear-gradient(to right, #ff9a00, #ff6a00)';
+                    
+                    setTimeout(() => {
+                        this.style.background = originalBg;
+                    }, 300);
+                });
+            });
+            
+            // चेकलिस्ट आइटम्स
+            const checkboxes = document.querySelectorAll('.checklist-item input');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const label = this.nextElementSibling;
+                    if(this.checked) {
+                        label.classList.add('completed');
+                    } else {
+                        label.classList.remove('completed');
+                    }
+                });
+            });
+            
+            // महत्वपूर्ण बॉक्स को क्लिक करने योग्य बनाना
+            const importantBoxes = document.querySelectorAll('.important, .fact-box');
+            importantBoxes.forEach(box => {
+                box.style.cursor = 'pointer';
+                box.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
