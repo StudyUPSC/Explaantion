@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पालमपुर गाँव की कहानी - UPSC प्रीलिम्स MCQs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .card-content {
+            color: #444;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #d35400;
+        }
+        
+        .important {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .fact-box {
+            background-color: #f9f7ff;
+            border: 2px dashed #9b59b6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .keyword {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .keyword:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .color-1 { background: linear-gradient(to right, #3498db, #2980b9); }
+        .color-2 { background: linear-gradient(to right, #2ecc71, #27ae60); }
+        .color-3 { background: linear-gradient(to right, #e74c3c, #c0392b); }
+        .color-4 { background: linear-gradient(to right, #9b59b6, #8e44ad); }
+        .color-5 { background: linear-gradient(to right, #1abc9c, #16a085); }
+        .color-6 { background: linear-gradient(to right, #f39c12, #d35400); }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+        
+        /* MCQ Section Styles */
+        .mcq-container {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .mcq-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        .mcq-question {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3498db;
+            transition: all 0.3s;
+        }
+        
+        .mcq-question:hover {
+            background-color: #f1f8ff;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f0f8ff;
+            border-color: #3498db;
+        }
+        
+        .option.selected {
+            background-color: #e8f4fc;
+            border-color: #3498db;
+        }
+        
+        .option.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option input {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        
+        .option-label {
+            font-weight: 600;
+            margin-right: 10px;
+            min-width: 30px;
+        }
+        
+        .skip-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        .skip-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .mcq-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .submit-btn, .reset-btn {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11);
+        }
+        
+        .reset-btn {
+            background: linear-gradient(to right, #6c757d, #5a6268);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1);
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(108, 117, 125, 0.1);
+        }
+        
+        .results-container {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            display: none;
+        }
+        
+        .results-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        
+        .score-card {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .score-box {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid;
+        }
+        
+        .correct-box {
+            border-top-color: #28a745;
+        }
+        
+        .incorrect-box {
+            border-top-color: #dc3545;
+        }
+        
+        .skipped-box {
+            border-top-color: #ffc107;
+        }
+        
+        .total-box {
+            border-top-color: #3498db;
+        }
+        
+        .score-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .correct-box .score-number {
+            color: #28a745;
+        }
+        
+        .incorrect-box .score-number {
+            color: #dc3545;
+        }
+        
+        .skipped-box .score-number {
+            color: #ffc107;
+        }
+        
+        .total-box .score-number {
+            color: #3498db;
+        }
+        
+        .score-label {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        
+        .final-score {
+            text-align: center;
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .final-score-number {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+        
+        .explanation {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .mcq-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .submit-btn, .reset-btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-book-open"></i> पालमपुर गाँव की कहानी</h1>
+        <p class="subtitle">UPSC प्रीलिम्स - MCQs रिवीजन नोट्स</p>
+    </div>
+    
+    <div class="container">
+        <div class="card" style="animation-delay: 0.1s">
+            <div class="card-title"><i class="fas fa-bullseye color-1"></i> अध्याय का उद्देश्य</div>
+            <div class="card-content">
+                <p>• <span class="highlight">उत्पादन के मूल विचार</span> को समझाना</p>
+                <p>• <span class="highlight">खेती और गैर-कृषि गतिविधियों</span> का तुलनात्मक अध्ययन</p>
+                <p>• उत्पादन में <span class="highlight">संसाधनों के संयोजन</span> को समझना</p>
+                
+                <div class="important">
+                    <strong>महत्वपूर्ण:</strong> यह अध्याय ग्रामीण अर्थव्यवस्था के मूल सिद्धांतों को सरल उदाहरण के माध्यम से समझाता है।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.2s">
+            <div class="card-title"><i class="fas fa-seedling color-2"></i> उत्पादन के कारक</div>
+            <div class="card-content">
+                <p><strong>उत्पादन:</strong> वस्तुओं और सेवाओं का निर्माण</p>
+                <p><strong>चार कारक:</strong></p>
+                <p>1. <span class="highlight">भूमि</span> - प्राकृतिक संसाधन (जल, मिट्टी, वन)</p>
+                <p>2. <span class="highlight">श्रम</span> - मानव श्रम (शारीरिक + बौद्धिक)</p>
+                <p>3. <span class="highlight">पूँजी</span> - 
+                    <br>• स्थायी: औज़ार, मशीन, भवन
+                    <br>• कार्यशील: बीज, खाद, नकद पैसा
+                </p>
+                <p>4. <span class="highlight">मानव पूँजी</span> - ज्ञान, संगठन क्षमता</p>
+                
+                <div class="fact-box">
+                    <strong>पालमपुर में:</strong> 75% लोग खेती पर निर्भर, भूमि स्थिर और दुर्लभ संसाधन है।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.3s">
+            <div class="card-title"><i class="fas fa-tractor color-3"></i> अधिक पैदावार के तरीके</div>
+            <div class="card-content">
+                <p><strong>A. बहुविध फसल प्रणाली:</strong></p>
+                <p>• एक वर्ष में एक भूमि पर एक से अधिक फसल</p>
+                <p>• पालमपुर में 2-3 फसलें</p>
+                <p>• खरीफ़: ज्वार, बाजरा</p>
+                <p>• रबी: गेहूँ</p>
+                <p>• तीसरी फसल: आलू</p>
+                
+                <p><strong>B. आधुनिक कृषि विधियाँ:</strong></p>
+                <p>• <span class="highlight">HYV बीज</span> (उच्च उपज वाले बीज)</p>
+                <p>• सिंचाई सुविधाओं का विस्तार</p>
+                <p>• रासायनिक उर्वरक एवं कीटनाशक</p>
+                <p>• मशीनीकरण (ट्रैक्टर, हार्वेस्टर)</p>
+                
+                <div class="important">
+                    <strong>हरित क्रांति (1960s):</strong> पंजाब, हरियाणा, पश्चिमी UP में शुरुआत, गेहूँ उत्पादन में भारी वृद्धि।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.4s">
+            <div class="card-title"><i class="fas fa-exclamation-triangle color-4"></i> आधुनिक खेती की समस्याएँ</div>
+            <div class="card-content">
+                <p>• <span class="highlight">अधिक पूँजी</span> की आवश्यकता</p>
+                <p>• मिट्टी की <span class="highlight">उर्वरता में कमी</span></p>
+                <p>• <span class="highlight">भू-जल स्तर</span> में गिरावट</p>
+                <p>• <span class="highlight">पर्यावरणीय असंतुलन</span></p>
+                <p>• छोटे किसानों के लिए संसाधनों तक पहुँच सीमित</p>
+                
+                <div class="fact-box">
+                    <strong>निष्कर्ष:</strong> भूमि का सावधानीपूर्वक एवं टिकाऊ उपयोग आवश्यक है।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.5s">
+            <div class="card-title"><i class="fas fa-balance-scale color-5"></i> भूमि वितरण एवं श्रम</div>
+            <div class="card-content">
+                <p><strong>भूमि वितरण (450 परिवार):</strong></p>
+                <p>• 150 परिवार = <span class="highlight">भूमिहीन</span></p>
+                <p>• 240 परिवार = <span class="highlight">छोटे किसान</span> (< 2 हेक्टेयर)</p>
+                <p>• 60 परिवार = <span class="highlight">मझोले व बड़े किसान</span> (> 2 हेक्टेयर)</p>
+                
+                <p><strong>श्रम व्यवस्था:</strong></p>
+                <p>• छोटे किसान → पारिवारिक श्रम</p>
+                <p>• बड़े किसान → खेतिहर मजदूर</p>
+                <p>• मजदूरी: नकद / अनाज, दैनिक / मौसमी</p>
+                <p>• अक्सर <span class="highlight">न्यूनतम मजदूरी से कम</span> भुगतान</p>
+                
+                <div class="important">
+                    <strong>महत्वपूर्ण:</strong> भूमि असमान रूप से वितरित, श्रम सबसे प्रचुर कारक।
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="animation-delay: 0.6s">
+            <div class="card-title"><i class="fas fa-chart-line color-6"></i> पूँजी एवं अधिशेष</div>
+            <div class="card-content">
+                <p><strong>खेती के लिए पूँजी:</strong></p>
+                <p>• <span class="highlight">छोटे किसान:</span> साहूकार/बड़े किसान से कर्ज, ऊँची ब्याज दर</p>
+                <p>• <span class="highlight">बड़े किसान:</span> अधिशेष से पूँजी की व्यवस्था</p>
+                
+                <p><strong>अधिशेष कृषि उत्पाद:</strong></p>
+                <p>• कुछ उत्पादन उपभोग के लिए, शेष बाज़ार में बिक्री</p>
+                <p>• <span class="highlight">छोटे किसान → कम अधिशेष</span></p>
+                <p>• <span class="highlight">बड़े किसान → अधिक अधिशेष</span></p>
+                <p>• अधिशेष से: बचत, पूँजी निर्माण, गैर-कृषि निवेश</p>
+                
+                <div class="fact-box">
+                    <strong>पालमपुर में गैर-कृषि गतिविधियाँ (25% लोग):</strong> डेयरी, लघु-स्तरीय विनिर्माण, दुकानदारी, परिवहन सेवाएँ।
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mcq-container">
+        <div class="mcq-title">
+            <i class="fas fa-question-circle"></i> UPSC प्रीलिम्स स्तरीय MCQs
+        </div>
+        
+        <div class="mcq-question" data-correct="b">
+            <div class="question-text">
+                <span class="question-number">1</span>
+                पालमपुर गाँव के संदर्भ में, निम्नलिखित में से कौन सा कथन सही है?
+            </div>
+            <div class="options-container">
+                <div class="option" data-value="a">
+                    <input type="radio" name="q1" id="q1a">
+                    <label class="option-label">A</label>
+                    <span>पालमपुर में 50% से कम लोग खेती पर निर्भर हैं</span>
+                </div>
+                <div class="option" data-value="b">
+                    <input type="radio" name="q1" id="q1b">
+                    <label class="option-label">B</label>
+                    <span>पालमपुर में 75% लोग खेती पर निर्भर हैं</span>
+                </div>
+                <div class="option" data-value="c">
+                    <input type="radio" name="q1" id="q1c">
+                    <label class="option-label">C</label>
+                    <span>पालमपुर में केवल 25% लोग खेती पर निर्भर हैं</span>
+                </div>
+                <div class="option" data-value="d">
+                    <input type="radio" name="q1" id="q1d">
+                    <label class="option-label">D</label>
+                    <span>पालमपुर में कोई भी व्यक्ति खेती पर निर्भर नहीं है</span>
+                </div>
+            </div>
+            <button class="skip-btn" data-question="1">स्किप करें</button>
+            <div class="explanation">
+                <strong>स्पष्टीकरण:</strong> पालमपुर गाँव में 75% लोग खेती पर निर्भर हैं। यह गाँव की मुख्य आर्थिक गतिविधि है। शेष 25% लोग गैर-कृषि गतिविधियों में संलग्न हैं।
+            </div>
+        </div>
+        
+        <div class="mcq-question" data-correct="d">
+            <div class="question-text">
+                <span class="question-number">2</span>
+                उत्पादन के कारकों के संदर्भ में, निम्नलिखित में से कौन सा युग्म सही सुमेलित नहीं है?
+            </div>
+            <div class="options-container">
+                <div class="option" data-value="a">
+                    <input type="radio" name="q2" id="q2a">
+                    <label class="option-label">A</label>
+                    <span>भूमि - प्राकृतिक संसाधन</span>
+                </div>
+                <div class="option" data-value="b">
+                    <input type="radio" name="q2" id="q2b">
+                    <label class="option-label">B</label>
+                    <span>श्रम - मानवीय प्रयास</span>
+                </div>
+                <div class="option" data-value="c">
+                    <input type="radio" name="q2" id="q2c">
+                    <label class="option-label">C</label>
+                    <span>पूँजी - उत्पादन के साधन</span>
+                </div>
+                <div class="option" data-value="d">
+                    <input type="radio" name="q2" id="q2d">
+                    <label class="option-label">D</label>
+                    <span>मानव पूँजी - केवल शारीरिक श्रम</span>
+                </div>
+            </div>
+            <button class="skip-btn" data-question="2">स्किप करें</button>
+            <div class="explanation">
+                <strong>स्पष्टीकरण:</strong> मानव पूँजी में केवल शारीरिक श्रम नहीं, बल्कि ज्ञान, कौशल, शिक्षा और स्वास्थ्य भी शामिल हैं। यह बौद्धिक एवं संगठनात्मक क्षमताओं को दर्शाता है।
+            </div>
+        </div>
+        
+        <div class="mcq-question" data-correct="c">
+            <div class="question-text">
+                <span class="question-number">3</span>
+                पालमपुर में बहुविध फसल प्रणाली के संबंध में कौन सा कथन सही है?
+            </div>
+            <div class="options-container">
+                <div class="option" data-value="a">
+                    <input type="radio" name="q3" id="q3a">
+                    <label class="option-label">A</label>
+                    <span>इसमें एक वर्ष में केवल एक फसल उगाई जाती है</span>
+                </div>
+                <div class="option" data-value="b">
+                    <input type="radio" name="q3" id="q3b">
+                    <label class="option-label">B</label>
+                    <span>इसमें केवल रबी की फसलें उगाई जाती हैं</span>
+                </div>
+                <div class="option" data-value="c">
+                    <input type="radio" name="q3" id="q3c">
+                    <label class="option-label">C</label>
+                    <span>इसमें एक वर्ष में एक ही भूमि पर 2-3 फसलें उगाई जाती हैं</span>
+                </div>
+                <div class="option" data-value="d">
+                    <input type="radio" name="q3" id="q3d">
+                    <label class="option-label">D</label>
+                    <span>इसमें केवल खरीफ की फसलें उगाई जाती हैं</span>
+                </div>
+            </div>
+            <button class="skip-btn" data-question="3">स्किप करें</button>
+            <div class="explanation">
+                <strong>स्पष्टीकरण:</strong> बहुविध फसल प्रणाली में एक ही भूमि पर एक वर्ष में एक से अधिक फसलें उगाई जाती हैं। पालमपुर में किसान खरीफ (ज्वार, बाजरा), रबी (गेहूँ) और तीसरी फसल (आलू) उगाते हैं।
+            </div>
+        </div>
+        
+        <div class="mcq-question" data-correct="a">
+            <div class="question-text">
+                <span class="question-number">4</span>
+                हरित क्रांति के संदर्भ में निम्नलिखित में से कौन सा कथन सही है?
+            </div>
+            <div class="options-container">
+                <div class="option" data-value="a">
+                    <input type="radio" name="q4" id="q4a">
+                    <label class="option-label">A</label>
+                    <span>इसकी शुरुआत 1960 के दशक में पंजाब, हरियाणा और पश्चिमी उत्तर प्रदेश में हुई</span>
+                </div>
+                <div class="option" data-value="b">
+                    <input type="radio" name="q4" id="q4b">
+                    <label class="option-label">B</label>
+                    <span>इसकी शुरुआत 1950 के दशक में बिहार और पश्चिम बंगाल में हुई</span>
+                </div>
+                <div class="option" data-value="c">
+                    <input type="radio" name="q4" id="q4c">
+                    <label class="option-label">C</label>
+                    <span>इसके कारण चावल उत्पादन में भारी गिरावट आई</span>
+                </div>
+                <div class="option" data-value="d">
+                    <input type="radio" name="q4" id="q4d">
+                    <label class="option-label">D</label>
+                    <span>इसने केवल सिंचाई सुविधाओं पर ध्यान केंद्रित किया, बीजों पर नहीं</span>
+                </div>
+            </div>
+            <button class="skip-btn" data-question="4">स्किप करें</button>
+            <div class="explanation">
+                <strong>स्पष्टीकरण:</strong> हरित क्रांति की शुरुआत 1960 के दशक में पंजाब, हरियाणा और पश्चिमी उत्तर प्रदेश में हुई। इसने HYV बीज, रासायनिक उर्वरक, सिंचाई और मशीनीकरण के माध्यम से गेहूँ उत्पादन में भारी वृद्धि की।
+            </div>
+        </div>
+        
+        <div class="mcq-question" data-correct="d">
+            <div class="question-text">
+                <span class="question-number">5</span>
+                पालमपुर में भूमि वितरण के संदर्भ में, निम्नलिखित में से कौन सा कथन सही है?
+            </div>
+            <div class="options-container">
+                <div class="option" data-value="a">
+                    <input type="radio" name="q5" id="q5a">
+                    <label class="option-label">A</label>
+                    <span>अधिकांश परिवारों के पास 5 हेक्टेयर से अधिक भूमि है</span>
+                </div>
+                <div class="option" data-value="b">
+                    <input type="radio" name="q5" id="q5b">
+                    <label class="option-label">B</label>
+                    <span>भूमि का वितरण समान रूप से हुआ है</span>
+                </div>
+                <div class="option" data-value="c">
+                    <input type="radio" name="q5" id="q5c">
+                    <label class="option-label">C</label>
+                    <span>केवल 10% परिवार भूमिहीन हैं</span>
+                </div>
+                <div class="option" data-value="d">
+                    <input type="radio" name="q5" id="q5d">
+                    <label class="option-label">D</label>
+                    <span>150 परिवार (450 में से) भूमिहीन हैं</span>
+                </div>
+            </div>
+            <button class="skip-btn" data-question="5">स्किप करें</button>
+            <div class="explanation">
+                <strong>स्पष्टीकरण:</strong> पालमपुर में 450 परिवारों में से 150 परिवार (लगभग 33%) भूमिहीन हैं। भूमि का वितरण असमान है - 240 परिवार छोटे किसान (<2 हेक्टेयर) और 60 परिवार मझोले एवं बड़े किसान (>2 हेक्टेयर) हैं।
+            </div>
+        </div>
+        
+        <div class="mcq-controls">
+            <button class="reset-btn" id="resetBtn">
+                <i class="fas fa-redo"></i> रीसेट करें
+            </button>
+            <button class="submit-btn" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> सबमिट करें
+            </button>
+        </div>
+    </div>
+    
+    <div class="results-container" id="resultsContainer">
+        <div class="results-title">
+            <i class="fas fa-chart-bar"></i> परिणाम विवरण
+        </div>
+        
+        <div class="score-card">
+            <div class="score-box correct-box">
+                <div class="score-number" id="correctCount">0</div>
+                <div class="score-label">सही उत्तर</div>
+            </div>
+            
+            <div class="score-box incorrect-box">
+                <div class="score-number" id="incorrectCount">0</div>
+                <div class="score-label">गलत उत्तर</div>
+            </div>
+            
+            <div class="score-box skipped-box">
+                <div class="score-number" id="skippedCount">0</div>
+                <div class="score-label">स्किप किए</div>
+            </div>
+            
+            <div class="score-box total-box">
+                <div class="score-number" id="totalQuestions">5</div>
+                <div class="score-label">कुल प्रश्न</div>
+            </div>
+        </div>
+        
+        <div class="final-score">
+            <div>आपका कुल स्कोर</div>
+            <div class="final-score-number" id="finalScore">0</div>
+            <div>स्कोरिंग: सही (+2), गलत (-1/3), स्किप (0)</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title"><i class="fas fa-key"></i> परीक्षा के लिए महत्वपूर्ण कीवर्ड</div>
+        <div class="keywords">
+            <div class="keyword color-1">उत्पादन के कारक</div>
+            <div class="keyword color-2">बहुविध फसल प्रणाली</div>
+            <div class="keyword color-3">हरित क्रांति</div>
+            <div class="keyword color-4">HYV बीज</div>
+            <div class="keyword color-5">स्थायी vs कार्यशील पूँजी</div>
+            <div class="keyword color-6">अधिशेष उत्पादन</div>
+            <div class="keyword color-1">गैर-कृषि गतिविधियाँ</div>
+            <div class="keyword color-2">भूमिहीन मजदूर</div>
+            <div class="keyword color-3">सीमांत किसान</div>
+            <div class="keyword color-4">मशीनीकरण</div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p><strong>पालमपुर गाँव की कहानी - UPSC प्रीलिम्स MCQs रिवीजन</strong></p>
+        <p>UPSC प्रीलिम्स परीक्षा के लिए विशेष रूप से तैयार MCQs | अभ्यास के लिए आदर्श</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.8;">© UPSC तैयारी सामग्री</p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // कार्ड एनिमेशन
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${0.1 + index * 0.1}s`;
+            });
+            
+            // MCQ फंक्शनलिटी
+            const questions = document.querySelectorAll('.mcq-question');
+            const submitBtn = document.getElementById('submitBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const skipButtons = document.querySelectorAll('.skip-btn');
+            
+            let userAnswers = {};
+            
+            // प्रत्येक प्रश्न के विकल्पों पर क्लिक इवेंट
+            questions.forEach(question => {
+                const options = question.querySelectorAll('.option');
+                const questionNum = question.querySelector('.question-number').textContent;
+                
+                options.forEach(option => {
+                    option.addEventListener('click', function() {
+                        const radioBtn = this.querySelector('input');
+                        radioBtn.checked = true;
+                        
+                        // सभी विकल्पों से selected क्लास हटाएं
+                        options.forEach(opt => opt.classList.remove('selected'));
+                        
+                        // चयनित विकल्प को highlighted करें
+                        this.classList.add('selected');
+                        
+                        // उत्तर स्टोर करें
+                        userAnswers[questionNum] = this.getAttribute('data-value');
+                        
+                        // स्किप बटन डिसेबल करें
+                        const skipBtn = question.querySelector('.skip-btn');
+                        skipBtn.textContent = "चुना गया";
+                        skipBtn.disabled = true;
+                        skipBtn.style.backgroundColor = "#3498db";
+                    });
+                });
+            });
+            
+            // स्किप बटन फंक्शनलिटी
+            skipButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const questionNum = this.getAttribute('data-question');
+                    userAnswers[questionNum] = 'skipped';
+                    
+                    // स्किप बटन अपडेट करें
+                    this.textContent = "स्किप किया गया";
+                    this.disabled = true;
+                    this.style.backgroundColor = "#ffc107";
+                    
+                    // उस प्रश्न के सभी रेडियो बटन अनचेक करें
+                    const question = document.querySelector(`.mcq-question[data-question="${questionNum}"]`);
+                    const options = question.querySelectorAll('input[type="radio"]');
+                    options.forEach(option => option.checked = false);
+                    
+                    // सभी विकल्पों से selected क्लास हटाएं
+                    const optionDivs = question.querySelectorAll('.option');
+                    optionDivs.forEach(div => div.classList.remove('selected'));
+                });
+            });
+            
+            // सबमिट बटन फंक्शनलिटी
+            submitBtn.addEventListener('click', function() {
+                let correctCount = 0;
+                let incorrectCount = 0;
+                let skippedCount = 0;
+                
+                // प्रत्येक प्रश्न की जाँच करें
+                questions.forEach(question => {
+                    const questionNum = question.querySelector('.question-number').textContent;
+                    const correctAnswer = question.getAttribute('data-correct');
+                    const userAnswer = userAnswers[questionNum];
+                    
+                    // सही/गलत हाइलाइट करें
+                    const options = question.querySelectorAll('.option');
+                    
+                    if (userAnswer === 'skipped') {
+                        skippedCount++;
+                        // स्किप किए गए प्रश्नों को पीले रंग में हाइलाइट करें
+                        question.style.borderLeftColor = "#ffc107";
+                        question.style.backgroundColor = "#fffdf0";
+                    } else if (userAnswer === correctAnswer) {
+                        correctCount++;
+                        // सही उत्तर को हरा हाइलाइट करें
+                        const selectedOption = question.querySelector(`.option[data-value="${userAnswer}"]`);
+                        selectedOption.classList.add('correct');
+                        question.style.borderLeftColor = "#28a745";
+                        question.style.backgroundColor = "#f0fff4";
+                    } else {
+                        incorrectCount++;
+                        // गलत उत्तर को लाल हाइलाइट करें
+                        if (userAnswer) {
+                            const selectedOption = question.querySelector(`.option[data-value="${userAnswer}"]`);
+                            selectedOption.classList.add('incorrect');
+                        }
+                        
+                        // सही उत्तर को हरा हाइलाइट करें
+                        const correctOption = question.querySelector(`.option[data-value="${correctAnswer}"]`);
+                        correctOption.classList.add('correct');
+                        
+                        question.style.borderLeftColor = "#dc3545";
+                        question.style.backgroundColor = "#fff0f0";
+                    }
+                    
+                    // स्पष्टीकरण दिखाएं
+                    const explanation = question.querySelector('.explanation');
+                    explanation.style.display = 'block';
+                });
+                
+                // स्कोर कैलकुलेट करें
+                const finalScore = (correctCount * 2) - (incorrectCount * (1/3));
+                
+                // परिणाम अपडेट करें
+                document.getElementById('correctCount').textContent = correctCount;
+                document.getElementById('incorrectCount').textContent = incorrectCount;
+                document.getElementById('skippedCount').textContent = skippedCount;
+                document.getElementById('finalScore').textContent = finalScore.toFixed(2);
+                
+                // परिणाम दिखाएं
+                resultsContainer.style.display = 'block';
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+                
+                // सबमिट बटन डिसेबल करें
+                submitBtn.disabled = true;
+                submitBtn.style.backgroundColor = "#95a5a6";
+                submitBtn.textContent = "परीक्षा समाप्त";
+            });
+            
+            // रीसेट बटन फंक्शनलिटी
+            resetBtn.addEventListener('click', function() {
+                // सभी उत्तर रीसेट करें
+                userAnswers = {};
+                
+                // सभी रेडियो बटन अनचेक करें
+                const allRadioButtons = document.querySelectorAll('input[type="radio"]');
+                allRadioButtons.forEach(radio => radio.checked = false);
+                
+                // सभी विकल्पों से क्लासेस हटाएं
+                const allOptions = document.querySelectorAll('.option');
+                allOptions.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                });
+                
+                // सभी प्रश्नों को डिफॉल्ट स्टाइल में रीसेट करें
+                questions.forEach(question => {
+                    question.style.borderLeftColor = "#3498db";
+                    question.style.backgroundColor = "#f8f9fa";
+                    
+                    // स्पष्टीकरण छुपाएं
+                    const explanation = question.querySelector('.explanation');
+                    explanation.style.display = 'none';
+                    
+                    // स्किप बटन रीसेट करें
+                    const skipBtn = question.querySelector('.skip-btn');
+                    skipBtn.textContent = "स्किप करें";
+                    skipBtn.disabled = false;
+                    skipBtn.style.backgroundColor = "#6c757d";
+                });
+                
+                // परिणाम छुपाएं
+                resultsContainer.style.display = 'none';
+                
+                // सबमिट बटन एनेबल करें
+                submitBtn.disabled = false;
+                submitBtn.style.backgroundColor = "";
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> सबमिट करें';
+            });
+            
+            // कीवर्ड क्लिक करने पर हाइलाइट
+            const keywords = document.querySelectorAll('.keyword');
+            keywords.forEach(keyword => {
+                keyword.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    
+                    const originalBg = this.style.background;
+                    this.style.background = 'linear-gradient(to right, #ff9a00, #ff6a00)';
+                    
+                    setTimeout(() => {
+                        this.style.background = originalBg;
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
