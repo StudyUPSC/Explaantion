@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Seismic_Waves_Notes</title>
+    <style>
+        /* ---------- CLEAN, PROFESSIONAL, EXAM-READY STYLE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fafcff;
+            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1a2634;
+            padding: 1.2rem;
+        }
+
+        .notes-container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 18px rgba(0, 20, 40, 0.04);
+            padding: 2rem 1.8rem;
+            border: 1px solid #eef2f6;
+        }
+
+        /* ----- HEADINGS: clean hierarchy ----- */
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: #0b3954;
+            border-left: 8px solid #2a7f6e;
+            padding-left: 1.2rem;
+            margin-top: 0.2rem;
+            margin-bottom: 1.8rem;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            transition: all 0.15s ease;
+        }
+
+        h1:hover {
+            border-left-color: #0a5e4b;
+            color: #043746;
+            padding-left: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 550;
+            color: #1d4e5f;
+            border-bottom: 2px solid #cbe7e1;
+            padding-bottom: 0.4rem;
+            margin-top: 2rem;
+            margin-bottom: 1.2rem;
+            transition: border-color 0.15s, color 0.1s;
+        }
+
+        h2:hover {
+            border-bottom-color: #2a7f6e;
+            color: #0a3a44;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 540;
+            color: #1d5a6c;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            padding-left: 0.3rem;
+            transition: color 0.15s;
+        }
+
+        h3:hover {
+            color: #0e4a5c;
+            text-decoration: underline 1px dashed #2a7f6e;
+            text-underline-offset: 6px;
+        }
+
+        /* ----- LISTS : perfect nested structure ----- */
+        ul {
+            list-style: none;  /* we preserve original emojis/bullets inside <li> */
+            padding-left: 0.5rem;
+            margin-top: 0.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        li {
+            margin-bottom: 0.45rem;
+            padding: 0.2rem 0 0.2rem 1.2rem;
+            position: relative;
+            font-size: 1.02rem;
+            word-break: break-word;
+            transition: background 0.12s ease, transform 0.1s;
+            border-radius: 6px;
+        }
+
+        /* subtle hover on list items */
+        li:hover {
+            background: #f6fbfe;
+            transform: translateX(3px);
+        }
+
+        /* nested ul : more indentation */
+        ul ul {
+            margin-left: 1.2rem;
+            margin-top: 0.3rem;
+            margin-bottom: 0.3rem;
+            border-left: 2px dotted #cbd8e3;
+            padding-left: 1rem;
+        }
+
+        ul ul li {
+            font-size: 0.99rem;
+        }
+
+        /* ----- HIGHLIGHT: important keywords (soft, exam-friendly) ----- */
+        .highlight {
+            background: #fcf1d6;    /* very light warm yellow – easy on eyes */
+            color: #1e3b4a;
+            font-weight: 600;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            transition: all 0.15s;
+            border-bottom: 1px solid #eadbb0;
+        }
+
+        .highlight:hover {
+            background: #ffecb3;
+            color: #002b36;
+            border-bottom: 1px solid #a5864a;
+        }
+
+        strong, b {
+            font-weight: 650;
+            color: #0d4a4a;
+        }
+
+        /* inline emoji and symbol spacing – preserve original */
+        .diagram-placeholder {
+            background: #f0f5fa;
+            padding: 0.8rem 1.2rem;
+            border-radius: 16px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            border: 1px solid #dae2ed;
+            margin: 1.2rem 0;
+            color: #1c4e5c;
+            letter-spacing: 1px;
+        }
+
+        /* quick revision block – extra clean */
+        .quick-rev ul {
+            margin-top: 0.2rem;
+        }
+
+        /* mobile fine-tuning */
+        @media (max-width: 550px) {
+            .notes-container {
+                padding: 1.5rem 1rem;
+            }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.4rem; }
+            h3 { font-size: 1.2rem; }
+            li { padding-left: 0.8rem; }
+            ul ul { margin-left: 0.7rem; }
+        }
+
+        /* link footer style — only for shareable link (no extra icons) */
+        .share-link {
+            margin-top: 2.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #dbe4ee;
+            font-size: 0.95rem;
+            color: #2e5f6b;
+            word-break: break-all;
+            text-align: center;
+        }
+
+        .share-link a {
+            color: #1f6e7a;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dotted #6ea6ae;
+            transition: all 0.1s;
+        }
+
+        .share-link a:hover {
+            color: #05414b;
+            border-bottom: 2px solid #05414b;
+        }
+    </style>
+</head>
+<body>
+    <div class="notes-container">
+
+        <!-- MAIN HEADING (exact, with emoji) -->
+        <h1>🌊 भूकंपीय तरंगें (Seismic Waves) (UPSC Prelims – Short Notes | Concept Clarity + Fast Revision | Emoji-balanced)</h1>
+
+        <!-- 1️⃣ मूल तथ्य (h2) -->
+        <h2>🌍 1️⃣ मूल तथ्य</h2>
+        <ul>
+            <li>🔹 सभी प्राकृतिक भूकंप <span class="highlight">स्थलमंडल (Lithosphere)</span> में आते हैं।</li>
+            <li>🔹 स्थलमंडल = सतह से लगभग 200 किमी गहराई तक।</li>
+            <li>🔹 भूकंपमापी यंत्र = <span class="highlight">सीस्मोग्राफ (Seismograph)</span> → सतह पर पहुँचने वाली तरंगों को अभिलेखित करता है।</li>
+        </ul>
+
+        <!-- 2️⃣ भूकंपीय तरंगों के प्रकार (h2) -->
+        <h2>🔵 2️⃣ भूकंपीय तरंगों के प्रकार</h2>
+        <ul>
+            <li>🔹 मुख्यतः दो प्रकार:
+                <ul>
+                    <!-- A. Body Waves (h3 style but inside li as heading) we'll use h3-like bold -->
+                    <li><span style="font-weight:600; color:#146b7a;">🟢 A. भूगर्भिक तरंगें (Body Waves)</span>
+                        <ul>
+                            <li>उद्गम केंद्र (<span class="highlight">Focus</span>) से उत्पन्न</li>
+                            <li>पृथ्वी के अंदर से होकर गुजरती हैं</li>
+                            <li>सभी दिशाओं में संचरित</li>
+                            <li><span class="highlight">Body Waves</span> के दो प्रकार:
+                                <ul>
+                                    <!-- P-wave -->
+                                    <li><span class="highlight">1️⃣ P-तरंगें (Primary Waves)</span>
+                                        <ul>
+                                            <li>✔️ सबसे तेज</li>
+                                            <li>✔️ धरातल पर सबसे पहले पहुँचती हैं</li>
+                                            <li>✔️ ध्वनि तरंगों जैसी</li>
+                                            <li>🔹 माध्यम:
+                                                <ul>
+                                                    <li>ठोस</li>
+                                                    <li>द्रव</li>
+                                                    <li>गैस</li>
+                                                </ul>
+                                            </li>
+                                            <li>📌 <span class="highlight">संकुचन–प्रसारण (Compression–Expansion)</span> प्रकृति</li>
+                                        </ul>
+                                    </li>
+                                    <!-- S-wave -->
+                                    <li><span class="highlight">2️⃣ S-तरंगें (Secondary Waves)</span>
+                                        <ul>
+                                            <li>✔️ P के बाद पहुँचती हैं</li>
+                                            <li>✔️ केवल ठोस माध्यम से गुजरती हैं</li>
+                                            <li>❌ द्रव या गैस में नहीं चलती</li>
+                                            <li>📌 यही विशेषता <span class="highlight">बाह्य क्रोड के द्रव होने का प्रमाण</span> बनी।</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- B. Surface Waves -->
+                    <li><span style="font-weight:600; color:#146b7a;">🔵 B. धरातलीय तरंगें (Surface Waves)</span>
+                        <ul>
+                            <li>भूगर्भीय तरंगों व सतही शैलों की अंतःक्रिया से उत्पन्न</li>
+                            <li>धरातल के साथ-साथ चलती हैं</li>
+                            <li>सीस्मोग्राफ पर अंत में दर्ज होती हैं</li>
+                            <li><span class="highlight">सबसे अधिक विनाशकारी</span></li>
+                            <li>🔹 प्रभाव:
+                                <ul>
+                                    <li>शैल विस्थापन</li>
+                                    <li>भवन गिरना</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <!-- 3️⃣ तरंगों का व्यवहार (h2) -->
+        <h2>⚙️ 3️⃣ तरंगों का व्यवहार (Wave Behaviour)</h2>
+        <ul>
+            <li>🔹 <span class="highlight">वेग का नियम</span>
+                <ul>
+                    <li>अधिक घनत्व → अधिक वेग</li>
+                    <li>कम घनत्व → कम वेग</li>
+                </ul>
+            </li>
+            <li>🔹 <span class="highlight">दिशा परिवर्तन</span>
+                <ul>
+                    <li>🔁 <span class="highlight">परावर्तन (Reflection)</span> → तरंग वापस लौटती है</li>
+                    <li>🔄 <span class="highlight">अपवर्तन (Refraction)</span> → दिशा बदलकर आगे बढ़ती है</li>
+                </ul>
+            </li>
+            <li>📌 घनत्व परिवर्तन के कारण परावर्तन व अपवर्तन होता है।</li>
+        </ul>
+
+        <!-- Concept Diagram : exact text as given -->
+        <div class="diagram-placeholder">
+            📊 Concept Diagram (Clear Visual Understanding)<br>4
+        </div>
+
+        <!-- QUICK REVISION (h2) -->
+        <h2 style="margin-top: 1rem;">🧠 QUICK REVISION (Ultra Fast Recall)</h2>
+        <ul class="quick-rev">
+            <li>🔹 <span class="highlight">Lithosphere</span> → 0–200 km</li>
+            <li>🔹 <span class="highlight">Seismograph</span> → Records waves</li>
+            <li>🔹 <span class="highlight">Body Waves</span> → P + S</li>
+            <li>🔹 <span class="highlight">P</span> → Fastest, All media</li>
+            <li>🔹 <span class="highlight">S</span> → Only Solid</li>
+            <li>🔹 <span class="highlight">Surface Waves</span> → Most destructive</li>
+            <li>🔹 Velocity ↑ with Density</li>
+            <li>🔹 Reflection + Refraction → Direction change</li>
+            <li>🔹 <span class="highlight">S-wave absence</span> → Liquid outer core</li>
+        </ul>
+
+        <!-- SHAREABLE LINK (exact as per rule) -->
+        <div class="share-link">
+            Seismic_Waves_Notes.html<br>
+            <a href="#" target="_blank">https://StudyUPSC.github.io/Explaantion/Seismic_Waves_Notes.html</a>
+        </div>
+
+    </div> <!-- /.notes-container -->
+
+    <!-- subtle fade animation on load -->
+    <style>
+        .notes-container {
+            animation: fadeSlide 0.4s ease-out;
+        }
+        @keyframes fadeSlide {
+            0% { opacity: 0.9; transform: translateY(3px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        /* additional hover on h2/h3 already used */
+    </style>
+</body>
+</html>
