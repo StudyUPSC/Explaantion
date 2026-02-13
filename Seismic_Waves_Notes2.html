@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Seismic_Waves_Notes</title>
+    <!-- modern font: Inter + fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- VIBRANT, UPS-CLASS, PRISTINE NOTE CARD ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 30%, #e9f2f5, #d9e4ec);
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+            line-height: 1.65;
+            color: #1f3845;
+            padding: 1.8rem 1.2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .earth-card {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+            background: linear-gradient(145deg, #ffffff 0%, #fcfdff 100%);
+            border-radius: 48px 48px 48px 48px;
+            box-shadow: 0 30px 45px -15px rgba(27, 58, 80, 0.26), 0 12px 18px -8px rgba(0,60,80,0.08);
+            padding: 2.6rem 2.5rem;
+            border: 1px solid rgba(64, 156, 182, 0.25);
+            transition: box-shadow 0.3s, border-color 0.2s;
+        }
+
+        .earth-card:hover {
+            box-shadow: 0 38px 55px -14px rgba(15, 84, 102, 0.32);
+            border-color: rgba(41, 141, 161, 0.45);
+        }
+
+        /* ---------- HEADINGS : rich color, dynamic hierarchy ---------- */
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            line-height: 1.35;
+            color: #0a4a5e;
+            background: linear-gradient(135deg, #ffeec2 0%, #fff2d4 80%);
+            padding: 1.2rem 1.8rem;
+            margin: -0.8rem 0 1.8rem -0.8rem;
+            border-radius: 0 60px 60px 0;
+            border-left: 14px solid #e06d3b;
+            letter-spacing: -0.012em;
+            word-break: break-word;
+            transition: 0.2s ease;
+            box-shadow: 6px 8px 12px rgba(144, 84, 32, 0.06);
+        }
+
+        h1:hover {
+            border-left-width: 18px;
+            border-left-color: #b1451c;
+            background: linear-gradient(135deg, #ffe6b3, #ffedc9);
+            padding-left: 2.2rem;
+            color: #0a3e4c;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 650;
+            margin-top: 2.4rem;
+            margin-bottom: 1.2rem;
+            padding: 0.5rem 0 0.5rem 1.4rem;
+            border-radius: 16px 8px 16px 8px;
+            display: inline-block;
+            transition: 0.18s;
+            border-bottom: 4px solid rgba(0,0,0,0.05);
+        }
+
+        /* distinct section personalities */
+        h2:nth-of-type(1) {  /* निम्न मैंटल – ठोस क्यों?  */
+            background: linear-gradient(105deg, #e3eef3, #f1f7f9);
+            border-left: 14px solid #407b82;
+            color: #1c4e57;
+            box-shadow: 0 2px 8px rgba(63, 128, 128, 0.1);
+        }
+
+        h2:nth-of-type(2) {  /* बाह्य क्रोड – तरल क्यों? */
+            background: linear-gradient(105deg, #fee9dc, #ffefe7);
+            border-left: 14px solid #c05e3a;
+            color: #663f2a;
+            box-shadow: 0 2px 8px rgba(192, 78, 38, 0.08);
+        }
+
+        h2:hover {
+            transform: translateX(9px) scale(1.01);
+            filter: brightness(1.03);
+            border-bottom-color: rgba(30, 120, 130, 0.25);
+        }
+
+        /* ---------- LISTS : perfect nesting, soft depth ---------- */
+        ul {
+            list-style: none;
+            padding-left: 0.4rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0.9rem;
+        }
+
+        li {
+            position: relative;
+            padding: 0.45rem 0 0.45rem 2.2rem;
+            margin-bottom: 0.3rem;
+            font-size: 1.07rem;
+            font-weight: 450;
+            word-break: break-word;
+            border-radius: 18px;
+            transition: background 0.14s, transform 0.14s, color 0.1s;
+            color: #1f404c;
+        }
+
+        li:hover {
+            background: #f7ffff;
+            transform: translateX(9px);
+            color: #043f4a;
+        }
+
+        /* nested ul: beautiful indentation, oceanic left border */
+        ul ul {
+            margin-left: 1.6rem;
+            margin-top: 0.35rem;
+            margin-bottom: 0.3rem;
+            padding-left: 1.5rem;
+            border-left: 4px dotted #7bb3b3;
+            background: rgba(169, 208, 216, 0.09);
+            border-radius: 0 0 0 20px;
+        }
+
+        ul ul li {
+            font-size: 1.03rem;
+            padding-left: 2rem;
+        }
+
+        /* ----- HIGHLIGHT : soft, peppy, very readable ----- */
+        .highlight {
+            background: #ffeab5;   /* sunny yellow */
+            color: #0a4a51;
+            font-weight: 680;
+            padding: 0.2rem 0.6rem;
+            border-radius: 24px;
+            border-bottom: 3px solid #d9a741;
+            transition: 0.13s;
+            box-decoration-break: clone;
+        }
+
+        .highlight:hover {
+            background: #ffde94;
+            border-bottom-color: #aa8239;
+            color: #03363d;
+        }
+
+        /* for key reasons & Q/A emphasis */
+        .fire-reason {
+            background: #ffd9b0;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #4d2e1b;
+            transition: 0.1s;
+        }
+
+        .fire-reason:hover {
+            background: #ffc78c;
+        }
+
+        /* ----- special block for intro question (bold & clean) ----- */
+        .question-block {
+            background: linear-gradient(120deg, #f6f3e2, #fbf7e9);
+            padding: 1.1rem 2rem;
+            border-radius: 60px 20px 60px 20px;
+            margin: 0.5rem 0 1.8rem 0;
+            border-left: 12px solid #d4833f;
+            color: #1d4855;
+            font-size: 1.22rem;
+            font-weight: 550;
+            box-shadow: inset 0 -1px 0 #e7dbbd;
+            transition: 0.2s;
+        }
+
+        .question-block:hover {
+            background: #fcf3de;
+            border-left-color: #b3572a;
+        }
+
+        /* ----- mobile adaptation ----- */
+        @media (max-width: 580px) {
+            .earth-card { padding: 1.6rem 1.2rem; }
+            h1 { font-size: 1.6rem; padding: 0.8rem 1.2rem; }
+            h2 { font-size: 1.5rem; }
+            li { padding-left: 1.5rem; }
+        }
+
+        /* ----- entry animation ----- */
+        .earth-card {
+            animation: riseUp 0.58s cubic-bezier(0.13,0.88,0.25,1);
+        }
+
+        @keyframes riseUp {
+            0% { opacity: 0.7; transform: translateY(16px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* subtle bullet custom */
+        .emoji-marker {
+            margin-right: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="earth-card">
+
+        <!-- ===== MAIN HEADING : exactly as provided ===== -->
+        <h1>🌊 भूकंपीय तरंगों का संचरण (Propagation of Seismic Waves)</h1>
+        
+        <!-- ===== QUESTION : जब निम्न मैंटल ... तरल अवस्था में कैसे? (exact copy) ===== -->
+        <div class="question-block">
+            🔥 जब निम्न मैंटल (Lower Mantle) ठोस अवस्था में है, तो उसके नीचे स्थित बाह्य क्रोड (Outer Core) तरल अवस्था में कैसे हो सकता है?<br>
+            <span style="font-size:0.98rem; display:block; margin-top:0.4rem; color:#5f4c3b;">🔥 मुख्य कारण: तापमान बनाम दाब का संतुलन</span>
+        </div>
+
+        <!-- ===== introductory lines: पृथ्वी के अंदर दो मुख्य चीजें... ===== -->
+        <ul style="margin-bottom: 0.8rem;">
+            <li>🔹 पृथ्वी के अंदर दो मुख्य चीजें अवस्था (ठोस/तरल) तय करती हैं:</li>
+            <li style="padding-left: 2.8rem; list-style: none;">🌡️ तापमान (Temperature)</li>
+            <li style="padding-left: 2.8rem; list-style: none;">⚖️ दाब (Pressure)</li>
+        </ul>
+
+        <!-- ===== SECTION 1 : निम्न मैंटल – ठोस क्यों? (h2) ===== -->
+        <h2>1️⃣ निम्न मैंटल (Lower Mantle) – ठोस क्यों?</h2>
+        <ul>
+            <li>🔹 गहराई: लगभग 660 किमी से 2900 किमी तक</li>
+            <li>🔹 तापमान बहुत अधिक है</li>
+            <li>🔹 लेकिन यहाँ <span class="highlight">दाब (Pressure) अत्यधिक अधिक है</span></li>
+            <li>🔹 इतना अधिक दबाव पदार्थ को पिघलने नहीं देता</li>
+            <li>🔹 इसलिए यह भाग <span class="highlight">ठोस अवस्था में रहता है</span> (हालाँकि यह बहुत धीरे-धीरे बह सकता है – plastic solid की तरह)</li>
+        </ul>
+
+        <!-- ===== SECTION 2 : बाह्य क्रोड – तरल क्यों? (h2) ===== -->
+        <h2>2️⃣ बाह्य क्रोड (Outer Core) – तरल क्यों?</h2>
+        <ul>
+            <li>🔹 गहराई: 2900 किमी से 5150 किमी तक</li>
+            <li>🔹 तापमान: लगभग <span class="highlight">4000–6000°C</span></li>
+            <li>🔹 यह मुख्यतः लोहा (Iron) और निकेल (Nickel) से बना है</li>
+            <li>🔹 <span class="fire-reason">यहाँ तापमान इतना अधिक है कि</span>
+                <ul>
+                    <li>👉 दाब के बावजूद लोहे का गलनांक (Melting point) पार हो जाता है</li>
+                </ul>
+            </li>
+            <li>🔹 इसलिए <span class="highlight">बाह्य क्रोड तरल अवस्था में होता है।</span></li>
+        </ul>
+
+        <!-- ===== EXTRA subtle refinement: nothing added, nothing removed ===== -->
+        <div style="height: 0.2rem;"></div>
+
+    </div> <!-- /.earth-card -->
+
+    <!-- NO SHARE LINK INSIDE BODY — as per "alg se muse dena hai"  -->
+    
+</body>
+</html>
+
