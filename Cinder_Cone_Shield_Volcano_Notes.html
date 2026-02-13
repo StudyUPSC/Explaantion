@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <!-- UNIQUE TITLE: CINDER CONE AND SHIELD VOLCANO NOTES -->
+    <title>Cinder_Cone_Shield_Volcano_Notes</title>
+    <!-- modern font: Inter + fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- VIBRANT, UPSC-READY, PERFECT NESTING ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(165deg, #edf2f7 0%, #e2ecf1 100%);
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+            line-height: 1.7;
+            color: #1d3942;
+            padding: 2rem 1.2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .volcano-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(4px);
+            background: #ffffff;
+            border-radius: 56px 56px 56px 56px;
+            box-shadow: 0 30px 50px -18px rgba(22, 62, 80, 0.28);
+            padding: 2.6rem 2.8rem;
+            border: 1px solid rgba(193, 157, 93, 0.25);
+            transition: all 0.25s;
+        }
+
+        .volcano-card:hover {
+            box-shadow: 0 38px 60px -16px rgba(131, 88, 42, 0.28);
+            border-color: rgba(190, 125, 55, 0.35);
+        }
+
+        /* ---------- HEADINGS : Distinct, rich & unique per section ---------- */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1d4c4f;
+            background: linear-gradient(130deg, #fbebc8, #fff4df);
+            padding: 1.2rem 2rem;
+            margin: -0.8rem 0 1.8rem -1rem;
+            border-radius: 0 70px 70px 0;
+            border-left: 16px solid #b1653a;
+            letter-spacing: -0.01em;
+            word-break: break-word;
+            transition: 0.2s;
+            box-shadow: 4px 8px 12px rgba(115, 75, 35, 0.06);
+        }
+
+        h1:hover {
+            border-left-width: 22px;
+            border-left-color: #8f4a28;
+            background: linear-gradient(130deg, #ffe3b5, #ffedcc);
+            padding-left: 2.5rem;
+        }
+
+        /* sub-headers for Cinder Cone and Shield Volcano */
+        h2 {
+            font-size: 1.9rem;
+            font-weight: 680;
+            margin-top: 2.2rem;
+            margin-bottom: 1.4rem;
+            padding: 0.5rem 0 0.5rem 1.8rem;
+            border-radius: 30px 10px 30px 10px;
+            display: inline-block;
+            transition: 0.18s;
+            border-bottom: 4px solid transparent;
+        }
+
+        /* Cinder Cone header style — volcanic ash theme */
+        h2:nth-of-type(1) {
+            background: linear-gradient(145deg, #efe3cf, #f7ede1);
+            border-left: 16px solid #a3582b;
+            color: #55371e;
+            box-shadow: 0 3px 10px rgba(163, 88, 43, 0.1);
+        }
+
+        /* Shield Volcano header — fluid, broad */
+        h2:nth-of-type(2) {
+            background: linear-gradient(145deg, #d4e9ed, #e3f0f2);
+            border-left: 16px solid #367c7c;
+            color: #1f5552;
+            box-shadow: 0 3px 10px rgba(54, 124, 124, 0.1);
+        }
+
+        h2:hover {
+            transform: translateX(12px);
+            filter: brightness(1.02);
+            border-bottom-color: rgba(130, 100, 70, 0.2);
+        }
+
+        /* ----- LISTS: perfect nested, clean emoji spacing ----- */
+        ul {
+            list-style: none;
+            padding-left: 0.2rem;
+            margin-top: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            position: relative;
+            padding: 0.5rem 0 0.3rem 2.4rem;
+            margin-bottom: 0.3rem;
+            font-size: 1.08rem;
+            font-weight: 460;
+            word-break: break-word;
+            border-radius: 24px;
+            transition: 0.14s;
+            color: #1e3e48;
+        }
+
+        li:hover {
+            background: #faf3ea;
+            transform: translateX(10px);
+            color: #0b4a4a;
+        }
+
+        /* nested indentation — dotted border with warm tone */
+        ul ul {
+            margin-left: 1.9rem;
+            margin-top: 0.3rem;
+            margin-bottom: 0.3rem;
+            padding-left: 1.7rem;
+            border-left: 4px dotted #c49a6c;
+            background: rgba(241, 220, 195, 0.1);
+            border-radius: 0 0 0 24px;
+        }
+
+        ul ul li {
+            font-size: 1.04rem;
+            padding-left: 2rem;
+        }
+
+        /* ----- HIGHLIGHT : soft, vivid but exam-clean ----- */
+        .highlight {
+            background: #fbdfb5;   /* honey beige */
+            color: #1f4a47;
+            font-weight: 650;
+            padding: 0.2rem 0.7rem;
+            border-radius: 28px;
+            border-bottom: 3px solid #c29147;
+            transition: 0.12s;
+            box-decoration-break: clone;
+        }
+
+        .highlight:hover {
+            background: #f9d192;
+            border-bottom-color: #9e6f39;
+            color: #003c3c;
+        }
+
+        /* ----- 🖼️ IMAGE STYLES : proper use, clean, context diagrams ----- */
+        .volcano-figure {
+            margin: 2rem 0 1.8rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-evenly;
+            gap: 1.8rem;
+            background: linear-gradient(to right, #fbf7f0, #fffdf9);
+            padding: 1.6rem 1rem;
+            border-radius: 48px;
+            border: 1px solid #ddcbb0;
+        }
+
+        .volcano-figure svg {
+            max-width: 200px;
+            height: auto;
+            background: transparent;
+            filter: drop-shadow(6px 12px 16px rgba(78, 48, 16, 0.12));
+            transition: transform 0.2s;
+        }
+
+        .volcano-figure svg:hover {
+            transform: scale(1.03);
+        }
+
+        .fig-caption {
+            font-size: 0.98rem;
+            color: #4f5e5e;
+            background: #faf0e1;
+            padding: 0.3rem 1.1rem;
+            border-radius: 40px;
+            font-weight: 540;
+        }
+
+        /* ----- examples, special bullet ----- */
+        .example-tag {
+            background: #bdd4cf;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1e4643;
+        }
+
+        /* ----- mobile first adjustments ----- */
+        @media (max-width: 650px) {
+            .volcano-card { padding: 1.8rem 1.4rem; }
+            h1 { font-size: 1.75rem; padding: 0.8rem 1.2rem; }
+            h2 { font-size: 1.6rem; }
+            li { padding-left: 1.8rem; }
+            .volcano-figure svg { max-width: 160px; }
+        }
+
+        /* entry animation */
+        .volcano-card {
+            animation: floatUp 0.6s ease-out;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 0.8; transform: translateY(18px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="volcano-card">
+
+        <!-- ***** UNIQUE MAIN HEADING : CINDER CONE & SHIELD VOLCANO ***** -->
+        <h1>🌋 सिंडर शंकु (Cinder Cone) और शील्ड ज्वालामुखी (Shield Volcano)</h1>
+
+        <!-- ========== PART 1 : सिंडर शंकु (CINDER CONE) ========== -->
+        <h2>🔺 सिंडर शंकु (Cinder Cone) क्या होता है?</h2>
+        
+        <!-- IMAGE 1: CINDER CONE – SVG diagram with vent, crater, steep slope -->
+        <div class="volcano-figure">
+            <svg width="200" height="130" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+                <!-- base mound / cinder cone shape -->
+                <polygon points="30,120 110,20 190,120" fill="#A56534" stroke="#6b3f1e" stroke-width="2.5" opacity="0.96"/>
+                <!-- crater at top -->
+                <ellipse cx="110" cy="32" rx="16" ry="10" fill="#4f2d1a" stroke="#2d1c0e" stroke-width="1.8"/>
+                <!-- volcanic vent line -->
+                <line x1="110" y1="32" x2="110" y2="60" stroke="#b34b26" stroke-width="3" stroke-dasharray="4 2"/>
+                <!-- ash fragments (small circles) -->
+                <circle cx="70" cy="80" r="4" fill="#7a5a44" opacity="0.9"/>
+                <circle cx="150" cy="85" r="5" fill="#8d613e" opacity="0.9"/>
+                <circle cx="48" cy="100" r="3.5" fill="#6b4a34"/>
+                <circle cx="178" cy="102" r="4" fill="#7b563a"/>
+                <!-- label: steep slope indicator -->
+                <text x="40" y="62" font-size="10" fill="#3a281c" font-weight="bold">तेज ढाल</text>
+                <text x="140" y="60" font-size="10" fill="#3a281c" font-weight="bold">क्रेटर</text>
+            </svg>
+            <span class="fig-caption">🔺 सिंडर शंकु – नुकीला, छोटा, गड्ढा युक्त</span>
+        </div>
+
+        <ul>
+            <li>👉 जब ज्वालामुखी फटता है तो राख, छोटे-छोटे पत्थर और ज्वालामुखी बम हवा में ऊपर जाते हैं।</li>
+            <li>👉 ये टुकड़े वापस नीचे गिरकर मुख (vent) के आसपास जमा हो जाते हैं।</li>
+            <li>👉 धीरे-धीरे वे मिलकर एक छोटा, नुकीला पहाड़ बना देते हैं।</li>
+            <li>🔹 इसी को <span class="highlight">सिंडर शंकु</span> कहते हैं।</li>
+            <li>✔ छोटा होता है
+                <ul>
+                    <li>✔ ढाल (किनारा) तेज होता है</li>
+                    <li>✔ ऊपर गड्ढा (क्रेटर) होता है</li>
+                </ul>
+            </li>
+            <li><span class="example-tag">उदाहरण: Parícutin</span></li>
+        </ul>
+
+        <!-- ========== PART 2 : SHIELD VOLCANO ========== -->
+        <h2>🛡️ शील्ड ज्वालामुखी का ढाल कम तीव्र क्यों होता है?</h2>
+        
+        <!-- IMAGE 2: SHIELD VOLCANO – broad, gentle slope, fluid lava -->
+        <div class="volcano-figure">
+            <svg width="200" height="120" viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg">
+                <!-- broad shield shape, gentle slope -->
+                <polygon points="20,110 70,40 170,40 220,110" fill="#6f8c7d" stroke="#3c5e5b" stroke-width="2.2" opacity="0.9"/>
+                <!-- crater wide and shallow -->
+                <ellipse cx="120" cy="44" rx="22" ry="8" fill="#4a605a" stroke="#2b453e" stroke-width="1.5"/>
+                <!-- thin lava flow lines -->
+                <polyline points="70,60 40,95 20,110" stroke="#b1653a" stroke-width="3" fill="none" stroke-dasharray="3 3"/>
+                <polyline points="170,60 200,90 220,110" stroke="#b1653a" stroke-width="3" fill="none" stroke-dasharray="3 3"/>
+                <!-- lava droplets (fluid) -->
+                <circle cx="55" cy="100" r="4" fill="#b6592c"/>
+                <circle cx="190" cy="102" r="4.5" fill="#b6592c"/>
+                <text x="100" y="90" font-size="11" fill="#1e4745" font-weight="600">पतला लावा, दूर तक फैलाव</text>
+            </svg>
+            <span class="fig-caption">🛡️ शील्ड ज्वालामुखी – चौड़ा, ढाल समान, ढाल कम तीव्र</span>
+        </div>
+
+        <ul>
+            <li>👉 इसमें निकलने वाला लावा बहुत पतला (पानी जैसा) होता है।</li>
+            <li>👉 इसलिए वह दूर-दूर तक फैल जाता है।</li>
+            <li>👉 वह एक जगह ऊँचा ढेर नहीं बनाता।</li>
+            <li>🔹 इसलिए इसका आकार <span class="highlight">ढाल (shield) जैसा चौड़ा और फैला हुआ</span> होता है, न कि नुकीला।</li>
+            <li><span class="example-tag">उदाहरण: Mauna Loa</span></li>
+        </ul>
+
+        <!-- EXTRA subtle spacing -->
+        <div style="height: 0.5rem;"></div>
+
+    </div> <!-- /.volcano-card -->
+
+    <!-- NO SHARE LINK, NO TOPIC NAME INSIDE HTML — as per "muse alg se dena" strictly -->
+    
+</body>
+</html>
+
