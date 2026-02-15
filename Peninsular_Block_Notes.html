@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Peninsular_Block_Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f2f5f9;
+            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            line-height: 1.65;
+            color: #1c2c3a;
+            padding: 2rem 1.2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .notes-container {
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 25px 40px -18px rgba(12, 45, 65, 0.18);
+            padding: 2.4rem 2.4rem;
+            border: 1px solid #e2e9f0;
+            transition: box-shadow 0.25s;
+        }
+
+        .notes-container:hover {
+            box-shadow: 0 30px 48px -16px rgba(14, 60, 85, 0.22);
+        }
+
+        /* ---------- HEADING HIERARCHY ---------- */
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 650;
+            color: #174b5c;
+            background: linear-gradient(90deg, #f2efe7, #ffffff);
+            padding: 0.9rem 1.8rem;
+            margin: -0.6rem 0 1.5rem -1rem;
+            border-radius: 0 60px 60px 0;
+            border-left: 12px solid #3f7e6b;
+            letter-spacing: -0.01em;
+            line-height: 1.4;
+            transition: 0.15s;
+            word-break: break-word;
+        }
+
+        h1:hover {
+            border-left-width: 16px;
+            border-left-color: #256454;
+            background: linear-gradient(90deg, #ebe6db, #ffffff);
+            padding-left: 2rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-top: 2.4rem;
+            margin-bottom: 1.2rem;
+            padding: 0.4rem 0 0.4rem 1.6rem;
+            border-radius: 16px 0 0 16px;
+            background: linear-gradient(120deg, #f0f4fa, #ffffff);
+            border-left: 14px solid #628c9c;
+            color: #134a57;
+            transition: 0.1s;
+        }
+
+        h2:hover {
+            border-left-color: #1f6f82;
+            background: linear-gradient(120deg, #e7f0f5, #ffffff);
+            transform: translateX(6px);
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 560;
+            margin: 1.8rem 0 1rem 0;
+            padding: 0.3rem 0 0.3rem 1rem;
+            border-bottom: 3px solid #bdd3d9;
+            color: #1b6270;
+            transition: 0.1s;
+        }
+
+        h3:hover {
+            border-bottom-color: #54828f;
+            color: #0b4c5a;
+        }
+
+        /* ---------- LIST & NESTED STRUCTURE ---------- */
+        ul {
+            list-style: none;
+            padding-left: 0.2rem;
+            margin-top: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            position: relative;
+            padding: 0.4rem 0 0.3rem 2.2rem;
+            margin-bottom: 0.25rem;
+            font-size: 1.05rem;
+            word-break: break-word;
+            border-radius: 12px;
+            transition: background 0.12s, transform 0.1s;
+            color: #1c3b47;
+        }
+
+        li:hover {
+            background: #f6fbfe;
+            transform: translateX(7px);
+        }
+
+        ul ul {
+            margin-left: 1.5rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0.2rem;
+            padding-left: 1.4rem;
+            border-left: 3px dotted #aac3cc;
+            background: rgba(216, 234, 242, 0.1);
+            border-radius: 0 0 0 16px;
+        }
+
+        ul ul li {
+            font-size: 1.02rem;
+            padding-left: 2rem;
+        }
+
+        /* HIGHLIGHTING (soft, exam-oriented) */
+        .highlight {
+            background: #faeecb;   /* light honey */
+            color: #1e4c5a;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            border-bottom: 2px solid #cfb27c;
+            transition: 0.12s;
+            box-decoration-break: clone;
+        }
+
+        .highlight:hover {
+            background: #f8e2ac;
+            border-bottom-color: #aa874e;
+        }
+
+        strong, b {
+            font-weight: 650;
+            color: #115561;
+        }
+
+        /* special note for gradient formula — preserve original text */
+        .formula-box {
+            background: #edf3f7;
+            padding: 0.6rem 1.2rem;
+            border-radius: 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin: 0.8rem 0;
+            border: 1px solid #b9d2dd;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* quick revision block extra clean */
+        .quick-rev li {
+            font-weight: 500;
+        }
+
+        /* responsive */
+        @media (max-width: 550px) {
+            .notes-container { padding: 1.6rem 1.2rem; }
+            h1 { font-size: 1.7rem; }
+            h2 { font-size: 1.5rem; }
+            h3 { font-size: 1.3rem; }
+            li { padding-left: 1.6rem; }
+        }
+
+        /* light animation */
+        .notes-container {
+            animation: fadeSlide 0.45s ease-out;
+        }
+
+        @keyframes fadeSlide {
+            0% { opacity: 0.8; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+<div class="notes-container">
+
+    <!-- MAIN HEADING exactly as given -->
+    <h1>🪨 प्रायद्वीपीय खंड (Peninsular Block) – विस्तृत समझ (UPSC Prelims – Concept + Map Clarity | Clean & Structured)</h1>
+
+    <!-- ========== उत्तरी सीमा ========== -->
+    <h2>🗺️ उत्तरी सीमा (Irregular Northern Boundary)</h2>
+    <ul>
+        <li>🔹 कच्छ से आरंभ</li>
+        <li>🔹 अरावली के पश्चिम से → दिल्ली</li>
+        <li>🔹 यमुना–गंगा के समानांतर → राजमहल पहाड़ियाँ</li>
+        <li>🔹 आगे → गंगा डेल्टा</li>
+        <li>विस्तार क्षेत्र:
+            <ul>
+                <li>उत्तर-पूर्व → कर्बी ऐंगलोंग, मेघालय पठार</li>
+                <li>पश्चिम → राजस्थान (मरुस्थलीय भाग)</li>
+            </ul>
+        </li>
+        <li>📌 <span class="highlight">मालदा भ्रंश (Malda Fault)</span> → मेघालय–कर्बी ऐंगलोंग पठार को छोटा नागपुर से अलग करता है।</li>
+    </ul>
+
+    <!-- ========== संरचनात्मक विशेषताएँ ========== -->
+    <h2>🏔️ संरचनात्मक विशेषताएँ</h2>
+    <ul>
+        <li>✔️ मुख्य शैल → <span class="highlight">नाइस (Gneiss) व ग्रेनाइट</span></li>
+        <li>✔️ कैम्ब्रियन काल से स्थिर</li>
+        <li>✔️ अत्यंत प्राचीन एवं कठोर भूखंड</li>
+        <li>👉 इंडो-ऑस्ट्रेलियन प्लेट का भाग</li>
+        <li>👉 उर्ध्वाधर हलचल एवं ब्लॉक आंदोलन से प्रभावित</li>
+    </ul>
+
+    <!-- ========== प्रमुख संरचनात्मक उदाहरण ========== -->
+    <h2>⛰️ प्रमुख संरचनात्मक उदाहरण</h2>
+    <ul>
+        <li><span class="highlight">1️⃣ रिफ्ट घाटियाँ</span>
+            <ul>
+                <li>नर्मदा</li>
+                <li>तापी</li>
+                <li>महानदी</li>
+            </ul>
+        </li>
+        <li><span class="highlight">2️⃣ ब्लॉक पर्वत</span>
+            <ul>
+                <li>सतपुड़ा</li>
+            </ul>
+        </li>
+        <li><span class="highlight">3️⃣ अवशिष्ट पहाड़ियाँ</span>
+            <ul>
+                <li>अरावली</li>
+                <li>नल्लामाला</li>
+                <li>जावादी</li>
+                <li>वेलीकोण्डा</li>
+                <li>पालकोण्डा</li>
+                <li>महेंद्रगिरी</li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- ========== नदी प्रणाली की विशेषताएँ ========== -->
+    <h2>🌊 नदी प्रणाली की विशेषताएँ</h2>
+    <ul>
+        <li>✔️ उथली घाटियाँ</li>
+        <li>✔️ कम प्रवणता (Low Gradient)</li>
+        <li>✔️ अपरदन की परिपक्व अवस्था</li>
+    </ul>
+
+    <!-- ========== प्रवणता तुलना (Gradient Comparison) ========== -->
+    <h2>📊 प्रवणता तुलना (Gradient Comparison)</h2>
+    <div class="formula-box">
+        सूत्र:<br>
+        प्रवणता = ऊँचाई में अंतर / नदी की लंबाई
+    </div>
+    <ul>
+        <li>🔹 हिमालयी नदियाँ:
+            <ul>
+                <li>ऊँचाई अंतर → बहुत अधिक</li>
+                <li>तीव्र ढाल</li>
+                <li>V-आकार घाटियाँ</li>
+                <li>गॉर्ज निर्माण</li>
+            </ul>
+        </li>
+        <li>🔹 प्रायद्वीपीय नदियाँ:
+            <ul>
+                <li>ऊँचाई अंतर → कम</li>
+                <li>धीमी ढाल</li>
+                <li>चौड़ी व उथली घाटियाँ</li>
+            </ul>
+        </li>
+        <li>👉 <span class="highlight">निष्कर्ष:</span><br>हिमालयी नदियाँ = अधिक प्रवणता<br>प्रायद्वीपीय नदियाँ = कम प्रवणता</li>
+    </ul>
+
+    <!-- ========== डेल्टा निर्माण ========== -->
+    <h2>🌾 डेल्टा निर्माण</h2>
+    <ul>
+        <li>पूर्ववाहिनी नदियाँ बंगाल की खाड़ी में गिरने से पहले डेल्टा बनाती हैं।</li>
+        <li>4</li>   <!-- as per original, numeral 4 appears standalone -->
+        <li>प्रमुख डेल्टा:
+            <ul>
+                <li>महानदी</li>
+                <li>गोदावरी</li>
+                <li>कृष्णा</li>
+            </ul>
+        </li>
+        <li>👉 कारण:
+            <ul>
+                <li>कम प्रवणता</li>
+                <li>अधिक अवसाद</li>
+                <li>शांत समुद्री तट</li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- ========== Prelims Trap Points ========== -->
+    <h2>🧠 Prelims Trap Points</h2>
+    <ul>
+        <li>✔️ प्रायद्वीप = प्राचीन कठोर खंड</li>
+        <li>✔️ नर्मदा–तापी = रिफ्ट घाटियाँ</li>
+        <li>✔️ सतपुड़ा = ब्लॉक पर्वत</li>
+        <li>✔️ मालदा भ्रंश → पठारों का विभाजन</li>
+        <li>✔️ पूर्ववाहिनी नदियाँ → डेल्टा निर्माण</li>
+        <li>✔️ कम प्रवणता = चौड़ी घाटियाँ</li>
+    </ul>
+
+    <!-- ========== QUICK REVISION (30 सेकंड Recall) ========== -->
+    <h2>⚡ QUICK REVISION (30 सेकंड Recall)</h2>
+    <ul class="quick-rev">
+        <li>🔹 Gneiss + Granite</li>
+        <li>🔹 Stable since Cambrian</li>
+        <li>🔹 Rift Valleys → Narmada, Tapi</li>
+        <li>🔹 Low Gradient Rivers</li>
+        <li>🔹 East-flowing → Delta</li>
+    </ul>
+
+    <!-- no extra icons, no emojis inside notes except those already in text -->
+
+</div> <!-- /.notes-container -->
+
+<!-- nothing else — shareable link placed after blank line as per rule -->
+
+</body>
+</html>
+
+
