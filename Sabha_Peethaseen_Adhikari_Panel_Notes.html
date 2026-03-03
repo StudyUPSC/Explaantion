@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabha_Peethaseen_Adhikari_Panel_Notes</title>
+<style>
+body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:#f4f7fb;
+    margin:0;
+    padding:20px;
+    line-height:1.7;
+    color:#222;
+}
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+h1{
+    text-align:center;
+    border-bottom:2px solid #ddd;
+    padding-bottom:10px;
+    transition:0.3s ease;
+}
+h1:hover{ color:#0b5394; }
+
+h2{
+    margin-top:25px;
+    transition:0.3s ease;
+}
+h2:hover{ color:#0b5394; }
+
+.box{
+    background:#ffffff;
+    padding:20px;
+    margin:20px 0;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    transition:0.3s ease;
+}
+.box:hover{ transform:translateY(-3px); }
+
+ul{ margin-top:10px; }
+li{ margin:6px 0; }
+
+.highlight{
+    background:#eaf2ff;
+    font-weight:bold;
+    padding:2px 5px;
+    border-radius:4px;
+}
+
+.clickable{
+    color:#0b5394;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:underline;
+}
+
+.popup-overlay{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.4);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+}
+
+.popup{
+    background:#ffffff;
+    padding:25px;
+    max-width:500px;
+    border-radius:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+    position:relative;
+    animation:fadeIn 0.3s ease;
+}
+
+.close-btn{
+    position:absolute;
+    top:8px;
+    right:12px;
+    font-size:18px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:scale(0.9);}
+    to{opacity:1; transform:scale(1);}
+}
+
+@media(max-width:600px){
+    body{padding:10px;}
+    .box{padding:15px;}
+    h1{font-size:22px;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>सभापति एवं उप-सभापति पैनल</h1>
+
+<div class="box">
+<h2>1️⃣ लोकसभा में — सभापति (अध्यक्ष) का पैनल</h2>
+<ul>
+<li>लोकसभा में मुख्य पीठासीन अधिकारी होते हैं —  
+👉 लोकसभा के अध्यक्ष (Speaker)</li>
+
+<li>अध्यक्ष कुछ सदस्यों को चुनकर एक सूची बनाते हैं, जिसे सभापति का पैनल (Panel of Chairpersons) कहा जाता है।</li>
+
+<li><strong>📌 काम क्या होता है?</strong>
+    <ul>
+        <li>जब — अध्यक्ष उपस्थित न हों</li>
+        <li>उपाध्यक्ष भी उपलब्ध न हों</li>
+        <li>तब इस पैनल में से कोई एक सदस्य सदन की कार्यवाही चलाता है।</li>
+    </ul>
+</li>
+
+<li>👉 ये स्थायी अध्यक्ष नहीं होते, बल्कि अस्थायी रूप से अध्यक्षता करते हैं।</li>
+</ul>
+</div>
+
+<div class="box">
+<h2>2️⃣ राज्यसभा में — उप-सभापति का पैनल</h2>
+<ul>
+<li>राज्यसभा के मुख्य पीठासीन अधिकारी होते हैं —  
+👉 राज्यसभा के सभापति  
+(जो भारत के उपराष्ट्रपति होते हैं)</li>
+
+<li>सभापति कुछ सदस्यों को <span class="clickable" onclick="openPopup()">नामित</span> करते हैं, जिन्हें उप-सभापति का पैनल (Panel of Vice-Chairpersons) कहा जाता है।</li>
+
+<li><strong>📌 काम क्या होता है?</strong>
+    <ul>
+        <li>जब — सभापति और</li>
+        <li>उप-सभापति दोनों अनुपस्थित हों</li>
+        <li>तब इस पैनल का कोई सदस्य सदन की अध्यक्षता करता है।</li>
+    </ul>
+</li>
+</ul>
+</div>
+
+<div class="box">
+<h2>मुख्य अंतर</h2>
+<ul>
+<li>लोकसभा — सभापति का पैनल</li>
+<li>राज्यसभा — उप-सभापति का पैनल</li>
+<li>अध्यक्ष द्वारा <span class="clickable" onclick="openPopup()">नामित</span></li>
+<li>सभापति द्वारा <span class="clickable" onclick="openPopup()">नामित</span></li>
+<li>अनुपस्थिति में सदन चलाते हैं</li>
+</ul>
+</div>
+
+</div>
+
+<!-- Popup -->
+<div class="popup-overlay" id="popup">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup()">✖</span>
+        <h3>“नामित” मतलब क्या होता है?</h3>
+        <p><strong>नामित (Nominated)</strong> का अर्थ है —  
+        👉 किसी व्यक्ति को चुनकर/निर्धारित करके नियुक्त करना, बिना चुनाव कराए।</p>
+
+        <p><strong>आसान भाषा में:</strong>  
+        अगर कोई अधिकारी अपने अधिकार से किसी सदस्य का नाम तय करता है और उसे किसी पद या सूची में शामिल करता है, तो उसे नामित करना कहते हैं।</p>
+
+        <p><strong>एक लाइन में:</strong>  
+        नामित = अधिकार के आधार पर चुना गया व्यक्ति (बिना चुनाव के)।</p>
+    </div>
+</div>
+
+<script>
+function openPopup(){
+    document.getElementById("popup").style.display="flex";
+}
+function closePopup(){
+    document.getElementById("popup").style.display="none";
+}
+</script>
+
+</body>
+</html>
