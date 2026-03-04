@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Prabhavi_Bahumat_Effective_Majority_Notes</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI', Arial, sans-serif;
+background:linear-gradient(135deg,#f5f7fa,#e3f2fd);
+padding:20px;
+line-height:1.8;
+color:#1a1a1a;
+}
+
+.container{
+max-width:980px;
+margin:auto;
+background:#ffffff;
+padding:30px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
+
+h1{
+text-align:center;
+border-bottom:2px solid #ddd;
+padding-bottom:10px;
+margin-bottom:25px;
+}
+
+h2{
+margin-top:28px;
+color:#0b5394;
+}
+
+ul{
+margin-top:8px;
+}
+
+li{
+margin:6px 0;
+}
+
+.highlight{
+background:#fff3cd;
+font-weight:bold;
+padding:3px 6px;
+border-radius:5px;
+}
+
+.example-box{
+background:#e8f5e9;
+padding:18px;
+border-radius:10px;
+margin-top:15px;
+}
+
+.fail-box{
+background:#fdecea;
+padding:18px;
+border-radius:10px;
+margin-top:25px;
+}
+
+.trick-box{
+background:#e3f2fd;
+padding:18px;
+border-radius:10px;
+margin-top:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+th, td{
+border:1px solid #ccc;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#f1f3f4;
+}
+
+.note{
+margin-top:10px;
+}
+
+@media(max-width:600px){
+body{padding:10px;}
+.container{padding:20px;}
+h1{font-size:20px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>प्रभावी बहुमत (Effective Majority) क्या होता है?</h1>
+
+<h2>📌 परिभाषा</h2>
+
+<p><span class="highlight">प्रभावी बहुमत</span> = सदन की कुल सदस्य संख्या − रिक्त सीटें,  
+और उसके बाद बची हुई संख्या का आधे से अधिक।</p>
+
+<p>इसे संविधान में <span class="highlight">“सदन के सभी तत्कालीन सदस्यों का बहुमत”</span> कहा गया है।</p>
+
+
+<h2>🔎 उदाहरण से समझो</h2>
+
+<div class="example-box">
+
+<h2>उदाहरण 1 — राज्यसभा</h2>
+
+<p>राज्यसभा</p>
+
+<ul>
+<li>कुल सदस्य = 245</li>
+<li>रिक्त सीट = 25</li>
+</ul>
+
+<p>अब प्रभावी सदस्य संख्या:</p>
+
+<ul>
+<li>245 − 25 = 220</li>
+</ul>
+
+<p>अब आधे से अधिक चाहिए:</p>
+
+<ul>
+<li>220 / 2 = 110</li>
+<li>👉 इसलिए 111 वोट चाहिए।</li>
+</ul>
+
+<p>✔ इसे ही प्रभावी बहुमत कहते हैं।</p>
+
+</div>
+
+
+<div class="example-box">
+
+<h2>उदाहरण 2 — लोकसभा</h2>
+
+<p>लोकसभा</p>
+
+<ul>
+<li>कुल सदस्य = 543</li>
+<li>रिक्त सीट = 15</li>
+</ul>
+
+<p>अब प्रभावी सदस्य:</p>
+
+<ul>
+<li>543 − 15 = 528</li>
+</ul>
+
+<p>आधा:</p>
+
+<ul>
+<li>528 / 2 = 264</li>
+<li>👉 इसलिए 265 वोट चाहिए।</li>
+</ul>
+
+</div>
+
+
+<h2>📊 साधारण बहुमत vs प्रभावी बहुमत</h2>
+
+<table>
+
+<tr>
+<th>प्रकार</th>
+<th>कैसे गिना जाता है</th>
+</tr>
+
+<tr>
+<td>साधारण बहुमत</td>
+<td>उपस्थित और मतदान करने वाले</td>
+</tr>
+
+<tr>
+<td>प्रभावी बहुमत</td>
+<td>कुल सदस्य − रिक्त सीट</td>
+</tr>
+
+</table>
+
+
+<div class="fail-box">
+
+<h2>🗳 प्रभावी बहुमत — और उदाहरण</h2>
+
+<h2>उदाहरण 1 — प्रभावी बहुमत हो गया</h2>
+
+<p>मान लो राज्यसभा में:</p>
+
+<ul>
+<li>कुल सदस्य = 245</li>
+<li>रिक्त सीट = 25</li>
+</ul>
+
+<p>अब प्रभावी सदस्य:</p>
+
+<ul>
+<li>245 − 25 = 220</li>
+</ul>
+
+<p>आधा:</p>
+
+<ul>
+<li>220 ÷ 2 = 110</li>
+<li>👉 इसलिए 111 वोट चाहिए।</li>
+</ul>
+
+<p>अब मतदान हुआ:</p>
+
+<ul>
+<li>पक्ष = 120</li>
+<li>विरोध = 100</li>
+</ul>
+
+<p>✔ 120 > 111</p>
+
+<p>✅ प्रस्ताव प्रभावी बहुमत से पारित हो गया।</p>
+
+
+<h2>उदाहरण 2 — प्रभावी बहुमत नहीं हुआ</h2>
+
+<p>उसी स्थिति में:</p>
+
+<ul>
+<li>प्रभावी सदस्य = 220</li>
+<li>चाहिए = 111 वोट</li>
+</ul>
+
+<p>अब मतदान हुआ:</p>
+
+<ul>
+<li>पक्ष = 105</li>
+<li>विरोध = 115</li>
+</ul>
+
+<p>❌ 105 < 111</p>
+
+<p>👉 इसलिए प्रस्ताव प्रभावी बहुमत से पारित नहीं हुआ।</p>
+
+
+<h2>उदाहरण 3 — लोकसभा</h2>
+
+<p>लोकसभा</p>
+
+<ul>
+<li>कुल सदस्य = 543</li>
+<li>रिक्त सीट = 15</li>
+</ul>
+
+<p>प्रभावी सदस्य:</p>
+
+<ul>
+<li>543 − 15 = 528</li>
+</ul>
+
+<p>आधा:</p>
+
+<ul>
+<li>528 ÷ 2 = 264</li>
+<li>👉 इसलिए 265 वोट चाहिए।</li>
+</ul>
+
+<p>मतदान हुआ:</p>
+
+<ul>
+<li>पक्ष = 270</li>
+<li>विरोध = 200</li>
+</ul>
+
+<p>✔ 270 > 265</p>
+
+<p>✅ प्रस्ताव प्रभावी बहुमत से पास हो गया।</p>
+
+</div>
+
+
+<div class="trick-box">
+
+<h2>🎯 एक लाइन में ट्रिक</h2>
+
+<p><span class="highlight">पहले रिक्त सीट घटाओ → फिर आधे से ज्यादा वोट चाहिए → वही प्रभावी बहुमत।</span></p>
+
+</div>
+
+
+</div>
+
+</body>
+</html>
