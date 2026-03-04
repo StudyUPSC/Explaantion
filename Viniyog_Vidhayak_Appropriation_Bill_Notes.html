@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vote_on_Account_Notes</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI', Arial, sans-serif;
+background:linear-gradient(135deg,#eef2f7,#dce9ff);
+padding:20px;
+line-height:1.8;
+}
+
+.container{
+max-width:950px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+h1{
+text-align:center;
+border-bottom:2px solid #ddd;
+padding-bottom:10px;
+margin-bottom:25px;
+}
+
+h2{
+color:#0b5394;
+margin-top:25px;
+}
+
+.highlight{
+background:#fff3cd;
+padding:3px 6px;
+border-radius:5px;
+font-weight:bold;
+}
+
+.problem{
+background:#fff4e5;
+padding:18px;
+border-radius:10px;
+margin-top:15px;
+}
+
+.example{
+background:#e8f5e9;
+padding:18px;
+border-radius:10px;
+margin-top:15px;
+}
+
+.trick{
+background:#e3f2fd;
+padding:18px;
+border-radius:10px;
+margin-top:20px;
+}
+
+.link{
+color:#0b5394;
+font-weight:bold;
+cursor:pointer;
+text-decoration:underline;
+}
+
+.link-box{
+margin-top:50px;
+padding-top:30px;
+border-top:3px dashed #ccc;
+}
+
+.back-btn{
+display:inline-block;
+margin-top:20px;
+padding:8px 16px;
+background:#0b5394;
+color:white;
+border-radius:6px;
+text-decoration:none;
+}
+
+@media(max-width:600px){
+
+.container{
+padding:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>वोट ऑन अकाउंट (Vote on Account)</h1>
+
+<h2>📜 वोट ऑन अकाउंट — मतलब क्या है?</h2>
+
+<p>(अनुच्छेद 116)</p>
+
+<h2>पहले समस्या समझो</h2>
+
+<div class="problem">
+
+<p>हर साल सरकार को नए वित्तीय वर्ष <span class="highlight">(1 अप्रैल)</span> से खर्च शुरू करना होता है।</p>
+
+<p>लेकिन कई बार:</p>
+
+<ul>
+
+<li>बजट पर चर्चा अभी पूरी नहीं हुई होती</li>
+
+<li>
+<span class="link" onclick="scrollToSection()">
+विनियोग विधेयक
+</span>
+पास नहीं हुआ होता
+</li>
+
+</ul>
+
+<p>ऐसी स्थिति में सरकार के पास खर्च करने की अनुमति नहीं होती।</p>
+
+</div>
+
+
+<h2>तब क्या किया जाता है?</h2>
+
+<p>ऐसी स्थिति से बचने के लिए लोकसभा सरकार को कुछ समय के लिए खर्च करने की अस्थायी अनुमति दे देती है।</p>
+
+<p>इसे <span class="highlight">वोट ऑन अकाउंट</span> कहते हैं।</p>
+
+
+<h2>उदाहरण</h2>
+
+<div class="example">
+
+<p>मान लो:</p>
+
+<p>नया वित्तीय वर्ष = <span class="highlight">1 अप्रैल</span> से शुरू</p>
+
+<p>लेकिन बजट की पूरी प्रक्रिया अभी खत्म नहीं हुई</p>
+
+<p>अब सरकार को:</p>
+
+<ul>
+
+<li>कर्मचारियों का वेतन देना है</li>
+<li>सेना का खर्च करना है</li>
+<li>सरकारी काम चलाना है</li>
+
+</ul>
+
+<p>तो लोकसभा कहती है:</p>
+
+<p><span class="highlight">“आप अभी 2–3 महीने के लिए कुछ पैसा खर्च कर सकते हैं।”</span></p>
+
+<p>इसी अस्थायी अनुमति को <span class="highlight">वोट ऑन अकाउंट</span> कहते हैं।</p>
+
+</div>
+
+
+<div class="trick">
+
+<strong>🎯 एक लाइन में</strong>
+
+<p>वोट ऑन अकाउंट = बजट पास होने से पहले सरकार को कुछ समय के लिए खर्च करने की अस्थायी अनुमति।</p>
+
+</div>
+
+
+
+<!-- Linking Section -->
+
+<div id="viniyog" class="link-box">
+
+<h1>विनियोग विधेयक (Appropriation Bill)</h1>
+
+<p>विनियोग विधेयक वह विधेयक होता है जिसके माध्यम से सरकार को</p>
+
+<p><span class="highlight">भारत की संचित निधि से पैसा निकालकर खर्च करने की कानूनी अनुमति</span> मिलती है।</p>
+
+<p>यह प्रावधान <span class="highlight">अनुच्छेद 114</span> में है।</p>
+
+
+<h2>क्यों जरूरी है?</h2>
+
+<p>बजट में सरकार बताती है कि:</p>
+
+<ul>
+
+<li>किस मंत्रालय को कितना पैसा चाहिए</li>
+<li>किस योजना पर कितना खर्च होगा</li>
+
+</ul>
+
+<p>लेकिन जब तक विनियोग विधेयक पास नहीं होता,</p>
+
+<p><strong>सरकार संचित निधि से पैसा खर्च नहीं कर सकती।</strong></p>
+
+
+<div class="example">
+
+<p><strong>उदाहरण</strong></p>
+
+<p>रक्षा मंत्रालय → ₹5 लाख करोड़</p>
+
+<p>शिक्षा मंत्रालय → ₹1 लाख करोड़</p>
+
+<p>अब संसद विनियोग विधेयक पास करेगी।</p>
+
+<p>तभी सरकार यह पैसा खर्च कर पाएगी।</p>
+
+</div>
+
+
+<p><strong>✔ यह हर वित्तीय वर्ष में पास होता है।</strong></p>
+
+<a href="#" class="back-btn" onclick="scrollToTop()">⬅ Back</a>
+
+</div>
+
+</div>
+
+
+<script>
+
+function scrollToSection(){
+document.getElementById("viniyog").scrollIntoView({
+behavior:"smooth"
+});
+}
+
+function scrollToTop(){
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+}
+
+</script>
+
+</body>
+</html>
