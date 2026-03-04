@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vishesh_Bahumat_Types_Special_Majority_Notes</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI', Arial, sans-serif;
+background:linear-gradient(135deg,#f5f7fa,#e3f2fd);
+padding:20px;
+line-height:1.8;
+color:#1a1a1a;
+}
+
+.container{
+max-width:980px;
+margin:auto;
+background:#ffffff;
+padding:30px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
+
+h1{
+text-align:center;
+border-bottom:2px solid #ddd;
+padding-bottom:10px;
+margin-bottom:25px;
+}
+
+h2{
+margin-top:30px;
+color:#0b5394;
+}
+
+ul{
+margin-top:8px;
+}
+
+li{
+margin:6px 0;
+}
+
+.highlight{
+background:#fff3cd;
+font-weight:bold;
+padding:3px 6px;
+border-radius:5px;
+}
+
+.example-box{
+background:#e8f5e9;
+padding:18px;
+border-radius:10px;
+margin-top:15px;
+}
+
+.fail-box{
+background:#fdecea;
+padding:18px;
+border-radius:10px;
+margin-top:20px;
+}
+
+.trick-box{
+background:#e3f2fd;
+padding:18px;
+border-radius:10px;
+margin-top:25px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#f1f3f4;
+}
+
+@media(max-width:600px){
+body{padding:10px;}
+.container{padding:20px;}
+h1{font-size:20px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>विशेष बहुमत (Special Majority) — प्रकार और उदाहरण</h1>
+
+<h2>🗳 विशेष बहुमत – I (Special Majority-1)</h2>
+
+<h3>📌 नियम</h3>
+
+<p>दो शर्तें एक साथ पूरी होनी चाहिए:</p>
+
+<ul>
+<li>1️⃣ कुल सदस्य संख्या का बहुमत</li>
+<li>2️⃣ उपस्थित और मतदान करने वालों का 2/3 बहुमत</li>
+</ul>
+
+
+<div class="example-box">
+
+<h3>उदाहरण — पास हो गया</h3>
+
+<p>मान लो लोकसभा</p>
+
+<ul>
+<li>कुल सदस्य = 543</li>
+</ul>
+
+<p>पहली शर्त:</p>
+
+<ul>
+<li>कुल सदस्य का बहुमत = 272</li>
+</ul>
+
+<p>अब मान लो उस दिन:</p>
+
+<ul>
+<li>उपस्थित = 450</li>
+<li>मतदान = 450</li>
+</ul>
+
+<p>दूसरी शर्त:</p>
+
+<ul>
+<li>450 का 2/3 = 300</li>
+</ul>
+
+<p>अब वोट पड़े:</p>
+
+<ul>
+<li>पक्ष = 320</li>
+<li>विरोध = 130</li>
+</ul>
+
+<p>✔ 320 > 272</p>
+<p>✔ 320 > 300</p>
+
+<p>✅ इसलिए प्रस्ताव विशेष बहुमत-1 से पारित हो गया।</p>
+
+</div>
+
+
+<div class="fail-box">
+
+<h3>उदाहरण — पास नहीं हुआ</h3>
+
+<p>उसी स्थिति में:</p>
+
+<ul>
+<li>कुल सदस्य = 543</li>
+<li>चाहिए = 272</li>
+</ul>
+
+<p>मान लो:</p>
+
+<ul>
+<li>उपस्थित = 450</li>
+<li>मतदान = 450</li>
+</ul>
+
+<p>2/3 = 300</p>
+
+<p>अब वोट पड़े:</p>
+
+<ul>
+<li>पक्ष = 280</li>
+<li>विरोध = 170</li>
+</ul>
+
+<p>✔ 280 > 272</p>
+<p>❌ लेकिन 280 < 300</p>
+
+<p>👉 इसलिए प्रस्ताव पारित नहीं होगा।</p>
+
+</div>
+
+
+<h2>🗳 विशेष बहुमत – II (President Impeachment)</h2>
+
+<h3>📌 नियम</h3>
+
+<p><span class="highlight">कुल सदस्य संख्या का 2/3</span></p>
+
+
+<div class="example-box">
+
+<h3>उदाहरण</h3>
+
+<p>लोकसभा</p>
+
+<ul>
+<li>कुल सदस्य = 543</li>
+<li>2/3 = 362</li>
+</ul>
+
+<p>अब वोट पड़े:</p>
+
+<ul>
+<li>पक्ष = 370</li>
+<li>विरोध = 100</li>
+</ul>
+
+<p>✔ 370 > 362</p>
+
+<p>✅ प्रस्ताव पारित।</p>
+
+</div>
+
+
+<div class="fail-box">
+
+<p>अगर:</p>
+
+<ul>
+<li>पक्ष = 350</li>
+</ul>
+
+<p>❌ 350 < 362</p>
+
+<p>👉 प्रस्ताव पास नहीं होगा।</p>
+
+</div>
+
+
+
+<h2>🗳 विशेष बहुमत – III</h2>
+
+<h3>📌 नियम</h3>
+
+<p><span class="highlight">उपस्थित और मतदान करने वालों का 2/3</span></p>
+
+<p>यह केवल राज्यसभा में लगता है।</p>
+
+
+<div class="example-box">
+
+<h3>उदाहरण</h3>
+
+<p>मान लो:</p>
+
+<ul>
+<li>उपस्थित = 210</li>
+<li>मतदान = 210</li>
+</ul>
+
+<p>2/3 = 140</p>
+
+<p>अब वोट पड़े:</p>
+
+<ul>
+<li>पक्ष = 150</li>
+<li>विरोध = 60</li>
+</ul>
+
+<p>✔ 150 > 140</p>
+
+<p>✅ प्रस्ताव पारित।</p>
+
+</div>
+
+
+<div class="fail-box">
+
+<p>अगर:</p>
+
+<ul>
+<li>पक्ष = 130</li>
+</ul>
+
+<p>❌ 130 < 140</p>
+
+<p>👉 प्रस्ताव पारित नहीं होगा।</p>
+
+</div>
+
+
+
+<div class="trick-box">
+
+<h2>🎯 बहुत छोटी ट्रिक</h2>
+
+<table>
+
+<tr>
+<th>प्रकार</th>
+<th>नियम</th>
+</tr>
+
+<tr>
+<td>Special-1</td>
+<td>कुल सदस्य का बहुमत + उपस्थित का 2/3</td>
+</tr>
+
+<tr>
+<td>Special-2</td>
+<td>कुल सदस्य का 2/3</td>
+</tr>
+
+<tr>
+<td>Special-3</td>
+<td>उपस्थित और मतदान का 2/3</td>
+</tr>
+
+</table>
+
+</div>
+
+
+</div>
+
+</body>
+</html>
