@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Election_Petition_Notes</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(to right, #f8fbff, #eef3f9);
+}
+
+/* container */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* cards */
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: 0.2s;
+}
+.card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* headings */
+h1,h2,h3 {
+    color:#1a3c6e;
+}
+
+/* clickable Petition */
+.click {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* highlight */
+.highlight {
+    font-weight:bold;
+    background:#e8f0fe;
+    padding:2px 4px;
+    border-radius:4px;
+}
+
+/* close btn */
+.close {
+    float:right;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* pages */
+.page {
+    display:none;
+}
+
+#mainPage {
+    display:block;
+}
+</style>
+
+<script>
+function openPage(){
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("linkPage").style.display = "block";
+}
+
+function closePage(){
+    document.getElementById("linkPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- MAIN PAGE -->
+<div id="mainPage" class="page">
+
+<div class="card">
+<h1>🔸 8. 🧾 चुनाव याचिका (Election Petition)</h1>
+</div>
+
+<div class="card">
+<h2>🧠 इसका मतलब</h2>
+<ul>
+<li>👉 अगर किसी चुनाव में गड़बड़ी हो:
+<ul>
+<li>✔️ सीधे court में नहीं जाओ ❌</li>
+<li>👉 पहले:
+<ul>
+<li>✔️ Election <span class="click" onclick="openPage()">Petition</span> डालो</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🎯 Example</h2>
+<ul>
+<li>👉 Candidate कहता है:
+<ul>
+<li>cheating हुई</li>
+<li>गलत counting हुई</li>
+</ul>
+</li>
+<li>👉 तो वो Election <span class="click" onclick="openPage()">Petition</span> देगा</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>⚖️ सुनवाई कहाँ होगी?</h2>
+<ul>
+<li>✔️ High Court में</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🔄 आगे क्या?</h2>
+<ul>
+<li>👉 अगर High Court के decision से संतुष्ट नहीं:
+<ul>
+<li>✔️ Appeal कर सकते हो</li>
+<li>👉 Supreme Court में</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+
+<!-- LINK PAGE -->
+<div id="linkPage" class="page">
+
+<div class="card">
+<span class="close" onclick="closePage()">✖</span>
+<h1>🧾 Election Petition = क्या होता है?</h1>
+</div>
+
+<div class="card">
+<ul>
+<li>👉 Election Petition = चुनाव को challenge करने की application</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🎯 आसान भाषा में</h2>
+<ul>
+<li>👉 अगर तुम्हें लगे:
+<ul>
+<li>चुनाव गलत हुआ ❌</li>
+<li>cheating हुई</li>
+<li>vote counting में गड़बड़ी</li>
+</ul>
+</li>
+<li>👉 तो तुम क्या करोगे?
+<ul>
+<li>👉 ✔️ Court में एक complaint दोगे</li>
+<li>👉 उसी को कहते हैं 👉 Election Petition</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🧠 कहाँ देना होता है?</h2>
+<ul>
+<li>✔️ सीधे High Court में</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🔄 आगे क्या होता है?</h2>
+<ul>
+<li>👉 High Court फैसला देगा</li>
+<li>👉 अगर फिर भी संतुष्ट नहीं:
+<ul>
+<li>✔️ Supreme Court जा सकते हो</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🎯 Example</h2>
+<ul>
+<li>👉 Candidate A हार गया</li>
+<li>👉 उसे लगता है:
+<ul>
+<li>“EVM में गड़बड़ी हुई”</li>
+</ul>
+</li>
+<li>👉 वो क्या करेगा?
+<ul>
+<li>✔️ Election Petition file करेगा High Court में</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🔥 1 लाइन में</h2>
+<ul>
+<li>👉 <span class="highlight">Election Petition = चुनाव के खिलाफ court में complaint</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>🔁 Quick याद</h2>
+<ul>
+<li>🧾 Petition = complaint</li>
+<li>🗳️ Election Petition = election complaint</li>
+<li>🏛️ High Court → first</li>
+<li>⚖️ SC → appeal</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
