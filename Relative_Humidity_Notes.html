@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relative_Humidity_Notes</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #ffffff, #eef5fb);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+h1, h2, h3 {
+  color: #1a3c6e;
+  transition: all 0.2s ease;
+}
+
+h1:hover, h2:hover, h3:hover {
+  color: #2a5ea8;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+.highlight {
+  background: #e6f0ff;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f6fb;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Relative Humidity Notes</h1>
+
+<div class="card">
+<h2>सापेक्षिक आर्द्रता (Relative Humidity) क्या है?</h2>
+<ul>
+<li>आसान भाषा में:
+<ul>
+<li>हवा में जितनी नमी है / जितनी नमी वह maximum पकड़ सकती है</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Formula (याद करने वाला)</h2>
+<ul>
+<li>सापेक्षिक आर्द्रता = <span class="highlight">(वास्तविक जलवाष्प / अधिकतम क्षमता) × 100</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>“आर्द्रता सामर्थ्य” क्या होता है?</h2>
+<ul>
+<li>यही तुम्हारा main doubt है
+<ul>
+<li>Definition (Simple)
+<ul>
+<li>आर्द्रता सामर्थ्य = हवा की नमी पकड़ने की अधिकतम क्षमता</li>
+</ul>
+</li>
+<li>मतलब:
+<ul>
+<li>हवा कितना पानी (जलवाष्प) अपने अंदर रख सकती है</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Example से समझो</h2>
+<ul>
+<li>ठंडी हवा:
+<ul>
+<li>capacity कम</li>
+<li>मान लो max = 10 g</li>
+<li>actual = 5 g</li>
+<li>RH = 50%</li>
+</ul>
+</li>
+
+<li>गर्म हवा:
+<ul>
+<li>capacity ज्यादा</li>
+<li>max = 20 g</li>
+<li>actual = वही 5 g</li>
+<li>RH = 25%</li>
+</ul>
+</li>
+
+<li>देखो
+<ul>
+<li>पानी same है, लेकिन temperature बढ़ा → RH घट गया</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Important Concept (Exam Favorite)</h2>
+<h3>Temperature vs Relative Humidity</h3>
+
+<table>
+<tr>
+<th>Temperature</th>
+<th>Capacity</th>
+<th>RH</th>
+</tr>
+<tr>
+<td>बढ़ेगा</td>
+<td>↑ बढ़ेगी</td>
+<td>↓ घटेगी</td>
+</tr>
+<tr>
+<td>घटेगा</td>
+<td>↓ घटेगी</td>
+<td>↑ बढ़ेगी</td>
+</tr>
+</table>
+
+</div>
+
+<div class="card">
+<h2>RH बदलने के 3 तरीके</h2>
+<ul>
+<li>जलवाष्प बढ़ाओ
+<ul>
+<li>RH बढ़ेगा</li>
+</ul>
+</li>
+
+<li>तापमान बढ़ाओ
+<ul>
+<li>capacity बढ़ेगी → RH घटेगा</li>
+</ul>
+</li>
+
+<li>तापमान घटाओ
+<ul>
+<li>capacity घटेगी → RH बढ़ेगा</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Final समझ (1 लाइन में)</h2>
+<ul>
+<li>आर्द्रता सामर्थ्य = हवा की maximum नमी पकड़ने की क्षमता</li>
+<li>RH = actual नमी / maximum नमी × 100</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Quick Revision (हिंदी)</h2>
+<ul>
+<li>आर्द्रता सामर्थ्य = अधिकतम नमी क्षमता</li>
+<li>तापमान बढ़ेगा → RH घटेगा</li>
+<li>तापमान घटेगा → RH बढ़ेगा</li>
+<li>जलवाष्प बढ़ेगा → RH बढ़ेगा</li>
+</ul>
+</div>
+
+</div>
+
+</body>
+</html>
