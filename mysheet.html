@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPSC Live Analytics Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --bg2: #0f1420;
+      --bg3: #151b2e;
+      --card: #111827;
+      --border: #1e2d45;
+      --accent: #00d4ff;
+      --accent2: #ff6b35;
+      --accent3: #7c3aed;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --text: #e2e8f0;
+      --muted: #64748b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* LOADER */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .loader-ring {
+      width: 60px;
+      height: 60px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .loader-text {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .loader-step {
+      color: var(--accent);
+      font-family: 'JetBrains Mono';
+      font-size: 0.8rem;
+      margin-top: 4px;
+    }
+
+    /* ERROR */
+    #error-box {
+      display: none;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    #error-box h3 {
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+
+    #error-box p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 30px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .header-left h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-left p {
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .stat-chip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-align: center;
+      min-width: 80px;
+    }
+
+    .stat-chip .val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'JetBrains Mono';
+    }
+
+    .stat-chip .lbl {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .stat-chip.warn .val {
+      color: var(--accent2);
+    }
+
+    .stat-chip.good .val {
+      color: var(--green);
+    }
+
+    .refresh-btn {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      color: var(--accent);
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .refresh-btn:hover {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.2));
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    }
+
+    .refresh-btn.spinning svg {
+      animation: spin 1s linear infinite;
+    }
+
+    .last-updated {
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      background: var(--card);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 9px 20px;
+      border-radius: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(124, 58, 237, 0.15));
+      color: var(--accent);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+
+    .tab:hover:not(.active) {
+      color: var(--text);
+    }
+
+    /* PANELS */
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      opacity: 0.6;
+    }
+
+    .card-title {
+      font-size: 0.73rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .big-num {
+      font-size: 2.8rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono';
+    }
+
+    .small-lbl {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .mini-bar {
+      margin-top: 12px;
+      background: var(--bg3);
+      height: 5px;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1.2s ease;
+    }
+
+    /* BARS */
+    .subject-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 11px;
+    }
+
+    .subject-label {
+      width: 130px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 10px;
+      background: var(--bg3);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 5px;
+      transition: width 1.2s ease;
+    }
+
+    .bar-value {
+      width: 50px;
+      text-align: right;
+      font-family: 'JetBrains Mono';
+      font-size: 0.82rem;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    /* TABLE */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 0.68rem;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(30, 45, 69, 0.5);
+    }
+
+    .data-table tr:hover td {
+      background: rgba(0, 212, 255, 0.03);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .badge-high {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--green);
+    }
+
+    .badge-med {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--yellow);
+    }
+
+    .badge-low {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+
+    .badge-blue {
+      background: rgba(0, 212, 255, 0.12);
+      color: var(--accent);
+    }
+
+    /* CHART */
+    .chart-area {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* HEATMAP */
+    .heatmap-grid {
+      display: flex;
+      gap: 3px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .heatmap-cell {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      background: var(--bg3);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.1s;
+      flex-shrink: 0;
+    }
+
+    .heatmap-cell:hover {
+      transform: scale(1.5);
+      z-index: 10;
+    }
+
+    .heatmap-cell:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.68rem;
+      white-space: nowrap;
+      padding: 4px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 100;
+      font-family: 'JetBrains Mono';
+    }
+
+    .h1 {
+      background: rgba(0, 212, 255, 0.18);
+    }
+
+    .h2 {
+      background: rgba(0, 212, 255, 0.38);
+    }
+
+    .h3 {
+      background: rgba(0, 212, 255, 0.62);
+    }
+
+    .h4 {
+      background: rgba(0, 212, 255, 0.9);
+      box-shadow: 0 0 5px rgba(0, 212, 255, 0.4);
+    }
+
+    /* LEGEND */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    /* RECO */
+    .reco-box {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.07), rgba(0, 212, 255, 0.04));
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .reco-title {
+      font-size: 0.73rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent3);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .reco-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .reco-num {
+      background: rgba(124, 58, 237, 0.2);
+      color: var(--accent3);
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* COMPARE */
+    .compare-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 12px;
+      background: var(--bg3);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .compare-subject {
+      width: 120px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .compare-bars {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mini-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.73rem;
+    }
+
+    .mini-label {
+      width: 45px;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .mini-track {
+      flex: 1;
+      height: 7px;
+      background: var(--bg);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .mini-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1.2s ease;
+    }
+
+    .mini-val {
+      width: 36px;
+      text-align: right;
+      font-family: 'JetBrains Mono';
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* RINGS */
+    .progress-rings {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0;
+      flex-wrap: wrap;
+    }
+
+    .radial-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .radial-label {
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .radial-val {
+      font-family: 'JetBrains Mono';
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    @media(max-width:900px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:600px) {
+
+      .grid-4,
+      .grid-3 {
+        grid-template-columns: 1fr
+      }
+
+      .tabs {
+        width: 100%
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: 8px 10px;
+        font-size: 0.8rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-text">Google Sheets se data load ho raha hai...</div>
+    <div class="loader-step" id="loader-step">Connecting...</div>
+  </div>
+
+  <!-- ERROR -->
+  <div class="container" style="display:none" id="error-box">
+    <h3>⚠️ Data Load Nahi Hua</h3>
+    <p>Sheet public nahi hai ya internet connection issue hai.<br>
+      Google Sheet → Share → "Anyone with the link" → Viewer → Done karo phir refresh karo.</p>
+    <button onclick="initDashboard()"
+      style="margin-top:16px;padding:10px 24px;background:var(--accent);color:#000;border:none;border-radius:6px;cursor:pointer;font-family:'Rajdhani';font-weight:700;font-size:1rem">🔄
+      Retry</button>
+  </div>
+
+  <div class="container" id="main-content" style="display:none">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-left">
+        <h1>📚 UPSC LIVE ANALYTICS</h1>
+        <p>GOOGLE SHEETS · REAL-TIME · AUTO-SYNC</p>
+        <div class="last-updated" id="last-updated-txt"></div>
+      </div>
+      <div class="header-right">
+        <div class="stat-chip warn" id="chip-unread">
+          <div class="val" id="chip-ncert-unread">—</div>
+          <div class="lbl">NCERT Unread</div>
+        </div>
+        <div class="stat-chip">
+          <div class="val" id="chip-books-unread">—</div>
+          <div class="lbl">Books Unread</div>
+        </div>
+        <div class="stat-chip warn">
+          <div class="val" id="chip-notes-unread">—</div>
+          <div class="lbl">Notes Unread</div>
+        </div>
+        <div class="stat-chip good">
+          <div class="val" id="chip-daily-target">—</div>
+          <div class="lbl">Daily Target</div>
+        </div>
+        <button class="refresh-btn" id="refresh-btn" onclick="initDashboard()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6M1 20v-6h6" />
+            <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="showPanel('overview',this)">📊 Overview</button>
+      <button class="tab" onclick="showPanel('ncert',this)">📗 NCERT</button>
+      <button class="tab" onclick="showPanel('books',this)">📘 Books</button>
+      <button class="tab" onclick="showPanel('notes',this)">📓 Notes</button>
+      <button class="tab" onclick="showPanel('progress',this)">📈 Progress</button>
+      <button class="tab" onclick="showPanel('compare',this)">⚖️ Compare</button>
+    </div>
+
+    <!-- ============ OVERVIEW ============ -->
+    <div id="panel-overview" class="panel active">
+      <div class="grid grid-4" style="margin-bottom:20px" id="overview-top-cards"></div>
+      <div class="grid grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-title"><span class="dot"></span> Combined Subject Reading (NCERT+Notes+Books)</div>
+          <div id="overview-bars"></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent2)"></span> Source-wise Total Pages
+          </div>
+          <div class="progress-rings" id="source-rings"></div>
+          <div class="legend" id="source-legend"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title"><span class="dot"></span> Last 14 Days — Daily Pages Read</div>
+        <div class="chart-area" id="recent-chart" style="height:170px"></div>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--accent)"></div>NCERT
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--accent2)"></div>Notes
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--green)"></div>Books
+          </div>
+        </div>
+      </div>
+      <div class="reco-box">
+        <div class="reco-title">🎯 Smart Recommendations</div>
+        <div id="recommendations"></div>
+      </div>
+    </div>
+
+    <!-- ============ NCERT ============ -->
+    <div id="panel-ncert" class="panel">
+      <div class="grid grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-title"><span class="dot"></span> NCERT Subject-wise Reading Pages</div>
+          <div id="ncert-subject-bars"></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent2)"></span> NCERT MCQs Attempted</div>
+          <div id="ncert-mcq-bars"></div>
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+            <div style="font-size:0.75rem;color:var(--muted);margin-bottom:8px;letter-spacing:1px">⚠️ WEAK AREAS (0
+              MCQs)</div>
+            <div id="ncert-weak"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> NCERT Book-wise Detail</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Book</th>
+                <th>Subject</th>
+                <th>Chapters</th>
+                <th>Reading</th>
+                <th>MCQs</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="ncert-book-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ BOOKS ============ -->
+    <div id="panel-books" class="panel">
+      <div class="grid grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-title"><span class="dot"></span> Books Subject-wise Reading</div>
+          <div id="books-subject-bars"></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent2)"></span> Books Chapter Coverage
+          </div>
+          <div id="books-coverage"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Book-wise Breakdown</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Book / Section</th>
+                <th>Subject</th>
+                <th>Chapters</th>
+                <th>Reading</th>
+                <th>MCQs</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="books-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ NOTES ============ -->
+    <div id="panel-notes" class="panel">
+      <div class="grid grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-title"><span class="dot"></span> Notes Subject-wise Reading</div>
+          <div id="notes-subject-bars"></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--accent2)"></span> Notes MCQ Revision Status
+          </div>
+          <div id="notes-mcq-bars"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Notes Subject Analysis</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Notebooks</th>
+                <th>Reading</th>
+                <th>MCQs</th>
+                <th>Priority</th>
+              </tr>
+            </thead>
+            <tbody id="notes-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PROGRESS ============ -->
+    <div id="panel-progress" class="panel">
+      <div class="grid grid-3" style="margin-bottom:20px" id="progress-top-cards"></div>
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title"><span class="dot"></span> Daily Reading Timeline</div>
+        <div class="chart-area" id="daily-chart" style="height:200px"></div>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--accent)"></div>NCERT
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--accent2)"></div>Notes
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--green)"></div>Books
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Activity Heatmap</div>
+        <div class="heatmap-grid" id="heatmap"></div>
+        <div class="legend" style="margin-top:10px">
+          <span style="font-size:0.73rem;color:var(--muted)">0</span>
+          <div class="heatmap-cell h1" style="position:static"></div>
+          <div class="heatmap-cell h2" style="position:static"></div>
+          <div class="heatmap-cell h3" style="position:static"></div>
+          <div class="heatmap-cell h4" style="position:static"></div>
+          <span style="font-size:0.73rem;color:var(--muted)">Max</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ COMPARE ============ -->
+    <div id="panel-compare" class="panel">
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title"><span class="dot"></span> NCERT vs Notes vs Books per Subject</div>
+        <div id="compare-content"></div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--green)"></span> Most Studied</div>
+          <div id="most-studied"></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot" style="background:var(--red)"></span> Least Studied (Focus Needed)
+          </div>
+          <div id="least-studied"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+
+  <script>
+    // =====================================================
+    // CONFIG — Sirf yahan Sheet ID change karo
+    // =====================================================
+    const SHEET_ID = '1fdFBcyBMk0INODKT59vV9qtd3pN8E8lOi4SLiT-UiL0';
+
+    // GID numbers for each sheet tab (from your URL)
+    const SHEET_GIDS = {
+      NCERT: '1254805128',
+      Books: '2026798914',
+      Notes: '1343235428',
+      Progress: '1560099927',
+    };
+
+    // =====================================================
+    // COLOR MAP
+    // =====================================================
+    const COLORS = {
+      Geography: '#00d4ff', History: '#ff6b35', Economy: '#10b981',
+      Polity: '#7c3aed', 'Art & Culture': '#f59e0b', 'Other/CSAT': '#64748b',
+      'Reasoning/CSAT': '#ec4899', 'Sci & Tech': '#22d3ee',
+      'General Studies': '#a78bfa', Environment: '#34d399', Other: '#64748b'
+    };
+    const getColor = s => COLORS[s] || '#64748b';
+
+    // =====================================================
+    // FETCH GOOGLE SHEET as CSV
+    // =====================================================
+    async function fetchSheet(sheetName, gid) {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&sheet=${encodeURIComponent(sheetName)}`;
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status} for sheet: ${sheetName}`);
+      const text = await resp.text();
+      return parseCSV(text);
+    }
+
+    function parseCSV(text) {
+      const lines = text.split('\n');
+      return lines.map(line => {
+        const cells = [];
+        let cur = '', inQ = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (ch === '"') { inQ = !inQ; }
+          else if (ch === ',' && !inQ) { cells.push(cur.trim()); cur = ''; }
+          else { cur += ch; }
+        }
+        cells.push(cur.trim());
+        return cells;
+      });
+    }
+
+    function cellNum(v) {
+      if (!v || v === '' || v.toLowerCase() === 'false' || v.toLowerCase() === 'true') return 0;
+      const n = parseFloat(v.replace(/[^0-9.-]/g, ''));
+      return isNaN(n) ? 0 : n;
+    }
+
+    function cellBool(v) {
+      return v && v.toUpperCase() === 'TRUE';
+    }
+
+    // =====================================================
+    // PARSE SHEETS
+    // =====================================================
+
+    // NCERT: col0=book name, col1=chapter, col2=reading, col3=check, col4=date, col5=mcqs
+    function parseNCERT(rows) {
+      const books = [];
+      let currentBook = null;
+
+      // subject mapping
+      const getSubject = name => {
+        if (!name) return 'Other';
+        const n = name.toLowerCase();
+        if (n.includes('geo') || n.includes('bhugol') || n.includes('paryabaran') || n.includes('samkalin bharat')) return 'Geography';
+        if (n.includes('his') || n.includes('itihas')) return 'History';
+        if (n.includes('eco') || n.includes('arth') || n.includes('vyasth') || n.includes('samasht')) return 'Economy';
+        if (n.includes('polity') || n.includes('rajniti') || n.includes('samvidhan') || n.includes('loktantrik')) return 'Polity';
+        if (n.includes('art') || n.includes('cul') || n.includes('sanskriti')) return 'Art & Culture';
+        return 'Other';
+      };
+
+      let dataStarted = false;
+      for (const row of rows) {
+        const c0 = row[0] || '';
+        const c1 = row[1] || '';
+        const c2 = row[2] || '';
+        const c5 = row[5] || '';
+
+        // header row detection
+        if (c1 === 'NCERT' || c2 === 'Reading') { dataStarted = true; continue; }
+        if (!dataStarted) continue;
+
+        if (c0 && c0 !== '' && !c0.startsWith('Total') && !c0.includes('Unread') && !c0.includes('Days') && !c0.includes('Target')) {
+          currentBook = { name: c0, subject: getSubject(c0), chapters: [], total_reading: 0, total_mcqs: 0 };
+          books.push(currentBook);
+        }
+
+        if (currentBook && c1 && c1 !== '' && !c1.includes('Total =') && c1 !== 'NCERT') {
+          const reading = cellNum(c2);
+          const mcqs = cellNum(c5);
+          currentBook.chapters.push({ name: c1, reading, mcqs });
+          currentBook.total_reading += reading;
+          currentBook.total_mcqs += mcqs;
+        }
+      }
+      return books;
+    }
+
+    // BOOKS: col0=section, col1=chapter, col2=reading, col5=mcqs
+    function parseBooks(rows) {
+      const books = [];
+      let currentBook = null;
+      let subjectCategories = [];
+      let dataStarted = false;
+
+      const getSubject = name => {
+        if (!name) return 'Other';
+        const n = name.toLowerCase();
+        if (n.includes('polity') || n.includes('संवैधानिक') || n.includes('constitutional') || n.includes('सरकार') || n.includes('government') || n.includes('केंद्र') || n.includes('राजनीतिक') || n.includes('judgement') || n.includes('comparison') || n.includes('निर्णय') || n.includes('निकाय') || n.includes('body') || n.includes('bodies') || n.includes('संविधान') || n.includes('संसद')) return 'Polity';
+        if (n.includes('rs sharma') || n.includes('आर्य') || n.includes('ताम्र') || n.includes('नवपाषाण') || n.includes('पाषाण') || n.includes('हड़प्पा') || n.includes('प्राचीन') || n.includes('मानव विकास') || n.includes('mh') || n.includes('modern') || n.includes('morern') || n.includes('history')) return 'History';
+        if (n.includes('geo') || n.includes('भूगोल')) return 'Geography';
+        if (n.includes('eco') || n.includes('vivek') || n.includes('अर्थ')) return 'Economy';
+        if (n.includes('env') || n.includes('पर्यावरण')) return 'Environment';
+        return 'Polity'; // default for Laxmikant parts
+      };
+
+      for (const row of rows) {
+        const c0 = row[0] || '';
+        const c1 = row[1] || '';
+        const c2 = row[2] || '';
+        const c5 = row[5] || '';
+
+        if (c1 === 'Books' || c2 === 'Reading') { dataStarted = true; continue; }
+        if (!dataStarted) continue;
+
+        if (c0 && c0 !== '' && !c0.startsWith('"Total') && !c0.includes('Unread') && !c0.includes('Days') && !c0.includes('Target')) {
+          currentBook = { name: c0, subject: getSubject(c0), chapters: [], total_reading: 0, total_mcqs: 0 };
+          books.push(currentBook);
+        }
+
+        if (currentBook && c1 && c1 !== '' && !c1.includes('Total =') && c1 !== 'Books') {
+          const reading = cellNum(c2);
+          const mcqs = cellNum(c5);
+          currentBook.chapters.push({ name: c1, reading, mcqs });
+          currentBook.total_reading += reading;
+          currentBook.total_mcqs += mcqs;
+        }
+      }
+      return books;
+    }
+
+    // NOTES: col0=subject, col1=notebook#, col2=reading, col5=mcqs
+    function parseNotes(rows) {
+      const notebooks = [];
+      let currentSubject = null;
+
+      const mapSubject = s => {
+        if (!s) return 'Other';
+        const map = {
+          'History': 'History', 'Polity': 'Polity', 'Eco': 'Economy',
+          'Reasning': 'Reasoning/CSAT', 'Sci And Tech': 'Sci & Tech', 'GS': 'General Studies',
+          'RC': 'Reasoning/CSAT', 'Map world': 'Geography', 'Maths': 'Reasoning/CSAT',
+          'पाषाण काल': 'History', 'हड्प्पा काल': 'History', 'vedic': 'History', 'Morya': 'History',
+          'गुप्त काल': 'History', 'गुप्तोतर काल': 'History', 'बुद्धकाल': 'History',
+          'पूर्व मध्यकाल': 'History', 'मोर्योतर काल': 'History',
+          'Africa': 'Geography', 'South America-Political': 'Geography',
+          'australia new zealand': 'Geography', 'Europ - Political 1': 'Geography',
+          'Europ - Political 2': 'Geography',
+          'Blood Relation': 'Reasoning/CSAT', 'Clock': 'Reasoning/CSAT', 'Direction': 'Reasoning/CSAT',
+          'Ranking': 'Reasoning/CSAT', 'Syllogism': 'Reasoning/CSAT', 'Dice': 'Reasoning/CSAT',
+          'Conding Decoding': 'Reasoning/CSAT', 'Cube + Syllogism': 'Reasoning/CSAT',
+          'Dice + Cube': 'Reasoning/CSAT', 'clender': 'Reasoning/CSAT',
+          'GDP': 'Economy', 'Banks': 'Economy', 'अवसंरचना': 'Economy', 'नियोजन': 'Economy',
+          'मुद्रास्पति': 'Economy', 'मुलभुत शब्दावली एवं सिद्धांत': 'Economy',
+          'Balance of Payment': 'Economy', 'सार्वजनिक वित': 'Economy', 'कृषि एवं खाद्य प्ररंस्करण': 'Economy', 'गरीबी': 'Economy',
+          'Art 23-27': 'Art & Culture', 'Art 28-32': 'Art & Culture',
+          'नागरिकता , समाप्त, art 12': 'Polity', 'DPSP': 'Polity',
+          'liya , प्रस्तावना': 'Polity', 'प्रस्तावना words, अधिकार': 'Polity',
+          'मौलिक कर्तव्य': 'Polity', 'Con. & work': 'Polity',
+        };
+        for (const [k, v] of Object.entries(map)) {
+          if (s.toLowerCase().includes(k.toLowerCase()) || s === k) return v;
+        }
+        return 'Other';
+      };
+
+      for (const row of rows) {
+        const c0 = row[0] || '';
+        const c1 = row[1] || '';
+        const c2 = row[2] || '';
+        const c5 = row[5] || '';
+
+        if (c0 && c0 !== '' && !c0.includes('Total Unread') && !c0.includes('Remaining') && !c0.includes('Daily') && !c0.includes('Complete') && !c0.includes('Last Day') && c0 !== 'Env') {
+          if (c1 && (c1 === 'Envirment' || parseInt(c1) > 0 || !isNaN(parseInt(c1)))) {
+            currentSubject = mapSubject(c0);
+          }
+        }
+
+        const nbNum = parseInt(c1);
+        if (!isNaN(nbNum) && nbNum > 0 && currentSubject) {
+          notebooks.push({
+            subject: currentSubject,
+            notebook: nbNum,
+            reading: cellNum(c2),
+            mcqs: cellNum(c5)
+          });
+        }
+      }
+      return notebooks;
+    }
+
+    // PROGRESS: col8=date, col9=ncert_read, col10=notes_read, col11=books_read, col12=total
+    // col15=ncert_mcq, col16=notes_mcq, col17=books_mcq, col18=total_mcq
+    function parseProgress(rows) {
+      const data = [];
+      for (const row of rows) {
+        const dateStr = row[8] || '';
+        if (!dateStr || dateStr.includes('Subject') || dateStr.includes('NaT')) continue;
+        // parse date from various formats
+        let date = null;
+        const d = new Date(dateStr);
+        if (!isNaN(d.getTime()) && d.getFullYear() > 2020) {
+          date = d.toISOString().slice(0, 10);
+        }
+        if (!date) continue;
+
+        data.push({
+          date,
+          ncert_read: cellNum(row[9]),
+          notes_read: cellNum(row[10]),
+          books_read: cellNum(row[11]),
+          total_read: cellNum(row[12]),
+          ncert_mcq: cellNum(row[15]),
+          notes_mcq: cellNum(row[16]),
+          books_mcq: cellNum(row[17]),
+          total_mcq: cellNum(row[18]),
+        });
+      }
+      return data.sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    // Parse summary numbers from NCERT/Books/Notes sheets (Unread, Days, Target)
+    function parseSummary(rows, key) {
+      for (const row of rows) {
+        for (const cell of row) {
+          if (cell && cell.includes(key)) {
+            const m = cell.match(/[\d.]+/);
+            if (m) return parseFloat(m[0]);
+          }
+        }
+      }
+      return null;
+    }
+
+    // =====================================================
+    // AGGREGATE
+    // =====================================================
+    function aggregateBySubject(books) {
+      const map = {};
+      for (const b of books) {
+        const s = b.subject;
+        if (!map[s]) map[s] = { subject: s, chapters: 0, total_reading: 0, total_mcqs: 0 };
+        map[s].chapters += b.chapters.length;
+        map[s].total_reading += b.total_reading;
+        map[s].total_mcqs += b.total_mcqs;
+      }
+      return Object.values(map).sort((a, b) => b.total_reading - a.total_reading);
+    }
+
+    function aggregateNotesBySubject(notebooks) {
+      const map = {};
+      for (const n of notebooks) {
+        const s = n.subject;
+        if (!map[s]) map[s] = { subject: s, notebooks: 0, total_reading: 0, total_mcqs: 0 };
+        map[s].notebooks++;
+        map[s].total_reading += n.reading;
+        map[s].total_mcqs += n.mcqs;
+      }
+      return Object.values(map).sort((a, b) => b.total_reading - a.total_reading);
+    }
+
+    // =====================================================
+    // RENDER HELPERS
+    // =====================================================
+    function renderBars(containerId, data, valueKey, colorKey = 'subject', labelKey = 'subject') {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      const max = Math.max(...data.map(d => d[valueKey]), 1);
+      el.innerHTML = data.map(d => {
+        const pct = Math.round((d[valueKey] / max) * 100);
+        const color = getColor(d[colorKey] || d[labelKey]);
+        const label = d[labelKey] || d.subject;
+        return `<div class="subject-bar">
+      <div class="subject-label" style="color:${color}" title="${label}">${label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div class="bar-value">${d[valueKey]}</div>
+    </div>`;
+      }).join('');
+    }
+
+    function renderStackedChart(containerId, data, h = 170) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      const W = el.clientWidth || 700;
+      const pad = 30;
+      const max = Math.max(...data.map(d => d.total_read), 1);
+      const bw = Math.max(4, (W - pad - 10) / data.length - 2);
+
+      let svg = `<svg viewBox="0 0 ${W} ${h}" width="100%" height="${h}">`;
+      [0.25, 0.5, 0.75, 1].forEach(f => {
+        const y = h - pad - f * (h - pad * 1.6);
+        svg += `<line x1="${pad}" y1="${y}" x2="${W - 5}" y2="${y}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>`;
+        svg += `<text x="${pad - 4}" y="${y + 4}" fill="#475569" font-size="9" text-anchor="end" font-family="JetBrains Mono">${Math.round(f * max)}</text>`;
+      });
+
+      data.forEach((d, i) => {
+        const x = pad + i * (bw + 2);
+        let y = h - pad;
+        [['ncert_read', '#00d4ff'], ['notes_read', '#ff6b35'], ['books_read', '#10b981']].forEach(([k, c]) => {
+          if (d[k] > 0) {
+            const bh = (d[k] / max) * (h - pad * 1.6);
+            y -= bh;
+            svg += `<rect x="${x}" y="${y.toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" fill="${c}" rx="1" opacity="0.85"><title>${d.date}: ${d[k]}</title></rect>`;
+          }
+        });
+        if (i % Math.max(1, Math.floor(data.length / 10)) === 0) {
+          svg += `<text x="${x + bw / 2}" y="${h - 4}" fill="#334155" font-size="8" text-anchor="middle" font-family="JetBrains Mono">${d.date.slice(5)}</text>`;
+        }
+      });
+      svg += '</svg>';
+      el.innerHTML = svg;
+    }
+
+    // =====================================================
+    // RENDER PANELS
+    // =====================================================
+    let G = {}; // global state
+
+    function renderOverview() {
+      const { ncertSubj, booksSubj, notesSubj, progressData } = G;
+
+      // Top cards
+      document.getElementById('overview-top-cards').innerHTML = [
+        { label: 'NCERT Unread', val: G.ncertUnread || '—', color: 'var(--accent)', pct: G.ncertUnread ? Math.min(100, 100 - G.ncertUnread / 2) : 0 },
+        { label: 'Books Unread', val: G.booksUnread || '—', color: 'var(--accent2)', pct: G.booksUnread ? Math.min(100, 100 - G.booksUnread / 2) : 0 },
+        { label: 'Notes Unread', val: G.notesUnread || '—', color: 'var(--accent3)', pct: 55 },
+        { label: 'Daily Target', val: G.dailyTarget || '—', color: 'var(--green)', pct: 80 },
+      ].map(s => `<div class="card" style="border-color:${s.color}33">
+    <div class="card-title"><span class="dot" style="background:${s.color}"></span>${s.label}</div>
+    <div class="big-num" style="color:${s.color}">${s.val}</div>
+    <div class="small-lbl">remaining</div>
+    <div class="mini-bar"><div class="mini-bar-fill" style="width:${s.pct}%;background:${s.color}"></div></div>
+  </div>`).join('');
+
+      // Combined bars
+      const combined = {};
+      [...ncertSubj, ...booksSubj].forEach(d => {
+        const s = d.subject;
+        combined[s] = (combined[s] || 0) + d.total_reading;
+      });
+      notesSubj.forEach(d => {
+        combined[d.subject] = (combined[d.subject] || 0) + d.total_reading;
+      });
+      const sortedCombined = Object.entries(combined)
+        .map(([subject, total_reading]) => ({ subject, total_reading }))
+        .sort((a, b) => b.total_reading - a.total_reading);
+      renderBars('overview-bars', sortedCombined, 'total_reading');
+
+      // Source rings
+      const totN = progressData.reduce((s, d) => s + d.ncert_read, 0);
+      const totO = progressData.reduce((s, d) => s + d.notes_read, 0);
+      const totB = progressData.reduce((s, d) => s + d.books_read, 0);
+      const grand = totN + totO + totB || 1;
+
+      document.getElementById('source-rings').innerHTML = [
+        { label: 'NCERT', val: totN, color: 'var(--accent)' },
+        { label: 'Notes', val: totO, color: 'var(--accent2)' },
+        { label: 'Books', val: totB, color: 'var(--green)' },
+      ].map(s => {
+        const pct = Math.round(s.val / grand * 100);
+        const r = 36, c = 42, circ = 2 * Math.PI * r;
+        const dash = (pct / 100) * circ;
+        return `<div class="radial-item">
+      <div style="position:relative">
+        <svg width="${c * 2}" height="${c * 2}" viewBox="0 0 ${c * 2} ${c * 2}">
+          <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="var(--bg3)" stroke-width="8"/>
+          <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${s.color}" stroke-width="8"
+            stroke-dasharray="${dash.toFixed(1)} ${circ.toFixed(1)}" stroke-linecap="round"
+            style="transform-origin:center;transform:rotate(-90deg)"/>
+        </svg>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
+          <div style="font-family:'JetBrains Mono';font-size:0.95rem;font-weight:700;color:${s.color}">${pct}%</div>
+        </div>
+      </div>
+      <div class="radial-label">${s.label}</div>
+      <div class="radial-val" style="color:${s.color}">${s.val}</div>
+    </div>`;
+      }).join('');
+
+      // Recent 14 days chart
+      renderStackedChart('recent-chart', progressData.slice(-14), 160);
+
+      // Recommendations — live based on data
+      const recos = [];
+      const weakNCERT = ncertSubj.filter(d => d.total_mcqs === 0 && d.total_reading > 50);
+      if (weakNCERT.length) recos.push({ n: 1, t: `<b>MCQ Gap:</b> ${weakNCERT.map(d => d.subject).join(', ')} — NCERT reading zyada hai lekin MCQs 0 hain. Revision karo!` });
+      const lowestSubj = sortedCombined[sortedCombined.length - 1];
+      if (lowestSubj) recos.push({ n: 2, t: `<b>Least Studied:</b> "${lowestSubj.subject}" — sirf ${lowestSubj.total_reading} pages. Isko priority do.` });
+      const todayData = progressData[progressData.length - 1];
+      if (todayData) recos.push({ n: 3, t: `<b>Aaj (${todayData.date}):</b> ${todayData.total_read} pages — NCERT:${todayData.ncert_read} | Notes:${todayData.notes_read} | Books:${todayData.books_read}` });
+      const avg = Math.round(progressData.reduce((s, d) => s + d.total_read, 0) / Math.max(progressData.length, 1));
+      recos.push({ n: 4, t: `<b>7-Day Avg:</b> ${avg} pages/day — ${avg >= (G.dailyTarget || 3) * 10 ? '✅ Target ke upar!' : '⚠️ Target se neeche, tempo badhao!'}` });
+
+      document.getElementById('recommendations').innerHTML = recos.map(r =>
+        `<div class="reco-item"><div class="reco-num">${r.n}</div><div>${r.t}</div></div>`
+      ).join('');
+    }
+
+    function renderNCERT() {
+      const { ncertSubj, ncertBooks } = G;
+      renderBars('ncert-subject-bars', ncertSubj, 'total_reading');
+      renderBars('ncert-mcq-bars', ncertSubj, 'total_mcqs');
+
+      const weak = ncertSubj.filter(d => d.total_mcqs === 0);
+      document.getElementById('ncert-weak').innerHTML = weak.map(d =>
+        `<span class="badge badge-low" style="margin:3px;display:inline-block">${d.subject}: 0 MCQs</span>`
+      ).join('') || '<span style="color:var(--green);font-size:0.8rem">✅ Sab subjects mein MCQs done hain!</span>';
+
+      document.getElementById('ncert-book-tbody').innerHTML = ncertBooks
+        .sort((a, b) => b.total_reading - a.total_reading)
+        .map(b => {
+          const status = b.total_reading > 50 ? '<span class="badge badge-high">Strong</span>'
+            : b.total_reading > 0 ? '<span class="badge badge-med">Partial</span>'
+              : '<span class="badge badge-low">Pending</span>';
+          return `<tr>
+        <td style="color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${b.name}">${b.name}</td>
+        <td style="color:${getColor(b.subject)};font-weight:600">${b.subject}</td>
+        <td style="font-family:'JetBrains Mono'">${b.chapters.length}</td>
+        <td style="font-family:'JetBrains Mono';color:var(--accent)">${b.total_reading}</td>
+        <td style="font-family:'JetBrains Mono';color:var(--green)">${b.total_mcqs}</td>
+        <td>${status}</td>
+      </tr>`;
+        }).join('');
+    }
+
+    function renderBooks() {
+      const { booksSubj, booksBooks } = G;
+      renderBars('books-subject-bars', booksSubj, 'total_reading');
+
+      const maxR = Math.max(...booksSubj.map(d => d.total_reading), 1);
+      document.getElementById('books-coverage').innerHTML = booksSubj.map(d => {
+        const color = getColor(d.subject);
+        return `<div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="font-weight:700;color:${color}">${d.subject}</span>
+        <span style="font-family:'JetBrains Mono';color:var(--muted)">${d.total_reading} pages · ${d.chapters} ch</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(d.total_reading / maxR * 100)}%;background:${color}"></div></div>
+      <div style="font-size:0.73rem;color:var(--muted);margin-top:4px">MCQs: ${d.total_mcqs}</div>
+    </div>`;
+      }).join('');
+
+      document.getElementById('books-tbody').innerHTML = booksBooks
+        .sort((a, b) => b.total_reading - a.total_reading)
+        .map(b => {
+          const status = b.total_reading > 50 ? '<span class="badge badge-high">Done</span>'
+            : b.total_reading > 0 ? '<span class="badge badge-med">Partial</span>'
+              : '<span class="badge badge-low">Pending</span>';
+          return `<tr>
+        <td style="color:var(--text);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${b.name}">${b.name}</td>
+        <td style="color:${getColor(b.subject)};font-weight:600">${b.subject}</td>
+        <td style="font-family:'JetBrains Mono'">${b.chapters.length}</td>
+        <td style="font-family:'JetBrains Mono';color:var(--accent)">${b.total_reading}</td>
+        <td style="font-family:'JetBrains Mono';color:var(--green)">${b.total_mcqs}</td>
+        <td>${status}</td>
+      </tr>`;
+        }).join('');
+    }
+
+    function renderNotes() {
+      const { notesSubj } = G;
+      renderBars('notes-subject-bars', notesSubj, 'total_reading');
+      renderBars('notes-mcq-bars', notesSubj, 'total_mcqs');
+
+      document.getElementById('notes-tbody').innerHTML = notesSubj
+        .sort((a, b) => b.total_reading - a.total_reading)
+        .map(d => {
+          const priority = d.total_mcqs === 0 && d.total_reading > 50
+            ? '<span class="badge badge-low">MCQ Pending!</span>'
+            : d.total_reading > 200 ? '<span class="badge badge-high">Good</span>'
+              : d.total_reading > 50 ? '<span class="badge badge-med">Medium</span>'
+                : '<span class="badge badge-low">Low</span>';
+          return `<tr>
+        <td style="color:${getColor(d.subject)};font-weight:700">${d.subject}</td>
+        <td style="font-family:'JetBrains Mono'">${d.notebooks}</td>
+        <td style="font-family:'JetBrains Mono';color:var(--accent)">${d.total_reading}</td>
+        <td style="font-family:'JetBrains Mono';color:var(--green)">${d.total_mcqs}</td>
+        <td>${priority}</td>
+      </tr>`;
+        }).join('');
+    }
+
+    function renderProgressPanel() {
+      const { progressData } = G;
+      const total = progressData.reduce((s, d) => s + d.total_read, 0);
+      const avg = Math.round(total / Math.max(progressData.length, 1));
+      const best = progressData.reduce((a, b) => a.total_read > b.total_read ? a : b, { total_read: 0, date: '-' });
+
+      document.getElementById('progress-top-cards').innerHTML = [
+        { label: 'Total Pages Read', val: total, sub: `${progressData.length} days`, color: 'var(--accent)' },
+        { label: 'Daily Average', val: avg, sub: 'pages/day', color: 'var(--green)' },
+        { label: 'Best Day', val: best.total_read, sub: best.date, color: 'var(--accent2)' },
+      ].map(s => `<div class="card">
+    <div class="card-title"><span class="dot" style="background:${s.color}"></span>${s.label}</div>
+    <div class="big-num" style="color:${s.color}">${s.val}</div>
+    <div class="small-lbl">${s.sub}</div>
+  </div>`).join('');
+
+      renderStackedChart('daily-chart', progressData, 190);
+
+      const maxDay = Math.max(...progressData.map(d => d.total_read), 1);
+      document.getElementById('heatmap').innerHTML = progressData.map(d => {
+        const r = d.total_read / maxDay;
+        const cls = r === 0 ? '' : r < 0.25 ? 'h1' : r < 0.5 ? 'h2' : r < 0.75 ? 'h3' : 'h4';
+        return `<div class="heatmap-cell ${cls}" data-tip="${d.date}: ${d.total_read} pages"></div>`;
+      }).join('');
+    }
+
+    function renderCompare() {
+      const { ncertSubj, booksSubj, notesSubj } = G;
+      const combined = {};
+      ncertSubj.forEach(d => { combined[d.subject] = { ...(combined[d.subject] || { ncert: 0, notes: 0, books: 0 }), ncert: (combined[d.subject]?.ncert || 0) + d.total_reading }; });
+      booksSubj.forEach(d => { combined[d.subject] = { ...(combined[d.subject] || { ncert: 0, notes: 0, books: 0 }), books: (combined[d.subject]?.books || 0) + d.total_reading }; });
+      notesSubj.forEach(d => { combined[d.subject] = { ...(combined[d.subject] || { ncert: 0, notes: 0, books: 0 }), notes: (combined[d.subject]?.notes || 0) + d.total_reading }; });
+
+      const allSubjects = Object.keys(combined).sort((a, b) => {
+        const tA = (combined[a].ncert || 0) + (combined[a].notes || 0) + (combined[a].books || 0);
+        const tB = (combined[b].ncert || 0) + (combined[b].notes || 0) + (combined[b].books || 0);
+        return tB - tA;
+      });
+      const maxVal = Math.max(...allSubjects.flatMap(s => [combined[s].ncert || 0, combined[s].notes || 0, combined[s].books || 0]), 1);
+
+      document.getElementById('compare-content').innerHTML = allSubjects.map(subj => {
+        const c = combined[subj];
+        const color = getColor(subj);
+        const total = (c.ncert || 0) + (c.notes || 0) + (c.books || 0);
+        return `<div class="compare-row">
+      <div class="compare-subject" style="color:${color}">${subj}
+        <div style="font-size:0.7rem;color:var(--muted);font-weight:400">Total: ${total}</div>
+      </div>
+      <div class="compare-bars">
+        ${[['NCERT', c.ncert || 0, 'var(--accent)'], ['Notes', c.notes || 0, 'var(--accent2)'], ['Books', c.books || 0, 'var(--green)']].map(([l, v, col]) =>
+          `<div class="mini-bar-row">
+            <div class="mini-label">${l}</div>
+            <div class="mini-track"><div class="mini-fill" style="width:${((v / maxVal) * 100).toFixed(0)}%;background:${col}"></div></div>
+            <div class="mini-val">${v}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+      }).join('');
+
+      const totals = allSubjects.map(s => ({ subject: s, total: (combined[s].ncert || 0) + (combined[s].notes || 0) + (combined[s].books || 0) }));
+      const maxT = totals[0]?.total || 1;
+      document.getElementById('most-studied').innerHTML = totals.slice(0, 5).map(d => `
+    <div class="subject-bar">
+      <div class="subject-label" style="color:${getColor(d.subject)}">${d.subject}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(d.total / maxT * 100).toFixed(0)}%;background:${getColor(d.subject)}"></div></div>
+      <div class="bar-value">${d.total}</div>
+    </div>`).join('');
+
+      document.getElementById('least-studied').innerHTML = [...totals].sort((a, b) => a.total - b.total).slice(0, 5).map(d => `
+    <div class="subject-bar">
+      <div class="subject-label" style="color:var(--red)">${d.subject}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4, (d.total / maxT * 100)).toFixed(0)}%;background:var(--red)"></div></div>
+      <div class="bar-value">${d.total}</div>
+    </div>`).join('');
+    }
+
+    // =====================================================
+    // TAB SWITCHING
+    // =====================================================
+    function showPanel(name, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    // =====================================================
+    // MAIN INIT — Fetch all sheets
+    // =====================================================
+    async function initDashboard() {
+      const loader = document.getElementById('loader');
+      const main = document.getElementById('main-content');
+      const errBox = document.getElementById('error-box');
+      const refreshBtn = document.getElementById('refresh-btn');
+      const stepEl = document.getElementById('loader-step');
+
+      loader.style.display = 'flex';
+      main.style.display = 'none';
+      errBox.style.display = 'none';
+      refreshBtn.classList.add('spinning');
+
+      try {
+        stepEl.textContent = '📗 NCERT sheet fetch ho rahi hai...';
+        const ncertRows = await fetchSheet('NCERT', SHEET_GIDS.NCERT);
+
+        stepEl.textContent = '📘 Books sheet fetch ho rahi hai...';
+        const booksRows = await fetchSheet('Books', SHEET_GIDS.Books);
+
+        stepEl.textContent = '📓 Notes sheet fetch ho rahi hai...';
+        const notesRows = await fetchSheet('Notes', SHEET_GIDS.Notes);
+
+        stepEl.textContent = '📈 Progress sheet fetch ho rahi hai...';
+        const progressRows = await fetchSheet('Progress', SHEET_GIDS.Progress);
+
+        stepEl.textContent = '⚙️ Data process ho raha hai...';
+
+        // Parse
+        const ncertBooks = parseNCERT(ncertRows);
+        const booksBooks = parseBooks(booksRows);
+        const notebooks = parseNotes(notesRows);
+        const progressData = parseProgress(progressRows);
+
+        // Aggregate
+        const ncertSubj = aggregateBySubject(ncertBooks);
+        const booksSubj = aggregateBySubject(booksBooks);
+        const notesSubj = aggregateNotesBySubject(notebooks);
+
+        // Summary numbers
+        const ncertUnread = parseSummary(ncertRows, 'Total Unread');
+        const booksUnread = parseSummary(booksRows, 'Total Unread');
+        const notesUnread = parseSummary(notesRows, 'Total Unread');
+        const dailyTarget = parseSummary(ncertRows, 'Daily Target');
+        const daysRemaining = parseSummary(ncertRows, 'Remaining Days');
+
+        // Store globally
+        G = {
+          ncertBooks, booksBooks, ncertSubj, booksSubj, notesSubj, progressData,
+          ncertUnread, booksUnread, notesUnread, dailyTarget, daysRemaining
+        };
+
+        // Update header chips
+        document.getElementById('chip-ncert-unread').textContent = ncertUnread || '—';
+        document.getElementById('chip-books-unread').textContent = booksUnread || '—';
+        document.getElementById('chip-notes-unread').textContent = notesUnread || '—';
+        document.getElementById('chip-daily-target').textContent = dailyTarget || '—';
+
+        // Render all panels
+        stepEl.textContent = '🎨 Dashboard render ho raha hai...';
+        renderOverview();
+        renderNCERT();
+        renderBooks();
+        renderNotes();
+        renderProgressPanel();
+        renderCompare();
+
+        // Last updated
+        const now = new Date();
+        document.getElementById('last-updated-txt').textContent =
+          `Last updated: ${now.toLocaleDateString('hi-IN')} ${now.toLocaleTimeString('hi-IN')}`;
+
+        loader.style.display = 'none';
+        main.style.display = 'block';
+        refreshBtn.classList.remove('spinning');
+
+      } catch (err) {
+        console.error('Dashboard error:', err);
+        loader.style.display = 'none';
+        errBox.style.display = 'block';
+        errBox.style.maxWidth = '600px';
+        errBox.style.margin = '80px auto';
+        document.querySelector('.container').style.display = 'block';
+        refreshBtn.classList.remove('spinning');
+      }
+    }
+
+    // Auto-start
+    window.addEventListener('DOMContentLoaded', initDashboard);
+  </script>
+</body>
+
+</html>
