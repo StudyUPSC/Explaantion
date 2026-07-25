@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>जलोढ़ पंख (Alluvial Fan)</title>
+
+<style>
+body{
+    margin:0;
+    padding:25px;
+    background:#f4f7fb;
+    font-family:"Noto Sans Devanagari",sans-serif;
+    line-height:1.8;
+    color:#222;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+h2{
+    color:#0b6efd;
+}
+
+h3{
+    margin-top:30px;
+}
+
+.link{
+    color:#0b6efd;
+    cursor:pointer;
+    font-weight:bold;
+    text-decoration:underline;
+}
+
+.popup{
+    display:none;
+    margin-top:15px;
+    padding:20px;
+    border-radius:12px;
+    background:#eef7ff;
+    border-left:6px solid #0b6efd;
+    animation:fade .3s;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    color:red;
+    font-size:22px;
+    font-weight:bold;
+}
+
+img{
+    width:100%;
+    margin-top:20px;
+    border-radius:12px;
+}
+
+pre{
+    white-space:pre-wrap;
+    font-size:16px;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(-10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@media(max-width:600px){
+.container{
+padding:18px;
+}
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>🌍 जलोढ़ पंख (Alluvial Fan)</h2>
+
+<p><b>आर्द्र प्रदेशों में जलोढ़ पंख प्रायः निम्न शंकु की आकृति तथा
+<span class="link" onclick="showPopup('apex')">शीर्ष (Apex)</span>
+से
+<span class="link" onclick="showPopup('base')">पाद (Base)</span>
+तक मंद ढाल वाले होते हैं।
+शुष्क व अर्द्ध-शुष्क जलवायवी प्रदेशों में ये तीव्र ढाल वाले व उच्च शंकु बनाते हैं।</b></p>
+
+<h3>इस वाक्य का अर्थ</h3>
+
+<p>इस वाक्य का अर्थ है कि <b>जलोढ़ पंख (Alluvial Fan)</b> का आकार और ढाल (Slope) जलवायु के अनुसार बदलते हैं।</p>
+
+<h3>1️⃣ आर्द्र (Humid) प्रदेशों में</h3>
+
+<ul>
+<li>यहाँ वर्षा अधिक होती है।</li>
+<li>पानी लगातार बहता रहता है।</li>
+<li>अवसाद दूर-दूर तक फैल जाते हैं।</li>
+<li>जलोढ़ पंख निम्न शंकु के आकार के होते हैं।</li>
+<li>ढाल बहुत कम (Gentle Slope) होती है।</li>
+</ul>
+
+<p>👉 यानी ये <b>चपटे (Flat)</b> और फैले हुए होते हैं।</p>
+
+<h3>2️⃣ शुष्क व अर्द्ध-शुष्क प्रदेशों में</h3>
+
+<ul>
+<li>वर्षा कम होती है।</li>
+<li>अचानक Flash Flood आती है।</li>
+<li>अवसाद पहाड़ के पास ही जमा हो जाते हैं।</li>
+<li>उच्च शंकु बनता है।</li>
+<li>ढाल तीव्र (Steep) होती है।</li>
+</ul>
+
+<p>👉 यानी ये ऊँचे और खड़े होते हैं।</p>
+
+<h3>🎯 आसान ट्रिक (UPSC)</h3>
+
+<p>
+आर्द्र = अधिक पानी = अधिक फैलाव = कम ढाल<br>
+शुष्क = कम पानी = पास में जमाव = अधिक ढाल
+</p>
+
+<h3>💡 याद रखने की लाइन</h3>
+
+<p><b>"जितना अधिक पानी, उतना अधिक फैलाव; जितना कम पानी, उतना ऊँचा और तीखा जलोढ़ पंख।"</b></p>
+
+<!-- Apex Popup -->
+
+<div id="apex" class="popup">
+
+<span class="close" onclick="closePopup('apex')">❌</span>
+
+<h3>शीर्ष (Apex) कहाँ होता है?</h3>
+
+<p>
+<b>शीर्ष (Apex)</b> = जहाँ नदी पहाड़ से निकलकर मैदान में प्रवेश करती है।
+यह जलोढ़ पंख का ऊपरी और संकरा भाग होता है।
+</p>
+
+<p>
+👉 इसे ऐसे समझिए:
+</p>
+
+<pre>
+पहाड़ ⛰️
+    │
+    ▼
+शीर्ष (Apex)
+    │
+जलोढ़ पंख फैलना शुरू
+</pre>
+
+</div>
+
+<!-- Base Popup -->
+
+<div id="base" class="popup">
+
+<span class="close" onclick="closePopup('base')">❌</span>
+
+<h3>पाद (Toe/Base) कहाँ होता है?</h3>
+
+<p>
+<b>पाद (Toe/Base)</b> = जलोढ़ पंख का सबसे नीचे और सबसे चौड़ा भाग।
+यहाँ आकर ढाल लगभग समाप्त हो जाती है।
+</p>
+
+<p>👉 क्रम हमेशा याद रखें:</p>
+
+<pre>
+पहाड़ ⛰️
+      │
+      ▼
+शीर्ष (Apex)
+      │
+बीच का भाग
+      │
+      ▼
+पाद (Base/Toe)
+</pre>
+
+<hr>
+
+<h3>"निम्न शंकु" (Low Cone) मतलब क्या?</h3>
+
+<p>
+निम्न = कम ऊँचाई वाला।
+यानि शंकु (Cone) बहुत ऊँचा नहीं होता बल्कि चपटा (Flat) होता है।
+</p>
+
+<h4>आर्द्र प्रदेश (Humid)</h4>
+
+<pre>
+        ▲
+      /   \
+    /       \
+  /           \
+---------------------
+
+(चपटा, कम ऊँचाई = निम्न शंकु)
+</pre>
+
+<h4>शुष्क प्रदेश (Arid)</h4>
+
+<pre>
+       ▲
+      / \
+     /   \
+    /     \
+   /       \
+------------
+
+(ऊँचा, तीखी ढाल = उच्च शंकु)
+</pre>
+
+<h3>🎯 UPSC Trick</h3>
+
+<p>
+🌧️ आर्द्र प्रदेश → पानी ज्यादा → अवसाद दूर तक फैलते हैं → निम्न (चपटा) शंकु + मंद ढाल
+</p>
+
+<p>
+☀️ शुष्क प्रदेश → पानी कम, अचानक बाढ़ → अवसाद पास में जमा → उच्च शंकु + तीव्र ढाल
+</p>
+
+</div>
+
+<h3>📷 चित्र</h3>
+
+<img src="https://i.ibb.co/DH0hrWJb/image.png" alt="Alluvial Fan">
+
+</div>
+
+<script>
+
+function showPopup(id){
+
+document.getElementById("apex").style.display="none";
+document.getElementById("base").style.display="none";
+
+document.getElementById(id).style.display="block";
+
+document.getElementById(id).scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+function closePopup(id){
+document.getElementById(id).style.display="none";
+}
+
+</script>
+
+</body>
+</html>
