@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌍 भू-आकृतियाँ – एजेंट अनुसार अपरदित & निक्षेपित</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: #f5f2eb;
+      padding: 2rem 1.2rem;
+      color: #1e2b2f;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      border-left: 8px solid #6b4f3c;
+      padding-left: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: #2d3e45;
+    }
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+      background: #e7e1d7;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .filter-btn {
+      background: transparent;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.4rem 1.2rem;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #2d3e45;
+      background: #d9d0c4;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-btn:hover {
+      background: #cbbfb1;
+      transform: scale(1.02);
+    }
+    .filter-btn.active {
+      background: #2d3e45;
+      color: #f5f2eb;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .filter-btn .count {
+      background: rgba(0,0,0,0.08);
+      border-radius: 30px;
+      padding: 0 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .filter-btn.active .count {
+      background: rgba(255,255,255,0.2);
+    }
+    #resetFilter {
+      background: #b4a18b;
+      color: #1f2c30;
+      margin-left: auto;
+    }
+    #resetFilter:hover {
+      background: #a08b74;
+    }
+    .row-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 860px) {
+      .row-cards {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+    .card {
+      background: #fffffffa;
+      border-radius: 32px;
+      padding: 1.6rem 1.6rem 2rem;
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e7dfd4;
+      transition: 0.1s;
+    }
+    .card h2 {
+      font-size: 1.7rem;
+      font-weight: 550;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px dashed #c9bcac;
+    }
+    .card h2 small {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #5f6f76;
+      margin-left: 6px;
+    }
+    .landform-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .landform-item {
+      border-bottom: 1px solid #ece5db;
+      padding-bottom: 0.8rem;
+    }
+    .landform-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .lf-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #2f434a;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .lf-name .eng {
+      font-weight: 400;
+      font-size: 0.85rem;
+      color: #6f7e83;
+    }
+    .lf-desc {
+      margin-top: 4px;
+      font-size: 0.92rem;
+      color: #3a4b4f;
+      line-height: 1.5;
+      padding-left: 12px;
+      border-left: 2px solid #d1c3b2;
+      padding-left: 12px;
+    }
+    .agent-badge {
+      background: #b4a18b;
+      color: #1f2c30;
+      border-radius: 40px;
+      padding: 0.1rem 0.9rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .empty-state {
+      color: #5f6f76;
+      font-style: italic;
+      padding: 1rem 0.5rem;
+      background: #f0ebe3;
+      border-radius: 30px;
+      text-align: center;
+    }
+    .footnote {
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      color: #4c5b60;
+      background: #eee8df;
+      padding: 0.7rem 1.8rem;
+      border-radius: 60px;
+      display: inline-block;
+    }
+    .badge-count {
+      background: #d6cdc0;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🏔️ अपरदित &amp; निक्षेपित · एजेंट फ़िल्टर</h1>
+
+  <!-- filter bar -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-agent="all" id="filterAll">🌍 सभी <span class="count" id="countAll">0</span></button>
+    <button class="filter-btn" data-agent="जल">🌊 जल <span class="count" id="countजल">0</span></button>
+    <button class="filter-btn" data-agent="हिम">🧊 हिम <span class="count" id="countहिम">0</span></button>
+    <button class="filter-btn" data-agent="पवन">🌬️ पवन <span class="count" id="countपवन">0</span></button>
+    <button class="filter-btn" data-agent="कार्स्ट">🕳️ कार्स्ट <span class="count" id="countकार्स्ट">0</span></button>
+    <button class="filter-btn" data-agent="तटीय">🌊 तटीय <span class="count" id="countतटीय">0</span></button>
+    <button id="resetFilter" class="filter-btn">↺ रीसेट</button>
+  </div>
+
+  <!-- two column cards -->
+  <div class="row-cards">
+    <div class="card" id="erosionalCard">
+      <h2>🧨 अपरदित <small>Erosional</small></h2>
+      <div class="landform-list" id="erosionalList"></div>
+    </div>
+    <div class="card" id="depositionalCard">
+      <h2>🏗️ निक्षेपित <small>Depositional</small></h2>
+      <div class="landform-list" id="depositionalList"></div>
+    </div>
+  </div>
+  <div class="footnote">
+    ⚡ किसी एजेंट पर क्लिक करें – केवल उससे संबंधित अपरदित व निक्षेपित स्थलरूप दिखेंगे।
+  </div>
+</div>
+
+<script>
+  (function() {
+    // -------- Data (exactly from chapter) --------
+    const landforms = [
+      // ---- EROSIONAL ----
+      { name: 'V‑आकार घाटी', english: 'V‑shaped valley', type: 'erosional', agent: 'जल', desc: 'प्रारंभिक अवस्था, अधोमुखी कटाव प्रमुख।' },
+      { name: 'गॉर्ज', english: 'Gorge', type: 'erosional', agent: 'जल', desc: 'गहरी, संकरी; चौड़ाई तल व ऊपर एक समान; कठोर चट्टानों में।' },
+      { name: 'कैनियन', english: 'Canyon', type: 'erosional', agent: 'जल', desc: 'गहरी, किनारे खड़ी; ऊपरी भाग अधिक चौड़ा; अवसादी चट्टानें।' },
+      { name: 'जलगर्तिका', english: 'Pothole', type: 'erosional', agent: 'जल', desc: 'नदी तल में वृत्ताकार छोटे उथले गर्त, कंकड़-पत्थर से निर्मित।' },
+      { name: 'अवनमित कुंड', english: 'Plunge Pool', type: 'erosional', agent: 'जल', desc: 'जलप्रपात के तल पर गहरा बड़ा जलगर्तिका।' },
+      { name: 'गभीरीभूत विसर्प', english: 'Incised Meander', type: 'erosional', agent: 'जल', desc: 'कठोर चट्टानों में गहरे कटे विसर्प, अधोमुखी अपरदन।' },
+      { name: 'नदी वेदिकाएँ', english: 'River Terraces', type: 'erosional', agent: 'जल', desc: 'पुराने बाढ़ मैदानों के चिह्न; युग्म/अयुग्म।' },
+      { name: 'घोलरंध', english: 'Sinkhole', type: 'erosional', agent: 'कार्स्ट', desc: 'चूना पत्थर में ऊपर वृत्ताकार, नीचे कीपाकार गर्त।' },
+      { name: 'डोलाइन', english: 'Doline', type: 'erosional', agent: 'कार्स्ट', desc: 'ध्वस्त घोलरंध (collapse sink) का दूसरा नाम।' },
+      { name: 'युवाला', english: 'Uvala', type: 'erosional', agent: 'कार्स्ट', desc: 'घोलरंधों के आपस में मिलने से बनी लंबी, तंग खाइयाँ।' },
+      { name: 'लेपीस', english: 'Lapies', type: 'erosional', agent: 'कार्स्ट', desc: 'अनियमित, पतले व नुकीले कटक; संधियों में घुलन से।' },
+      { name: 'कंदराएँ', english: 'Caves', type: 'erosional', agent: 'कार्स्ट', desc: 'चूना पत्थर के घुलने से लंबे तंग रिक्त स्थान; सुरंग भी।' },
+      { name: 'सर्क', english: 'Cirque', type: 'erosional', agent: 'हिम', desc: 'हिमनद घाटी के शीर्ष पर गहरा गर्त; पिघलने पर टार्न झील।' },
+      { name: 'हॉर्न', english: 'Horn', type: 'erosional', agent: 'हिम', desc: 'तीन या अधिक सर्कों से निर्मित नुकीली चोटी (मैटरहॉन, एवरेस्ट)।' },
+      { name: 'अरेट', english: 'Arête', type: 'erosional', agent: 'हिम', desc: 'दो सर्कों के बीच तीक्ष्ण, आरी के समान कटक (चढ़ना असंभव)।' },
+      { name: 'हिमनद घाटी', english: 'Glacial Valley', type: 'erosional', agent: 'हिम', desc: 'U‑आकार घाटी, चौड़ा तल, चिकने किनारे, तीव्र ढाल।' },
+      { name: 'लटकती घाटी', english: 'Hanging Valley', type: 'erosional', agent: 'हिम', desc: 'मुख्य घाटी के एक/दोनों तरफ ऊँचाई पर, त्रिकोण रूप में खुलती।' },
+      { name: 'फियोर्ड', english: 'Fjord', type: 'erosional', agent: 'हिम', desc: 'समुद्र जल से भरी अत्यंत गहरी हिमनद गर्त (तटरेखा पर)।' },
+      { name: 'भृगु', english: 'Cliff', type: 'erosional', agent: 'तटीय', desc: 'तरंगों के प्रहार से पहाड़ी पार्श्व, तीव्र ढाल, तलहटी प्लेटफार्म।' },
+      { name: 'तरंग घर्षित वेदिका', english: 'Wave-cut Terrace', type: 'erosional', agent: 'तटीय', desc: 'भृगु के तलहटी प्लेटफार्म का ऊँचा भाग।' },
+      { name: 'समुद्री कंदरा', english: 'Sea Cave', type: 'erosional', agent: 'तटीय', desc: 'भृगु के आधार पर तरंगों द्वारा खोखली गुफा।' },
+      { name: 'समुद्री स्टैक', english: 'Sea Stack', type: 'erosional', agent: 'तटीय', desc: 'भृगु के निवर्तन से तट पर अलग-थलग चट्टानी अवशेष (अस्थायी)।' },
+      { name: 'पेडीमेंट', english: 'Pediment', type: 'erosional', agent: 'पवन', desc: 'पर्वतों के पाद पर मलबे सहित/रहित मंद ढाल वाला चट्टानी तल।' },
+      { name: 'पदस्थली', english: 'Pedipalin', type: 'erosional', agent: 'पवन', desc: 'पेडीमेंट के विस्तार से बना उच्च, आकृति विहीन मैदान (Inselberg अवशिष्ट)।' },
+      { name: 'अपवाहन गर्त', english: 'Deflation Hollow', type: 'erosional', agent: 'पवन', desc: 'पवन द्वारा महीन पदार्थ के उड़ जाने से बने उथले गर्त।' },
+      { name: 'वात‑गर्त / गुहा', english: 'Blowout / Cave', type: 'erosional', agent: 'पवन', desc: 'अपवाहन व अपघर्षण से चट्टानी धरातल पर छोटे-बड़े गड्ढे।' },
+      { name: 'छत्रक शैल', english: 'Mushroom Rock', type: 'erosional', agent: 'पवन', desc: 'प्रतिरोधी चट्टानों के घिसे अवशेष, आधार पतला, ऊपर चौड़ा टोपी जैसा।' },
+      { name: 'टेबल / पीठिका शैल', english: 'Table / Pedestal Rock', type: 'erosional', agent: 'पवन', desc: 'प्रतिरोधी चट्टान का ऊपरी भाग मेज की भाँति विस्तृत।' },
+
+      // ---- DEPOSITIONAL ----
+      { name: 'जलोढ़ पंख', english: 'Alluvial Fan', type: 'depositional', agent: 'जल', desc: 'गिरिपद पर शंकु के आकार में निक्षेप; जलवितरिकाएँ बनती हैं।' },
+      { name: 'डेल्टा', english: 'Delta', type: 'depositional', agent: 'जल', desc: 'समुद्र तट पर नदी भार का स्तरित, व्यवस्थित निक्षेपण।' },
+      { name: 'सक्रिय बाढ़-मैदान', english: 'Active Floodplain', type: 'depositional', agent: 'जल', desc: 'बाढ़ में जल फैलने पर महीन कण (रेत, गाद) का जमाव।' },
+      { name: 'असक्रिय बाढ़-मैदान', english: 'Inactive Floodplain', type: 'depositional', agent: 'जल', desc: 'तलों से ऊँचाई पर बने तट (बाढ़ + सरिता निक्षेप)।' },
+      { name: 'प्राकृतिक तटबंध', english: 'Natural Levee', type: 'depositional', agent: 'जल', desc: 'बड़ी नदियों के किनारे स्थूल पदार्थों की रैखिक, निम्न कटक।' },
+      { name: 'विसर्पी रोधिका', english: 'Point Bar / Meander Bar', type: 'depositional', agent: 'जल', desc: 'विसर्प के अवतल ढाल पर तलछटों का निक्षेपण; चौड़ाई एकसमान।' },
+      { name: 'गोखुर झील', english: 'Oxbow Lake', type: 'depositional', agent: 'जल', desc: 'पुराने विसर्प का कट जाना → छोड़ी गई घोड़े की नाल झील।' },
+      { name: 'स्टैलेक्टाइट', english: 'Stalactite', type: 'depositional', agent: 'कार्स्ट', desc: 'कंदरा की छत से लटकता, आधार मोटा, अंत पतला।' },
+      { name: 'स्टैलेग्माइट', english: 'Stalagmite', type: 'depositional', agent: 'कार्स्ट', desc: 'कंदरा के फर्श से ऊपर बढ़ता, चपटी तश्तरी/क्रेटर आकार।' },
+      { name: 'स्तंभ', english: 'Pillar / Column', type: 'depositional', agent: 'कार्स्ट', desc: 'स्टैलेक्टाइट और स्टैलेग्माइट के मिलने से बना स्तंभ।' },
+      { name: 'हिमोढ़ (अंतस्थ)', english: 'Terminal Moraine', type: 'depositional', agent: 'हिम', desc: 'हिमनद के अंतिम भाग में मलबे का निक्षेप – घोड़े की नाल कटक।' },
+      { name: 'पार्श्व हिमोढ़', english: 'Lateral Moraine', type: 'depositional', agent: 'हिम', desc: 'हिमनद घाटी की दीवार के समांतर निक्षेपित कटक।' },
+      { name: 'तल/तलीय हिमोढ़', english: 'Ground Moraine', type: 'depositional', agent: 'हिम', desc: 'हिमनद टिल को परत के रूप में अव्यवस्थित छोड़ देते हैं।' },
+      { name: 'मध्यस्थ हिमोढ़', english: 'Medial Moraine', type: 'depositional', agent: 'हिम', desc: 'घाटी के मध्य में, पार्श्व हिमोढ़ से कम स्पष्ट।' },
+      { name: 'एस्कर', english: 'Esker', type: 'depositional', agent: 'हिम', desc: 'बर्फ की घाटी में जमा मलबा; बर्फ पिघलने पर वक्राकार कटक।' },
+      { name: 'हिमानी थौत मैदान', english: 'Outwash Plain', type: 'depositional', agent: 'हिम', desc: 'हिमानी-जलोढ़ निक्षेपों (बजरी, रेत, मृतिका) से विस्तृत समतल पंख।' },
+      { name: 'ड्रमलिन', english: 'Drumlin', type: 'depositional', agent: 'हिम', desc: 'अंडाकार समतल कटक; स्टॉस (तीखा) व टेल; हिम प्रवाह दिशा बताता है।' },
+      { name: 'पुलिन', english: 'Beach', type: 'depositional', agent: 'तटीय', desc: 'तटों पर रेत या शिंगिल (छोटी गोलाश्मिका) का निक्षेप, अस्थायी।' },
+      { name: 'टिब्बे (तटीय)', english: 'Coastal Dunes', type: 'depositional', agent: 'तटीय', desc: 'पुलिन के पीछे रेत की कटकें, तटरेखा के समानांतर।' },
+      { name: 'अपतट रोधिका', english: 'Offshore Bar', type: 'depositional', agent: 'तटीय', desc: 'समुद्री अपतट पर, तट के समांतर रेत व शिंगिल की कटक।' },
+      { name: 'रोध / रोध-रोधिका', english: 'Barrier / Barrier Bar', type: 'depositional', agent: 'तटीय', desc: 'अपतटीय रोधिका जो रेत के अधिक निक्षेपण से ऊपर दिखाई दे।' },
+      { name: 'स्पिट', english: 'Spit', type: 'depositional', agent: 'तटीय', desc: 'रोधिका का सिरा जो खाड़ी से जुड़ जाता है।' },
+      { name: 'लैगून', english: 'Lagoon', type: 'depositional', agent: 'तटीय', desc: 'रोधिका/स्पिट द्वारा समुद्र से अलग हुआ उथला जलाशय।' },
+      { name: 'बरखान', english: 'Barchan', type: 'depositional', agent: 'पवन', desc: 'नव चंद्राकार बालू-टिब्बा; भुजाएँ पवन दिशा में।' },
+      { name: 'परवलयिक टिब्बा', english: 'Parabolic Dune', type: 'depositional', agent: 'पवन', desc: 'आंशिक वनस्पति वाले रेतीले धरातल पर, बरखान से भिन्न।' },
+      { name: 'सीफ', english: 'Seif', type: 'depositional', agent: 'पवन', desc: 'एक भुजा वाला टिब्बा (पवन दिशा बदलने से); ऊँचा व लंबा।' },
+      { name: 'अनुदैर्ध्य टिब्बे', english: 'Longitudinal Dunes', type: 'depositional', agent: 'पवन', desc: 'रेत आपूर्ति कम, पवन दिशा स्थायी; लंबी, कम ऊँची कटक।' },
+      { name: 'अनुप्रस्थ टिब्बे', english: 'Transverse Dunes', type: 'depositional', agent: 'पवन', desc: 'प्रचलित पवनों के समकोण पर, रेत स्रोत पवन दिशा के समकोण पर।' }
+    ];
+
+    // -------- DOM refs --------
+    const erosionalList = document.getElementById('erosionalList');
+    const depositionalList = document.getElementById('depositionalList');
+    const filterBtns = document.querySelectorAll('.filter-btn[data-agent]');
+    const resetBtn = document.getElementById('resetFilter');
+    const countSpans = {
+      all: document.getElementById('countAll'),
+      जल: document.getElementById('countजल'),
+      हिम: document.getElementById('countहिम'),
+      पवन: document.getElementById('countपवन'),
+      कार्स्ट: document.getElementById('countकार्स्ट'),
+      तटीय: document.getElementById('countतटीय')
+    };
+
+    let currentAgent = 'all';  // 'all' or specific agent name
+
+    // -------- helpers --------
+    function getCounts() {
+      const counts = { all: landforms.length, जल: 0, हिम: 0, पवन: 0, कार्स्ट: 0, तटीय: 0 };
+      landforms.forEach(lf => {
+        if (counts[lf.agent] !== undefined) counts[lf.agent]++;
+      });
+      return counts;
+    }
+
+    function updateCounters() {
+      const counts = getCounts();
+      countSpans.all.textContent = counts.all;
+      countSpans.जल.textContent = counts.जल;
+      countSpans.हिम.textContent = counts.हिम;
+      countSpans.पवन.textContent = counts.पवन;
+      countSpans.कार्स्ट.textContent = counts.कार्स्ट;
+      countSpans.तटीय.textContent = counts.तटीय;
+    }
+
+    function render(agent) {
+      const filtered = agent === 'all' ? landforms : landforms.filter(lf => lf.agent === agent);
+      const erosional = filtered.filter(lf => lf.type === 'erosional');
+      const depositional = filtered.filter(lf => lf.type === 'depositional');
+
+      // clear
+      erosionalList.innerHTML = '';
+      depositionalList.innerHTML = '';
+
+      // render erosional
+      if (erosional.length === 0) {
+        erosionalList.innerHTML = `<div class="empty-state">🧊 इस एजेंट के कोई अपरदित स्थलरूप नहीं</div>`;
+      } else {
+        erosional.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'landform-item';
+          div.innerHTML = `
+            <div class="lf-name">${item.name} <span class="eng">${item.english}</span> <span class="agent-badge">${item.agent}</span></div>
+            <div class="lf-desc">${item.desc}</div>
+          `;
+          erosionalList.appendChild(div);
+        });
+      }
+
+      // render depositional
+      if (depositional.length === 0) {
+        depositionalList.innerHTML = `<div class="empty-state">🏗️ इस एजेंट के कोई निक्षेपित स्थलरूप नहीं</div>`;
+      } else {
+        depositional.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'landform-item';
+          div.innerHTML = `
+            <div class="lf-name">${item.name} <span class="eng">${item.english}</span> <span class="agent-badge">${item.agent}</span></div>
+            <div class="lf-desc">${item.desc}</div>
+          `;
+          depositionalList.appendChild(div);
+        });
+      }
+
+      // update active button
+      filterBtns.forEach(btn => {
+        const btnAgent = btn.dataset.agent;
+        btn.classList.toggle('active', btnAgent === agent);
+      });
+      if (agent === 'all') {
+        document.getElementById('filterAll').classList.add('active');
+      }
+      currentAgent = agent;
+    }
+
+    // -------- event listeners --------
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const agent = this.dataset.agent;
+        render(agent);
+      });
+    });
+
+    resetBtn.addEventListener('click', function() {
+      render('all');
+    });
+
+    // -------- init --------
+    updateCounters();
+    render('all');
+  })();
+</script>
+</body>
+</html>
