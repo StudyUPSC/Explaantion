@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ऊर्ध्वाधर एवं क्षैतिज दाब प्रवणता</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Noto Sans Devanagari",sans-serif;
+    background:#eef3f9;
+    color:#222;
+    line-height:1.8;
+}
+
+.container{
+    max-width:950px;
+    margin:30px auto;
+    background:#fff;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+h1{
+    color:#1565c0;
+    margin-bottom:20px;
+}
+
+h2{
+    margin-top:30px;
+    color:#1976d2;
+}
+
+p{
+    margin:12px 0;
+}
+
+.highlight{
+    background:#fff3cd;
+    padding:2px 6px;
+    border-radius:5px;
+    font-weight:bold;
+}
+
+.link{
+    color:#0d6efd;
+    cursor:pointer;
+    text-decoration:underline;
+    font-weight:bold;
+}
+
+.popup{
+    display:none;
+    margin-top:18px;
+    padding:20px;
+    border-left:6px solid #0d6efd;
+    background:#eef7ff;
+    border-radius:12px;
+    animation:slide .3s;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    color:red;
+    font-size:22px;
+    font-weight:bold;
+}
+
+button{
+    margin-top:25px;
+    padding:12px 22px;
+    border:none;
+    border-radius:10px;
+    background:#1976d2;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0d47a1;
+}
+
+#summary{
+    display:none;
+    margin-top:20px;
+    background:#f4fff6;
+    border-left:6px solid green;
+    padding:20px;
+    border-radius:10px;
+}
+
+.diagram{
+    background:#f7f7f7;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+    font-family:monospace;
+    white-space:pre-wrap;
+}
+
+@keyframes slide{
+from{
+opacity:0;
+transform:translateY(-10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>🌍 ऊर्ध्वाधर एवं क्षैतिज दाब प्रवणता</h1>
+
+<p><b>
+"ऊर्ध्वाधर दाब प्रवणता क्षैतिज दाब प्रवणता की अपेक्षा अधिक होती है। लेकिन, इसके विपरीत दिशा में कार्यरत
+<span class="link" onclick="showPopup('gravity')">गुरुत्वाकर्षण बल</span>
+से यह संतुलित हो जाती है, अतः ऊर्ध्वाधर पवनें अधिक शक्तिशाली नहीं होती।"
+</b></p>
+
+<h2>📖 इसका अर्थ</h2>
+
+<p>
+यह कथन <span class="highlight">वायुदाब (Air Pressure)</span> और
+<span class="highlight">गुरुत्वाकर्षण (Gravity)</span>
+के संतुलन को समझाता है।
+</p>
+
+<h2>🔹 सबसे पहले दो शब्द समझें</h2>
+
+<ul>
+
+<li><b>ऊर्ध्वाधर दाब प्रवणता (Vertical Pressure Gradient)</b> = ऊपर और नीचे की दिशा में दाब का अंतर।</li>
+
+<li><b>क्षैतिज दाब प्रवणता (Horizontal Pressure Gradient)</b> = एक स्थान से दूसरे स्थान तक दाब का अंतर।</li>
+
+</ul>
+
+<h2>1️⃣ ऊर्ध्वाधर दाब प्रवणता अधिक क्यों होती है?</h2>
+
+<p>
+
+✔ पृथ्वी की सतह के पास हवा का दाब सबसे अधिक होता है।
+
+<br>
+
+✔ ऊपर जाते-जाते दाब तेजी से कम हो जाता है।
+
+</p>
+
+<div class="diagram">
+
+समुद्र तल
+
+1013 mb
+
+⬆
+
+700 mb
+
+⬆
+
+500 mb
+
+⬆
+
+300 mb
+
+</div>
+
+<p>
+
+👉 इसलिए ऊपर-नीचे दाब का अंतर बहुत अधिक होता है।
+
+</p>
+
+<h2>2️⃣ फिर तेज ऊर्ध्वाधर पवनें क्यों नहीं चलतीं?</h2>
+
+<p>
+
+यदि केवल दाब प्रवणता बल कार्य करे तो हवा बहुत तेजी से ऊपर जाएगी।
+
+लेकिन
+
+<b>गुरुत्वाकर्षण</b>
+
+हवा को नीचे खींचता है।
+
+</p>
+
+<div class="diagram">
+
+Pressure Gradient Force
+
+⬆⬆⬆⬆⬆
+
+      🌬 हवा
+
+⬇⬇⬇⬇⬇
+
+Gravity
+
+</div>
+
+<p>
+
+दोनों बल लगभग बराबर हो जाते हैं।
+
+इसी संतुलन को
+
+<b>Hydrostatic Balance</b>
+
+कहते हैं।
+
+</p>
+
+<h2>3️⃣ क्षैतिज दिशा में क्या होता है?</h2>
+
+<p>
+
+क्षैतिज दिशा में गुरुत्वाकर्षण हवा को नहीं रोकता।
+
+इसलिए हवा
+
+<b>उच्च दाब → निम्न दाब</b>
+
+की ओर बहती है।
+
+</p>
+
+<div class="diagram">
+
+HIGH PRESSURE
+
+██████
+
+──────────────►
+
+LOW PRESSURE
+
+████
+
+</div>
+
+<p>
+
+👉 यही क्षैतिज पवन (Horizontal Wind) है।
+
+</p>
+
+<h2>🎯 आसान उदाहरण</h2>
+
+<p>
+
+कल्पना करो कि तुम गेंद ऊपर फेंकते हो।
+
+</p>
+
+<ul>
+
+<li>✋ हाथ = Pressure Gradient Force</li>
+
+<li>🌍 Gravity = नीचे खींचती है</li>
+
+</ul>
+
+<p>
+
+दोनों बलों के कारण गेंद लगातार ऊपर नहीं जाती।
+
+ठीक यही हवा के साथ भी होता है।
+
+</p>
+
+<button onclick="toggleSummary()">
+
+⚡ UPSC Quick Revision
+
+</button>
+
+<div id="summary">
+
+<h2>📚 UPSC Revision</h2>
+
+<p>
+
+✅ Vertical Pressure Gradient > Horizontal Pressure Gradient
+
+</p>
+
+<p>
+
+✅ Gravity नीचे की ओर कार्य करती है।
+
+</p>
+
+<p>
+
+✅ Pressure Gradient Force ऊपर की ओर कार्य करता है।
+
+</p>
+
+<p>
+
+✅ दोनों का संतुलन = Hydrostatic Balance
+
+</p>
+
+<p>
+
+✅ इसलिए सामान्य परिस्थितियों में Vertical Winds कमजोर होती हैं।
+
+</p>
+
+<p>
+
+✅ Horizontal Direction में Gravity नहीं रोकती।
+
+</p>
+
+<p>
+
+✅ इसलिए Horizontal Winds अधिक प्रभावी होती हैं।
+
+</p>
+
+<hr>
+
+<b>
+
+🎯 Trick
+
+</b>
+
+<p>
+
+⬆ Vertical
+
+=
+
+Pressure ↑
+
++
+
+Gravity ↓
+
+=
+
+Balance
+
+=
+
+Weak Wind
+
+</p>
+
+<p>
+
+➡ Horizontal
+
+=
+
+Pressure Gradient Force
+
+=
+
+Strong Wind
+
+</p>
+
+</div>
+
+<div id="gravity" class="popup">
+
+<span class="close" onclick="closePopup('gravity')">❌</span>
+
+<h2>🌍 गुरुत्वाकर्षण बल (Gravity)</h2>
+
+<p>
+
+गुरुत्वाकर्षण पृथ्वी का आकर्षण बल है जो सभी वस्तुओं तथा वायु को पृथ्वी की ओर खींचता है।
+
+</p>
+
+<p>
+
+ऊर्ध्वाधर दिशा में यही बल Pressure Gradient Force के विपरीत कार्य करता है।
+
+</p>
+
+<div class="diagram">
+
+Pressure Gradient Force
+
+⬆⬆⬆⬆
+
+⚪ हवा
+
+⬇⬇⬇⬇
+
+Gravity
+
+</div>
+
+<p>
+
+इसी कारण सामान्य परिस्थितियों में ऊर्ध्वाधर पवनें बहुत शक्तिशाली नहीं होतीं।
+
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+function showPopup(id){
+
+document.querySelectorAll(".popup").forEach(x=>x.style.display="none");
+
+document.getElementById(id).style.display="block";
+
+document.getElementById(id).scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+}
+
+function closePopup(id){
+
+document.getElementById(id).style.display="none";
+
+}
+
+function toggleSummary(){
+
+let x=document.getElementById("summary");
+
+x.style.display=x.style.display=="block"?"none":"block";
+
+}
+
+</script>
+
+</body>
+</html>
