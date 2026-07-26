@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>समदाब रेखा (Isobar) एवं दाब प्रवणता</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Noto Sans Devanagari",sans-serif;
+}
+
+body{
+background:#eef4fb;
+padding:25px;
+color:#222;
+line-height:1.8;
+}
+
+.container{
+max-width:950px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:18px;
+box-shadow:0 12px 35px rgba(0,0,0,.12);
+}
+
+h1{
+color:#1565c0;
+margin-bottom:20px;
+}
+
+h2{
+margin-top:35px;
+color:#0d47a1;
+}
+
+.card{
+background:#f8fbff;
+border-left:6px solid #1976d2;
+padding:18px;
+margin:18px 0;
+border-radius:12px;
+}
+
+.click{
+color:#0d6efd;
+cursor:pointer;
+font-weight:bold;
+text-decoration:underline;
+}
+
+.popup{
+display:none;
+background:#fffdf2;
+border-left:6px solid orange;
+padding:20px;
+margin-top:20px;
+border-radius:12px;
+animation:fade .3s;
+}
+
+.close{
+float:right;
+cursor:pointer;
+font-size:22px;
+color:red;
+font-weight:bold;
+}
+
+.diagram{
+background:#f5f5f5;
+padding:18px;
+margin:15px 0;
+font-family:monospace;
+border-radius:10px;
+white-space:pre-wrap;
+overflow-x:auto;
+}
+
+button{
+padding:12px 24px;
+background:#1565c0;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
+margin-top:25px;
+}
+
+button:hover{
+background:#0d47a1;
+}
+
+#revision{
+display:none;
+background:#e8fff1;
+border-left:6px solid green;
+padding:20px;
+margin-top:20px;
+border-radius:12px;
+}
+
+.compare{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+.box{
+background:#fafafa;
+padding:20px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+.good{
+color:green;
+font-weight:bold;
+}
+
+.bad{
+color:red;
+font-weight:bold;
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(-10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌍 समदाब रेखा (Isobar) एवं दाब प्रवणता (Pressure Gradient)</h1>
+
+<div class="card">
+
+<b>समदाब रेखा (Isobar)</b> पर
+<span class="click" onclick="openPopup('isobar')">दाब समान</span>
+होता है, लेकिन दो अलग-अलग समदाब रेखाओं का दाब समान नहीं होता।
+
+</div>
+
+<div class="diagram">
+
+1020 mb  ----------------
+
+1016 mb  ----------------
+
+1012 mb  ----------------
+
+1008 mb  ----------------
+
+</div>
+
+<p>
+
+✔ पहली रेखा पर हर जगह <b>1020 mb</b> है।
+
+<br>
+
+✔ दूसरी रेखा पर हर जगह <b>1016 mb</b> है।
+
+<br>
+
+✔ तीसरी रेखा पर हर जगह <b>1012 mb</b> है।
+
+</p>
+
+<p>
+
+👉 अर्थात <b>एक ही समदाब रेखा</b> पर दाब समान होता है,
+लेकिन अगली रेखा का दाब अलग होता है।
+
+</p>
+
+<div id="isobar" class="popup">
+
+<span class="close" onclick="closePopup('isobar')">✖</span>
+
+<h2>📖 समदाब रेखा (Isobar)</h2>
+
+<p>
+
+समदाब रेखा वह काल्पनिक रेखा होती है जो समान वायुदाब वाले सभी स्थानों को जोड़ती है।
+
+</p>
+
+<div class="diagram">
+
+1020 ●────────●────────●
+
+सभी बिन्दुओं का दाब = 1020 mb
+
+</div>
+
+</div>
+
+<h2>📍 अब "रेखाएँ पास-पास" का मतलब समझिए</h2>
+
+<div class="compare">
+
+<div class="box">
+
+<h3 class="bad">🔴 स्थिति 1 : रेखाएँ पास-पास</h3>
+
+<div class="diagram">
+
+1020 mb ----------------
+
+      ↑ 10 km
+
+1016 mb ----------------
+
+      ↑ 10 km
+
+1012 mb ----------------
+
+</div>
+
+<p>
+
+20 km में
+
+<b>1020 → 1012</b>
+
+यानी
+
+<b>8 mb</b>
+
+का अंतर।
+
+</p>
+
+<p class="bad">
+
+➡ कम दूरी में अधिक दाब परिवर्तन
+
+</p>
+
+<h3 class="good">
+
+दाब प्रवणता अधिक
+
+</h3>
+
+</div>
+
+<div class="box">
+
+<h3 class="good">🟢 स्थिति 2 : रेखाएँ दूर-दूर</h3>
+
+<div class="diagram">
+
+1020 mb ----------------
+
+      ↑ 100 km
+
+1016 mb ----------------
+
+      ↑ 100 km
+
+1012 mb ----------------
+
+</div>
+
+<p>
+
+200 km में
+
+<b>1020 → 1012</b>
+
+यानी
+
+<b>8 mb</b>
+
+का अंतर।
+
+</p>
+
+<p class="good">
+
+➡ अधिक दूरी में वही परिवर्तन
+
+</p>
+
+<h3 class="bad">
+
+दाब प्रवणता कम
+
+</h3>
+
+</div>
+
+</div>
+
+<h2>🌬 इसका पवनों पर प्रभाव</h2>
+
+<div class="diagram">
+
+रेखाएँ पास
+
+██████████
+
+➡➡➡➡➡➡➡
+
+तेज हवा
+
+----------------------------
+
+रेखाएँ दूर
+
+████      ████
+
+➡➡
+
+धीमी हवा
+
+</div>
+
+<p>
+
+✔ जितनी समदाब रेखाएँ पास-पास होंगी,
+
+उतनी तेज़ हवा चलेगी।
+
+</p>
+
+<p>
+
+✔ जितनी दूर-दूर होंगी,
+
+उतनी धीमी हवा चलेगी।
+
+</p>
+
+<button onclick="toggleRevision()">
+
+⚡ UPSC Quick Revision
+
+</button>
+
+<div id="revision">
+
+<h2>📚 एक नज़र में</h2>
+
+<p>
+
+✅ समदाब रेखा = समान वायुदाब वाले स्थानों को जोड़ती है।
+
+</p>
+
+<p>
+
+✅ एक ही रेखा पर दाब समान होता है।
+
+</p>
+
+<p>
+
+✅ अलग-अलग समदाब रेखाओं का दाब अलग होता है।
+
+</p>
+
+<p>
+
+✅ रेखाएँ पास = दाब प्रवणता अधिक।
+
+</p>
+
+<p>
+
+✅ रेखाएँ दूर = दाब प्रवणता कम।
+
+</p>
+
+<p>
+
+✅ दाब प्रवणता अधिक = तेज पवन।
+
+</p>
+
+<p>
+
+✅ दाब प्रवणता कम = धीमी पवन।
+
+</p>
+
+<hr>
+
+<h3>🎯 UPSC Trick</h3>
+
+<div class="diagram">
+
+Isobars Close
+
+↓
+
+Pressure Gradient High
+
+↓
+
+Wind Fast 🌪
+
+------------------------
+
+Isobars Far
+
+↓
+
+Pressure Gradient Low
+
+↓
+
+Wind Slow 🍃
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function openPopup(id){
+
+document.querySelectorAll(".popup").forEach(p=>p.style.display="none");
+
+document.getElementById(id).style.display="block";
+
+document.getElementById(id).scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+function closePopup(id){
+
+document.getElementById(id).style.display="none";
+
+}
+
+function toggleRevision(){
+
+let x=document.getElementById("revision");
+
+x.style.display=x.style.display=="block"?"none":"block";
+
+}
+
+</script>
+
+</body>
+</html>
