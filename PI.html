@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Income · PI · PDI · Private Income · NDI (लिंक्ड नोट्स)</title>
+    <style>
+        /* ----- GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f6fe;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 18px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1050px;
+            width: 100%;
+        }
+
+        /* ----- MAIN CARD ----- */
+        .notes-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 48px;
+            padding: 38px 40px;
+            box-shadow: 0 25px 50px -10px rgba(0, 20, 40, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0b2b46;
+            border-left: 10px solid #1f6f9e;
+            padding-left: 24px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #d3e4f3;
+            padding: 2px 20px;
+            border-radius: 60px;
+            color: #174b6b;
+        }
+
+        /* ----- STEP BLOCK ----- */
+        .step {
+            background: white;
+            border-radius: 30px;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+            border: 1px solid #e4eef9;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .step:hover {
+            border-color: #bed8ee;
+            box-shadow: 0 8px 20px rgba(24, 68, 102, 0.06);
+        }
+        .step-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 12px 18px;
+            margin-bottom: 12px;
+        }
+        .step-badge {
+            background: #1a4b72;
+            background: linear-gradient(145deg, #1a4b72, #266596);
+            color: white;
+            font-weight: 700;
+            padding: 4px 22px;
+            border-radius: 60px;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+        .step-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0d314b;
+        }
+        .step-sub {
+            background: #e5f0fa;
+            padding: 0 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #1a577a;
+            font-size: 0.95rem;
+        }
+
+        .definition {
+            background: #f4faff;
+            padding: 14px 22px;
+            border-radius: 24px;
+            border-left: 6px solid #2a7aaa;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #032b44;
+            margin: 8px 0 16px 0;
+        }
+        .example-box {
+            background: #eaf2fb;
+            border-radius: 24px;
+            padding: 18px 24px;
+            margin: 14px 0 6px 0;
+            border: 1px solid #d1e2f2;
+        }
+        .calc {
+            background: white;
+            border-radius: 24px;
+            padding: 16px 24px;
+            margin: 12px 0 0 0;
+            border: 1px dashed #2573a0;
+        }
+        .calc-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px 20px;
+            padding: 6px 0;
+            border-bottom: 1px solid #e1edf8;
+        }
+        .calc-row:last-child {
+            border-bottom: none;
+        }
+        .calc-label {
+            font-weight: 600;
+            color: #004066;
+            min-width: 150px;
+        }
+        .calc-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            background: #edf6fe;
+            padding: 2px 18px;
+            border-radius: 40px;
+            color: #003a5e;
+        }
+        .formula {
+            background: #15303f;
+            color: #ddf0ff;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0 4px 0;
+            border: 1px solid #3d7fa3;
+        }
+        .formula span {
+            color: #ffda7a;
+        }
+        .result-box {
+            background: #12384d;
+            color: white;
+            border-radius: 60px;
+            padding: 12px 32px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .result-box span {
+            color: #fdd77d;
+        }
+
+        /* ----- LINKED WORDS : BLUE + UNDERLINE (important) ----- */
+        .linked-word {
+            color: #0066cc !important;
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 2px;
+            font-weight: 700;
+            background: transparent !important;
+            padding: 0 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .linked-word:hover {
+            color: #003d80 !important;
+            text-decoration-color: #003d80;
+            background: #dcecff !important;
+            transform: scale(1.02);
+        }
+        .linked-word:active {
+            transform: scale(0.95);
+        }
+
+        /* ----- POPUP OVERLAY ----- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 10, 20, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        .popup-overlay.active {
+            display: flex;
+        }
+        .popup-card {
+            background: white;
+            max-width: 480px;
+            width: 100%;
+            border-radius: 40px;
+            padding: 32px 30px 28px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideUp 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .popup-close {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #3d5f7a;
+            cursor: pointer;
+            line-height: 1;
+            transition: 0.15s;
+            padding: 0 8px;
+            border-radius: 60px;
+            background: transparent;
+            border: none;
+        }
+        .popup-close:hover {
+            color: #0a2b42;
+            transform: rotate(90deg);
+            background: #eef4fa;
+        }
+        .popup-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00345a;
+            margin-bottom: 8px;
+            border-bottom: 4px solid #b0d1ec;
+            padding-bottom: 8px;
+        }
+        .popup-body {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #042b44;
+            margin-top: 14px;
+        }
+        .popup-body strong {
+            color: #004b77;
+        }
+        .popup-example {
+            background: #eef6fe;
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            border-left: 4px solid #2a78a3;
+        }
+
+        /* ----- FOOTER ----- */
+        .footnote {
+            margin-top: 30px;
+            background: #dce9f5;
+            border-radius: 100px;
+            padding: 16px 28px;
+            text-align: center;
+            font-weight: 500;
+            color: #003153;
+            border: 1px solid #b9d2e8;
+            font-size: 1rem;
+        }
+        .footnote i {
+            background: #1f5a7a;
+            color: white;
+            padding: 2px 16px;
+            border-radius: 40px;
+            margin: 0 4px;
+            font-style: normal;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 700px) {
+            .notes-card {
+                padding: 20px 16px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .step-title {
+                font-size: 1.5rem;
+            }
+            .formula {
+                font-size: 1rem;
+                padding: 10px 16px;
+            }
+            .popup-card {
+                padding: 24px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="notes-card">
+
+        <h1>
+            📊 आय · राष्ट्रीय · व्यक्तिगत · प्रयोज्य
+            <small>लिंक्ड नोट्स</small>
+        </h1>
+
+        <!-- ====== SECTION 1: National Income ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">1</span>
+                <span class="step-title">राष्ट्रीय आय</span>
+                <span class="step-sub">National Income (NI)</span>
+            </div>
+            <div class="definition">
+                यह देश में उत्पादन के साधनों (<strong>श्रम, भूमि, पूंजी, उद्यमी</strong>) द्वारा अर्जित कुल आय है। <br>
+                मान लो, <strong>NI = ₹1000</strong> <br>
+                लेकिन यह ₹1000 पूरा का पूरा लोगों (Individuals) के हाथ में नहीं जाता।
+            </div>
+        </div>
+
+        <!-- ====== SECTION 2: Personal Income (PI) ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">2</span>
+                <span class="step-title">वैयक्तिक आय</span>
+                <span class="step-sub">Personal Income (PI)</span>
+            </div>
+            <div class="definition">
+                <strong>PI = लोगों को वास्तव में प्राप्त आय।</strong> <br>
+                NI में से कुछ पैसा लोगों को नहीं मिलता, और कुछ ऐसा पैसा भी मिलता है जो NI का हिस्सा नहीं होता।
+            </div>
+            <div class="formula" style="background:#10303f; font-size:1rem;">
+                PI = NI − अवितरित लाभ − निगम कर + <span class="linked-word" data-popup="transfer">अंतरण आय</span> + <span class="linked-word" data-popup="interest">परिवारों को प्राप्त ब्याज</span>
+            </div>
+            <div class="example-box">
+                <strong>🧮 उदाहरण :</strong>
+                <div class="calc">
+                    <div class="calc-row"><span class="calc-label">NI</span><span class="calc-value">₹1000</span></div>
+                    <div class="calc-row"><span class="calc-label">अवितरित लाभ</span><span class="calc-value">₹50</span></div>
+                    <div class="calc-row"><span class="calc-label">निगम कर</span><span class="calc-value">₹100</span></div>
+                    <div class="calc-row"><span class="calc-label"><span class="linked-word" data-popup="pension">सरकार से पेंशन</span></span><span class="calc-value">₹40</span></div>
+                    <div class="calc-row"><span class="calc-label"><span class="linked-word" data-popup="scholarship">छात्रवृत्ति</span></span><span class="calc-value">₹10</span></div>
+                    <div class="calc-row"><span class="calc-label"><span class="linked-word" data-popup="bond">सरकारी बॉन्ड पर ब्याज</span></span><span class="calc-value">₹20</span></div>
+                    <div style="margin-top:12px;">
+                        <span class="formula" style="background:#143d55;">PI = 1000 − 50 − 100 + 40 + 10 + 20 = <span>₹920</span></span>
+                    </div>
+                    <div style="margin-top:8px; background:#dcebf8; padding:6px 16px; border-radius: 30px; display:inline-block;">
+                        👉 लोगों के हाथ में वास्तव में <strong>₹920</strong> पहुँचा।
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 3: Personal Disposable Income (PDI) ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">3</span>
+                <span class="step-title">वैयक्तिक प्रयोज्य आय</span>
+                <span class="step-sub">Personal Disposable Income (PDI)</span>
+            </div>
+            <div class="definition">
+                अब लोगों के पास जो आय आई, उसमें से उन्हें <strong>Income Tax</strong> भी देना पड़ता है। <br>
+                <strong>PDI = PI − Personal Taxes − Non-tax Payments</strong> <br>
+                यही वह आय है जिसे व्यक्ति <strong>खर्च या बचत</strong> कर सकता है।
+            </div>
+            <div class="example-box">
+                <strong>🧾 उदाहरण :</strong>
+                <div class="calc">
+                    <div class="calc-row"><span class="calc-label">PI</span><span class="calc-value">₹920</span></div>
+                    <div class="calc-row"><span class="calc-label">Income Tax</span><span class="calc-value">₹120</span></div>
+                    <div class="calc-row"><span class="calc-label">Fees / अन्य</span><span class="calc-value">₹20</span></div>
+                    <div style="margin-top:10px;">
+                        <span class="formula" style="background:#143d55;">PDI = 920 − 120 − 20 = <span>₹780</span></span>
+                    </div>
+                    <div style="margin-top:6px; background:#d4e5f5; padding:6px 18px; border-radius:30px; display:inline-block;">
+                        ✅ यही पैसा व्यक्ति अपनी इच्छा से खर्च या बचा सकता है।
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 4: Private Income ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">4</span>
+                <span class="step-title">निजी आय</span>
+                <span class="step-sub">Private Income</span>
+            </div>
+            <div class="definition">
+                यह <strong>केवल व्यक्तियों</strong> की नहीं, बल्कि पूरे <strong>Private Sector</strong> की आय होती है। <br>
+                Private Sector में शामिल हैं: <strong>परिवार (Households)</strong> और <strong>निजी कंपनियाँ</strong>।
+            </div>
+            <div style="background:#e7f1fa; border-radius:24px; padding:16px 22px; margin:12px 0;">
+                <strong>📌 इसमें शामिल होते हैं :</strong>
+                <ul style="margin:10px 0 4px 22px; line-height:1.9;">
+                    <li>निजी क्षेत्र की कारक आय</li>
+                    <li>राष्ट्रीय ऋण पर ब्याज</li>
+                    <li>NFIA</li>
+                    <li><span class="linked-word" data-popup="transfer">सरकार से मिलने वाले Transfer</span></li>
+                    <li><span class="linked-word" data-popup="transfer">विदेश से मिलने वाले Transfer</span></li>
+                </ul>
+                <div style="margin-top:10px; background:white; border-radius:30px; padding:6px 20px; display:inline-block; border:1px solid #b6d0e6;">
+                    <strong>Private Income</strong> = पूरे Private Sector की कुल प्राप्त आय
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 5: National Disposable Income ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">5</span>
+                <span class="step-title">राष्ट्रीय प्रयोज्य आय</span>
+                <span class="step-sub">National Disposable Income (NDI)</span>
+            </div>
+            <div class="definition">
+                यह <strong>पूरे देश</strong> के खर्च करने योग्य संसाधन हैं। <br>
+                <strong>National Disposable Income = NNP<sub>MP</sub> + Rest of World से Current Transfers</strong>
+            </div>
+            <div style="background:#e2effa; border-radius:24px; padding:16px 22px; margin-top:10px;">
+                <strong>🌍 इन Transfers में आते हैं :</strong>
+                <ul style="margin:10px 0 4px 22px; line-height:1.9;">
+                    <li>विदेश से <span class="linked-word" data-popup="gift">उपहार</span></li>
+                    <li>विदेशी सहायता</li>
+                    <li><span class="linked-word" data-popup="remittance">Remittances</span> (जैसे विदेश में रहने वाले भारतीयों द्वारा भेजा गया पैसा)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ====== FOOTER ====== -->
+        <div class="footnote">
+            <i>🔗</i>  <strong style="color:#0066cc; text-decoration:underline;">नीले + अंडरलाइन वाले शब्द</strong> क्लिक करने योग्य हैं — उन पर क्लिक करें और <i>पॉपअप</i> में विस्तृत जानकारी पाएँ  <i>✕</i>
+        </div>
+
+    </div>
+</div>
+
+<!-- ====== POPUP ====== -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+        <button class="popup-close" id="popupClose">✕</button>
+        <div class="popup-title" id="popupTitle">शीर्षक</div>
+        <div class="popup-body" id="popupBody">
+            यहाँ व्याख्या आएगी।
+        </div>
+    </div>
+</div>
+
+<!-- ====== JAVASCRIPT : POPUP DATA ====== -->
+<script>
+    (function() {
+        // ----- POPUP ELEMENTS -----
+        const overlay = document.getElementById('popupOverlay');
+        const closeBtn = document.getElementById('popupClose');
+        const titleEl = document.getElementById('popupTitle');
+        const bodyEl = document.getElementById('popupBody');
+
+        // ----- DATA : all linked words -----
+        const popupData = {
+
+            // Transfer Income (general)
+            'transfer': {
+                title: 'अंतरण आय (Transfer Income)',
+                body: `
+                    <strong>Transfer Income</strong> वह आय है जो <strong>बिना किसी वस्तु या सेवा के उत्पादन</strong> के बदले मिलती है। <br><br>
+                    यह <strong>सहायता</strong> या <strong>उपहार</strong> के रूप में होती है, न कि काम के बदले।
+                    <div class="popup-example">
+                        📌 <strong>उदाहरण :</strong> पेंशन, छात्रवृत्ति, बेरोज़गारी भत्ता, सरकारी सब्सिडी।
+                    </div>
+                `
+            },
+
+            // Interest (ब्याज)
+            'interest': {
+                title: 'ब्याज आय (Interest Income)',
+                body: `
+                    <strong>ब्याज</strong> वह पैसा है जो <strong>उधार देने</strong> के बदले में मिलता है। <br><br>
+                    यह <strong>Transfer Income नहीं</strong> है, क्योंकि यह पूँजी (Capital) के उपयोग का प्रतिफल है।
+                    <div class="popup-example">
+                        💡 <strong>उदाहरण :</strong> सरकारी बॉन्ड पर ब्याज, बैंक FD पर ब्याज, किसी को ऋण देने पर ब्याज।
+                    </div>
+                `
+            },
+
+            // Pension
+            'pension': {
+                title: 'पेंशन (Pension)',
+                body: `
+                    <strong>पेंशन</strong> सरकार या किसी संस्था द्वारा <strong>सेवानिवृत्त</strong> व्यक्ति को दी जाने वाली सहायता राशि है। <br><br>
+                    यह <strong>Transfer Income</strong> है, क्योंकि इसके बदले कोई वस्तु या सेवा नहीं दी जाती।
+                    <div class="popup-example">
+                        👴 <strong>उदाहरण :</strong> राहुल को सरकार ने ₹40 पेंशन दी – उसने इस साल कोई काम नहीं किया, फिर भी पैसा मिला।
+                    </div>
+                `
+            },
+
+            // Scholarship
+            'scholarship': {
+                title: 'छात्रवृत्ति (Scholarship)',
+                body: `
+                    <strong>छात्रवृत्ति</strong> सरकार या किसी संस्था द्वारा <strong>शिक्षा</strong> के लिए दी जाने वाली आर्थिक सहायता है। <br><br>
+                    यह भी <strong>Transfer Income</strong> है – किसी उत्पादन के बदले नहीं मिलती।
+                    <div class="popup-example">
+                        🎓 <strong>उदाहरण :</strong> राहुल को ₹10 छात्रवृत्ति – सिर्फ़ पढ़ाई में सहायता के लिए।
+                    </div>
+                `
+            },
+
+            // Government Bond Interest
+            'bond': {
+                title: 'सरकारी बॉन्ड पर ब्याज',
+                body: `
+                    <strong>सरकारी बॉन्ड</strong> पर मिलने वाला ब्याज <strong>Interest Income</strong> है, <strong>Transfer नहीं</strong>। <br><br>
+                    यह पैसा <strong>सरकार को उधार देने</strong> के बदले में मिलता है।
+                    <div class="popup-example">
+                        📈 <strong>उदाहरण :</strong> राहुल ने सरकार को ₹1000 उधार दिए (Bond खरीदा) – सरकार हर साल ₹20 ब्याज देती है।
+                    </div>
+                `
+            },
+
+            // Gift (उपहार)
+            'gift': {
+                title: 'उपहार (Gift)',
+                body: `
+                    <strong>उपहार</strong> वह धन या वस्तु है जो <strong>बिना किसी बदले</strong> में दी जाती है। <br><br>
+                    यह <strong>Transfer Income</strong> की श्रेणी में आता है।
+                    <div class="popup-example">
+                        🎁 <strong>उदाहरण :</strong> विदेश से रिश्तेदार द्वारा भेजा गया उपहार, जन्मदिन पर मिला पैसा आदि।
+                    </div>
+                `
+            },
+
+            // Remittance
+            'remittance': {
+                title: 'प्रेषण (Remittance)',
+                body: `
+                    <strong>Remittance</strong> विदेश में काम करने वाले लोगों द्वारा <strong>अपने देश</strong> भेजा गया पैसा है। <br><br>
+                    यह <strong>National Disposable Income</strong> का हिस्सा होता है, और <strong>Transfer Income</strong> माना जाता है।
+                    <div class="popup-example">
+                        🌏 <strong>उदाहरण :</strong> विदेश में रहने वाला भारतीय अपने परिवार को ₹50,000 भेजता है – यह Remittance है।
+                    </div>
+                `
+            }
+        };
+
+        // ----- open popup -----
+        function openPopup(key) {
+            const data = popupData[key];
+            if (!data) {
+                titleEl.textContent = 'जानकारी नहीं मिली';
+                bodyEl.innerHTML = 'इस शब्द के लिए कोई व्याख्या उपलब्ध नहीं है।';
+            } else {
+                titleEl.textContent = data.title;
+                bodyEl.innerHTML = data.body;
+            }
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ----- event listeners on all .linked-word -----
+        document.querySelectorAll('.linked-word').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const key = this.dataset.popup;
+                if (key) openPopup(key);
+            });
+        });
+
+        // close via button
+        closeBtn.addEventListener('click', closePopup);
+
+        // close via backdrop click
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closePopup();
+        });
+
+        // close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                closePopup();
+            }
+        });
+
+    })();
+</script>
+
+</body>
+</html>
