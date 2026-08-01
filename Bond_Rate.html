@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bond Price & Interest Rate (Inverse Relationship) - लिंक्ड नोट्स</title>
+    <style>
+        /* ----- GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f6fe;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 18px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1050px;
+            width: 100%;
+        }
+
+        /* ----- MAIN CARD ----- */
+        .notes-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 48px;
+            padding: 38px 40px;
+            box-shadow: 0 25px 50px -10px rgba(0, 20, 40, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0b2b46;
+            border-left: 10px solid #1f6f9e;
+            padding-left: 24px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #d3e4f3;
+            padding: 2px 20px;
+            border-radius: 60px;
+            color: #174b6b;
+        }
+
+        /* ----- STEP BLOCK ----- */
+        .step {
+            background: white;
+            border-radius: 30px;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+            border: 1px solid #e4eef9;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .step:hover {
+            border-color: #bed8ee;
+            box-shadow: 0 8px 20px rgba(24, 68, 102, 0.06);
+        }
+        .step-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 12px 18px;
+            margin-bottom: 12px;
+        }
+        .step-badge {
+            background: #1a4b72;
+            background: linear-gradient(145deg, #1a4b72, #266596);
+            color: white;
+            font-weight: 700;
+            padding: 4px 22px;
+            border-radius: 60px;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+        .step-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0d314b;
+        }
+        .step-sub {
+            background: #e5f0fa;
+            padding: 0 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #1a577a;
+            font-size: 0.95rem;
+        }
+
+        .definition {
+            background: #f4faff;
+            padding: 14px 22px;
+            border-radius: 24px;
+            border-left: 6px solid #2a7aaa;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #032b44;
+            margin: 8px 0 16px 0;
+        }
+        .example-box {
+            background: #eaf2fb;
+            border-radius: 24px;
+            padding: 18px 24px;
+            margin: 14px 0 6px 0;
+            border: 1px solid #d1e2f2;
+        }
+        .calc {
+            background: white;
+            border-radius: 24px;
+            padding: 16px 24px;
+            margin: 12px 0 0 0;
+            border: 1px dashed #2573a0;
+        }
+        .calc-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px 20px;
+            padding: 6px 0;
+            border-bottom: 1px solid #e1edf8;
+        }
+        .calc-row:last-child {
+            border-bottom: none;
+        }
+        .calc-label {
+            font-weight: 600;
+            color: #004066;
+            min-width: 140px;
+        }
+        .calc-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            background: #edf6fe;
+            padding: 2px 18px;
+            border-radius: 40px;
+            color: #003a5e;
+        }
+        .formula {
+            background: #15303f;
+            color: #ddf0ff;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0 4px 0;
+            border: 1px solid #3d7fa3;
+        }
+        .formula span {
+            color: #ffda7a;
+        }
+        .highlight-box {
+            background: #fef7e0;
+            border-radius: 20px;
+            padding: 16px 22px;
+            border-left: 6px solid #e6a817;
+            margin: 12px 0;
+        }
+        .green-tick {
+            color: #0a7a3a;
+            font-weight: 700;
+        }
+        .red-cross {
+            color: #b00030;
+            font-weight: 700;
+        }
+        .arrow-up {
+            color: #0a7a3a;
+            font-size: 1.3rem;
+        }
+        .arrow-down {
+            color: #b00030;
+            font-size: 1.3rem;
+        }
+
+        /* ----- LINKED WORDS : BLUE + UNDERLINE ----- */
+        .linked-word {
+            color: #0066cc !important;
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 2px;
+            font-weight: 700;
+            background: transparent !important;
+            padding: 0 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .linked-word:hover {
+            color: #003d80 !important;
+            text-decoration-color: #003d80;
+            background: #dcecff !important;
+            transform: scale(1.02);
+        }
+        .linked-word:active {
+            transform: scale(0.95);
+        }
+
+        /* ----- POPUP OVERLAY ----- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 10, 20, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        .popup-overlay.active {
+            display: flex;
+        }
+        .popup-card {
+            background: white;
+            max-width: 500px;
+            width: 100%;
+            border-radius: 40px;
+            padding: 32px 30px 28px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideUp 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .popup-close {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #3d5f7a;
+            cursor: pointer;
+            line-height: 1;
+            transition: 0.15s;
+            padding: 0 8px;
+            border-radius: 60px;
+            background: transparent;
+            border: none;
+        }
+        .popup-close:hover {
+            color: #0a2b42;
+            transform: rotate(90deg);
+            background: #eef4fa;
+        }
+        .popup-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00345a;
+            margin-bottom: 8px;
+            border-bottom: 4px solid #b0d1ec;
+            padding-bottom: 8px;
+        }
+        .popup-body {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #042b44;
+            margin-top: 14px;
+        }
+        .popup-body strong {
+            color: #004b77;
+        }
+        .popup-example {
+            background: #eef6fe;
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            border-left: 4px solid #2a78a3;
+        }
+
+        /* ----- TRICK BOX ----- */
+        .trick-box {
+            background: linear-gradient(145deg, #0b2b46, #1a4f72);
+            color: white;
+            border-radius: 30px;
+            padding: 24px 30px;
+            margin-top: 20px;
+            box-shadow: 0 8px 24px rgba(0, 30, 60, 0.2);
+        }
+        .trick-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .trick-box .rule {
+            font-size: 1.2rem;
+            background: #fddc7a;
+            color: #0a2b42;
+            padding: 10px 24px;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 700;
+            margin: 6px 0;
+        }
+        .trick-box .rule span {
+            font-size: 1.5rem;
+        }
+        .trick-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 30px;
+            margin-top: 12px;
+        }
+        .trick-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* ----- FOOTER ----- */
+        .footnote {
+            margin-top: 30px;
+            background: #dce9f5;
+            border-radius: 100px;
+            padding: 16px 28px;
+            text-align: center;
+            font-weight: 500;
+            color: #003153;
+            border: 1px solid #b9d2e8;
+            font-size: 1rem;
+        }
+        .footnote i {
+            background: #1f5a7a;
+            color: white;
+            padding: 2px 16px;
+            border-radius: 40px;
+            margin: 0 4px;
+            font-style: normal;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 700px) {
+            .notes-card {
+                padding: 20px 16px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .step-title {
+                font-size: 1.5rem;
+            }
+            .formula {
+                font-size: 1rem;
+                padding: 10px 16px;
+            }
+            .popup-card {
+                padding: 24px 18px;
+            }
+            .trick-box h3 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="notes-card">
+
+        <h1>
+            📈 Bond Price & Interest Rate
+            <small>Inverse Relationship</small>
+        </h1>
+
+        <!-- ====== STEP 1: Bond खरीदा ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">Step 1</span>
+                <span class="step-title"><span class="linked-word" data-popup="bond">Bond</span> खरीदा</span>
+            </div>
+            <div class="definition">
+                सरकार ने <strong>₹1000</strong> का <span class="linked-word" data-popup="bond">Bond</span> जारी किया। <br>
+                उस पर <strong>10%</strong> ब्याज मिलता है। <br>
+                मतलब हर साल आपको <strong>₹100</strong> मिलेंगे।
+            </div>
+            <div class="example-box" style="background:#f0f7ff;">
+                <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:center;">
+                    <span style="background:#1a4b72; color:white; padding:6px 20px; border-radius:60px; font-weight:700;">₹1000 Bond</span>
+                    <span style="background:#e6f0fa; padding:6px 20px; border-radius:60px;">10% Interest → ₹100/साल</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== CASE 1: Interest Rate बढ़ी ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">Case 1</span>
+                <span class="step-title"><span class="linked-word" data-popup="interest">ब्याज दर</span> बढ़ी</span>
+                <span class="step-sub">15% → Bond Price ↓</span>
+            </div>
+            <div class="definition" style="border-left-color:#b00030;">
+                <strong>बाद में बाजार की <span class="linked-word" data-popup="interest">ब्याज दर</span> बढ़कर 15% हो गई।</strong> <br>
+                अब नए Bond पर ₹1000 लगाने से <strong>₹150</strong> प्रति साल मिल रहे हैं।
+            </div>
+            <div class="example-box">
+                <p style="font-weight:600; color:#b00030;">❌ क्या कोई तुम्हारा Bond ₹1000 में खरीदेगा?</p>
+                <p style="background:#fff0f0; padding:10px 18px; border-radius:20px; border:1px solid #ffcccc;">
+                    <strong>नहीं।</strong> वह बोलेगा: <br>
+                    <em>"जब मुझे नए Bond से ₹150 मिल रहे हैं, तो तुम्हारे ₹100 वाले Bond के लिए मैं ₹1000 क्यों दूँ?"</em>
+                </p>
+                <div style="margin-top:12px; background:#ffebee; padding:12px 20px; border-radius:20px; border-left:6px solid #b00030;">
+                    <strong>👉 तुम्हें अपना Bond सस्ते में बेचना पड़ेगा।</strong> <br>
+                    मान लो <strong style="color:#b00030;">₹800</strong> में।
+                </div>
+                <div style="margin-top:14px; background:#f5f5f5; padding:12px 20px; border-radius:20px; text-align:center; font-size:1.2rem; font-weight:700;">
+                    <span style="color:#b00030;">⬆️ ब्याज दर ↑</span> ⇒ <span style="color:#b00030;">⬇️ Bond की कीमत ↓</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== CASE 2: Interest Rate घटी ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">Case 2</span>
+                <span class="step-title"><span class="linked-word" data-popup="interest">ब्याज दर</span> घटी</span>
+                <span class="step-sub">5% → Bond Price ↑</span>
+            </div>
+            <div class="definition" style="border-left-color:#0a7a3a;">
+                <strong>बाद में बाजार की <span class="linked-word" data-popup="interest">ब्याज दर</span> घटकर 5% हो गई।</strong> <br>
+                अब नए Bond पर ₹1000 लगाने से सिर्फ <strong>₹50</strong> प्रति साल मिलते हैं।
+            </div>
+            <div class="example-box">
+                <p style="font-weight:600; color:#0a7a3a;">✅ तुम्हारा पुराना Bond अभी भी ₹100 प्रति साल दे रहा है।</p>
+                <p style="background:#e6f5e6; padding:10px 18px; border-radius:20px; border:1px solid #99cc99;">
+                    <strong>अब हर कोई तुम्हारा Bond खरीदना चाहेगा।</strong> <br>
+                    वे ₹1000 से भी <strong>ज़्यादा</strong> देने को तैयार होंगे।
+                </p>
+                <div style="margin-top:12px; background:#e8f5e9; padding:12px 20px; border-radius:20px; border-left:6px solid #0a7a3a;">
+                    मान लो <strong style="color:#0a7a3a;">₹1200</strong> में।
+                </div>
+                <div style="margin-top:14px; background:#f5f5f5; padding:12px 20px; border-radius:20px; text-align:center; font-size:1.2rem; font-weight:700;">
+                    <span style="color:#0a7a3a;">⬇️ ब्याज दर ↓</span> ⇒ <span style="color:#0a7a3a;">⬆️ Bond की कीमत ↑</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SUMMARY ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">⚡</span>
+                <span class="step-title">एक लाइन में याद करो</span>
+            </div>
+            <div class="definition">
+                <span class="linked-word" data-popup="bond">Bond</span> का <strong>Interest Fixed</strong> होता है।
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px; margin:12px 0;">
+                <div style="background:#ffebee; padding:12px 20px; border-radius:20px; border-left:6px solid #b00030;">
+                    अगर बाजार में <strong>Interest Rate बढ़</strong> गई, तो तुम्हारा पुराना Bond <strong>कम आकर्षक</strong> हो गया ⇒ <strong style="color:#b00030;">Price गिर गई</strong> ⬇️
+                </div>
+                <div style="background:#e8f5e9; padding:12px 20px; border-radius:20px; border-left:6px solid #0a7a3a;">
+                    अगर बाजार में <strong>Interest Rate घट</strong> गई, तो तुम्हारा पुराना Bond <strong>ज्यादा आकर्षक</strong> हो गया ⇒ <strong style="color:#0a7a3a;">Price बढ़ गई</strong> ⬆️
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== UPSC TRICK ====== -->
+        <div class="trick-box">
+            <h3>🚀 UPSC Trick</h3>
+            <p style="font-size:1.1rem; margin-bottom:12px;">
+                कल्पना करो कि तुम्हारे पास <strong>10%</strong> वाला पुराना Bond है।
+            </p>
+            <div class="trick-grid">
+                <div class="trick-item" style="border-color:#b00030;">
+                    <strong style="color:#ff8a80;">Market Rate = 15%</strong> <br>
+                    → तुम्हारा Bond कमजोर <br>
+                    <span style="color:#ff8a80; font-size:1.5rem;">⬇️ Price Down</span>
+                </div>
+                <div class="trick-item" style="border-color:#69db7c;">
+                    <strong style="color:#69db7c;">Market Rate = 5%</strong> <br>
+                    → तुम्हारा Bond शानदार <br>
+                    <span style="color:#69db7c; font-size:1.5rem;">⬆️ Price Up</span>
+                </div>
+            </div>
+            <div style="margin-top:20px; text-align:center;">
+                <div class="rule">
+                    <span>📌</span> Interest Rate ↑ → Bond Price ↓ <br>
+                    <span>📌</span> Interest Rate ↓ → Bond Price ↑
+                </div>
+                <p style="margin-top:12px; font-size:1.1rem; opacity:0.9;">
+                    यही <strong>Bond Price और Interest Rate</strong> का <strong style="color:#fddc7a;">Inverse Relationship</strong> कहलाता है।
+                </p>
+            </div>
+        </div>
+
+        <!-- ====== FOOTER ====== -->
+        <div class="footnote">
+            <i>🔗</i>  <strong style="color:#0066cc; text-decoration:underline;">नीले + अंडरलाइन वाले शब्द</strong> क्लिक करने योग्य हैं — उन पर क्लिक करें और <i>पॉपअप</i> में विस्तृत जानकारी पाएँ  <i>✕</i>
+        </div>
+
+    </div>
+</div>
+
+<!-- ====== POPUP ====== -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+        <button class="popup-close" id="popupClose">✕</button>
+        <div class="popup-title" id="popupTitle">शीर्षक</div>
+        <div class="popup-body" id="popupBody">
+            यहाँ व्याख्या आएगी।
+        </div>
+    </div>
+</div>
+
+<!-- ====== JAVASCRIPT : POPUP DATA ====== -->
+<script>
+    (function() {
+        // ----- POPUP ELEMENTS -----
+        const overlay = document.getElementById('popupOverlay');
+        const closeBtn = document.getElementById('popupClose');
+        const titleEl = document.getElementById('popupTitle');
+        const bodyEl = document.getElementById('popupBody');
+
+        // ----- DATA : all linked words -----
+        const popupData = {
+
+            // BOND
+            'bond': {
+                title: '📜 Bond (ऋणपत्र) क्या है?',
+                body: `
+                    <p><strong>Bond</strong> एक <strong>ऋण पत्र</strong> (Debt Instrument) है जो सरकार या कंपनी जारी करती है।</p>
+                    <p>जब आप Bond खरीदते हैं, तो आप <strong>उधार देने वाले</strong> (Lender) बन जाते हैं।</p>
+                    <p>बदले में आपको <strong>निश्चित ब्याज</strong> (Fixed Interest) मिलता है – इसे <strong>Coupon Rate</strong> कहते हैं।</p>
+                    <div class="popup-example">
+                        📌 <strong>उदाहरण :</strong> ₹1000 का 10% Bond → हर साल ₹100 ब्याज मिलता है। <br>
+                        Bond की <strong>अवधि</strong> पूरी होने पर आपको ₹1000 वापस मिल जाते हैं।
+                    </div>
+                    <p style="margin-top:10px;">✅ Bond का <strong>Interest Fixed</strong> होता है – यही कारण है कि बाजार की ब्याज दर बदलने पर <strong>Bond की कीमत</strong> (Price) उल्टा (Inverse) चलती है।</p>
+                `
+            },
+
+            // INTEREST RATE
+            'interest': {
+                title: '📊 ब्याज दर (Interest Rate)',
+                body: `
+                    <p><strong>ब्याज दर</strong> वह <strong>प्रतिशत</strong> है जो उधार लेने या देने पर चुकाया जाता है।</p>
+                    <p>जब बाजार में <strong>ब्याज दर बढ़ती</strong> है, तो नए निवेश ज़्यादा रिटर्न देते हैं → पुराने Bond कम आकर्षक हो जाते हैं।</p>
+                    <p>जब <strong>ब्याज दर घटती</strong> है, तो पुराने Bond (जो ज़्यादा ब्याज देते हैं) ज़्यादा मांग में आ जाते हैं।</p>
+                    <div class="popup-example">
+                        📌 <strong>याद रखें :</strong> <br>
+                        <strong>⬆️ Interest Rate ↑ → Bond Price ↓</strong> <br>
+                        <strong>⬇️ Interest Rate ↓ → Bond Price ↑</strong> <br><br>
+                        इसे <strong>Inverse Relationship</strong> कहते हैं।
+                    </div>
+                `
+            }
+        };
+
+        // ----- open popup -----
+        function openPopup(key) {
+            const data = popupData[key];
+            if (!data) {
+                titleEl.textContent = 'जानकारी नहीं मिली';
+                bodyEl.innerHTML = 'इस शब्द के लिए कोई व्याख्या उपलब्ध नहीं है।';
+            } else {
+                titleEl.textContent = data.title;
+                bodyEl.innerHTML = data.body;
+            }
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ----- event listeners on all .linked-word -----
+        document.querySelectorAll('.linked-word').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const key = this.dataset.popup;
+                if (key) openPopup(key);
+            });
+        });
+
+        // close via button
+        closeBtn.addEventListener('click', closePopup);
+
+        // close via backdrop click
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closePopup();
+        });
+
+        // close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                closePopup();
+            }
+        });
+
+    })();
+</script>
+
+</body>
+</html>
