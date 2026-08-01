@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBI Monetary Policy · CRR · SLR · Repo · OMO (लिंक्ड नोट्स)</title>
+    <style>
+        /* ----- GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f6fe;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 18px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* ----- MAIN CARD ----- */
+        .notes-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 48px;
+            padding: 38px 40px;
+            box-shadow: 0 25px 50px -10px rgba(0, 20, 40, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0b2b46;
+            border-left: 10px solid #1f6f9e;
+            padding-left: 24px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #d3e4f3;
+            padding: 2px 20px;
+            border-radius: 60px;
+            color: #174b6b;
+        }
+
+        /* ----- STEP BLOCK ----- */
+        .step {
+            background: white;
+            border-radius: 30px;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+            border: 1px solid #e4eef9;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .step:hover {
+            border-color: #bed8ee;
+            box-shadow: 0 8px 20px rgba(24, 68, 102, 0.06);
+        }
+        .step-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 12px 18px;
+            margin-bottom: 12px;
+        }
+        .step-badge {
+            background: #1a4b72;
+            background: linear-gradient(145deg, #1a4b72, #266596);
+            color: white;
+            font-weight: 700;
+            padding: 4px 22px;
+            border-radius: 60px;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+        .step-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0d314b;
+        }
+        .step-sub {
+            background: #e5f0fa;
+            padding: 0 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #1a577a;
+            font-size: 0.95rem;
+        }
+
+        .definition {
+            background: #f4faff;
+            padding: 14px 22px;
+            border-radius: 24px;
+            border-left: 6px solid #2a7aaa;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #032b44;
+            margin: 8px 0 16px 0;
+        }
+
+        /* ----- POLICY TABLE ----- */
+        .policy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .policy-table th {
+            background: #1a4b72;
+            color: white;
+            padding: 12px 18px;
+            font-size: 1.05rem;
+            text-align: left;
+        }
+        .policy-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #e6eff6;
+            font-size: 0.98rem;
+        }
+        .policy-table tr:last-child td { border-bottom: none; }
+        .policy-table tr:hover td { background: #f5faff; }
+        .policy-table .effect-down {
+            color: #b00030;
+            font-weight: 700;
+        }
+        .policy-table .effect-up {
+            color: #0a7a3a;
+            font-weight: 700;
+        }
+        .policy-table .instrument-name {
+            font-weight: 600;
+            color: #004066;
+        }
+
+        /* ----- TRICK BOX ----- */
+        .trick-box {
+            background: linear-gradient(145deg, #0b2b46, #1a4f72);
+            color: white;
+            border-radius: 30px;
+            padding: 24px 30px;
+            margin-top: 20px;
+            box-shadow: 0 8px 24px rgba(0, 30, 60, 0.2);
+        }
+        .trick-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .trick-box .rule {
+            font-size: 1.2rem;
+            background: #fddc7a;
+            color: #0a2b42;
+            padding: 10px 24px;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 700;
+            margin: 6px 0;
+        }
+        .trick-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 30px;
+            margin-top: 12px;
+        }
+        .trick-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .trick-item .up { color: #69db7c; font-weight: 700; }
+        .trick-item .down { color: #ff8a80; font-weight: 700; }
+
+        /* ----- MANTRA BOX ----- */
+        .mantra-box {
+            background: #fef7e0;
+            border-radius: 24px;
+            padding: 18px 24px;
+            border-left: 6px solid #e6a817;
+            margin: 16px 0;
+        }
+        .mantra-box .line {
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 6px 0;
+        }
+        .mantra-box .line .red { color: #b00030; }
+        .mantra-box .line .green { color: #0a7a3a; }
+
+        /* ----- LINKED WORDS : BLUE + UNDERLINE ----- */
+        .linked-word {
+            color: #0066cc !important;
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 2px;
+            font-weight: 700;
+            background: transparent !important;
+            padding: 0 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .linked-word:hover {
+            color: #003d80 !important;
+            text-decoration-color: #003d80;
+            background: #dcecff !important;
+            transform: scale(1.02);
+        }
+        .linked-word:active { transform: scale(0.95); }
+
+        /* ----- POPUP OVERLAY ----- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 10, 20, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        .popup-overlay.active { display: flex; }
+        .popup-card {
+            background: white;
+            max-width: 520px;
+            width: 100%;
+            border-radius: 40px;
+            padding: 32px 30px 28px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideUp 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .popup-close {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #3d5f7a;
+            cursor: pointer;
+            line-height: 1;
+            transition: 0.15s;
+            padding: 0 8px;
+            border-radius: 60px;
+            background: transparent;
+            border: none;
+        }
+        .popup-close:hover {
+            color: #0a2b42;
+            transform: rotate(90deg);
+            background: #eef4fa;
+        }
+        .popup-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00345a;
+            margin-bottom: 8px;
+            border-bottom: 4px solid #b0d1ec;
+            padding-bottom: 8px;
+        }
+        .popup-body {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #042b44;
+            margin-top: 14px;
+        }
+        .popup-body strong { color: #004b77; }
+        .popup-example {
+            background: #eef6fe;
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            border-left: 4px solid #2a78a3;
+        }
+        .popup-body ul {
+            margin: 8px 0 8px 22px;
+            line-height: 1.8;
+        }
+
+        /* ----- FOOTER ----- */
+        .footnote {
+            margin-top: 30px;
+            background: #dce9f5;
+            border-radius: 100px;
+            padding: 16px 28px;
+            text-align: center;
+            font-weight: 500;
+            color: #003153;
+            border: 1px solid #b9d2e8;
+            font-size: 1rem;
+        }
+        .footnote i {
+            background: #1f5a7a;
+            color: white;
+            padding: 2px 16px;
+            border-radius: 40px;
+            margin: 0 4px;
+            font-style: normal;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 700px) {
+            .notes-card { padding: 20px 16px; }
+            h1 { font-size: 1.8rem; }
+            .step-title { font-size: 1.5rem; }
+            .popup-card { padding: 24px 18px; }
+            .policy-table th, .policy-table td { padding: 10px 12px; font-size: 0.85rem; }
+            .trick-box h3 { font-size: 1.4rem; }
+            .mantra-box .line { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="notes-card">
+
+        <h1>
+            🏦 RBI Monetary Policy
+            <small>Instruments · Effect · Tricks</small>
+        </h1>
+
+        <!-- ====== SECTION 1: Money Supply ↓ (Inflation कम) ====== -->
+        <div class="step" style="border-left: 6px solid #b00030;">
+            <div class="step-header">
+                <span class="step-badge" style="background:#b00030;">⬇️</span>
+                <span class="step-title">महंगाई कम करनी है</span>
+                <span class="step-sub">Money Supply ↓</span>
+            </div>
+            <div class="definition" style="border-left-color:#b00030;">
+                <strong>अगर RBI महंगाई कम करना चाहती है</strong> (Money Supply ↓) <br>
+                तो RBI ये करेगी:
+            </div>
+            <table class="policy-table">
+                <thead>
+                    <tr><th>Instrument ↑</th><th>Effect</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="linked-word" data-popup="crr">CRR</span> ↑</td>
+                        <td class="effect-down">Loan ↓ → Money Supply ↓</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="slr">SLR</span> ↑</td>
+                        <td class="effect-down">Loan ↓ → Money Supply ↓</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="bankrate">Bank Rate</span> ↑</td>
+                        <td class="effect-down">Loan महंगा → Money Supply ↓</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="repo">Repo Rate</span> ↑</td>
+                        <td class="effect-down">Loan महंगा → Money Supply ↓</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="reverse">Reverse Repo Rate</span> ↑</td>
+                        <td class="effect-down">बैंक RBI के पास ज्यादा पैसा रखेंगे → Money Supply ↓</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="omo">OMO</span> (Government Securities <strong>बेचता</strong> है)</td>
+                        <td class="effect-down">Money Supply ↓</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ====== SECTION 2: Money Supply ↑ (अर्थव्यवस्था में पैसा बढ़ाना) ====== -->
+        <div class="step" style="border-left: 6px solid #0a7a3a;">
+            <div class="step-header">
+                <span class="step-badge" style="background:#0a7a3a;">⬆️</span>
+                <span class="step-title">अर्थव्यवस्था में पैसा बढ़ाना है</span>
+                <span class="step-sub">Money Supply ↑</span>
+            </div>
+            <div class="definition" style="border-left-color:#0a7a3a;">
+                <strong>अगर RBI अर्थव्यवस्था में पैसा बढ़ाना चाहती है</strong> (Money Supply ↑) <br>
+                तो RBI ये करेगी:
+            </div>
+            <table class="policy-table">
+                <thead>
+                    <tr><th>Instrument ↓</th><th>Effect</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="linked-word" data-popup="crr">CRR</span> ↓</td>
+                        <td class="effect-up">Loan ↑ → Money Supply ↑</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="slr">SLR</span> ↓</td>
+                        <td class="effect-up">Loan ↑ → Money Supply ↑</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="bankrate">Bank Rate</span> ↓</td>
+                        <td class="effect-up">Loan सस्ता → Money Supply ↑</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="repo">Repo Rate</span> ↓</td>
+                        <td class="effect-up">Loan सस्ता → Money Supply ↑</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="reverse">Reverse Repo Rate</span> ↓</td>
+                        <td class="effect-up">बैंक RBI में कम पैसा रखेंगे → Money Supply ↑</td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="omo">OMO</span> (Government Securities <strong>खरीदता</strong> है)</td>
+                        <td class="effect-up">Money Supply ↑</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ====== TRICK BOX ====== -->
+        <div class="trick-box">
+            <h3>🚀 एक लाइन की ट्रिक</h3>
+            <div class="trick-grid">
+                <div class="trick-item" style="border-color:#ff8a80;">
+                    <span class="down">⬆️ जो भी Rate (CRR, SLR, Repo, Bank Rate, Reverse Repo) ↑ होगा</span> <br>
+                    → <span class="down">Money Supply ↓</span>
+                </div>
+                <div class="trick-item" style="border-color:#69db7c;">
+                    <span class="up">⬇️ जो भी Rate ↓ होगा</span> <br>
+                    → <span class="up">Money Supply ↑</span>
+                </div>
+            </div>
+            <div style="margin-top:16px; background:rgba(255,255,255,0.08); border-radius:20px; padding:14px 20px;">
+                <strong style="color:#fddc7a;">OMO उल्टा याद रखना:</strong> <br>
+                <span style="color:#69db7c;">RBI Bond खरीदे (Buy) → Money ↑</span> <br>
+                <span style="color:#ff8a80;">RBI Bond बेचे (Sell) → Money ↓</span>
+            </div>
+        </div>
+
+        <!-- ====== MANTRA ====== -->
+        <div class="mantra-box">
+            <h3 style="color:#0b3b5a; margin-bottom:8px;">📣 5 सेकंड का याद रखने वाला मंत्र</h3>
+            <div class="line">
+                <span class="red">"Rate बढ़े = Loan घटे = Money घटे"</span>
+            </div>
+            <div class="line">
+                <span class="green">"Rate घटे = Loan बढ़े = Money बढ़े"</span>
+            </div>
+            <div class="line" style="border-top:1px solid #d4c8a0; padding-top:10px; margin-top:6px;">
+                <span style="color:#b0601a;">"OMO Buy = Money Inject, OMO Sell = Money Withdraw."</span>
+            </div>
+        </div>
+
+        <!-- ====== FOOTER ====== -->
+        <div class="footnote">
+            <i>🔗</i>  <strong style="color:#0066cc; text-decoration:underline;">नीले + अंडरलाइन वाले शब्द</strong> क्लिक करने योग्य हैं — उन पर क्लिक करें और <i>पॉपअप</i> में विस्तृत जानकारी पाएँ  <i>✕</i>
+        </div>
+
+    </div>
+</div>
+
+<!-- ====== POPUP ====== -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+        <button class="popup-close" id="popupClose">✕</button>
+        <div class="popup-title" id="popupTitle">शीर्षक</div>
+        <div class="popup-body" id="popupBody">
+            यहाँ व्याख्या आएगी।
+        </div>
+    </div>
+</div>
+
+<!-- ====== JAVASCRIPT : POPUP DATA ====== -->
+<script>
+    (function() {
+        const overlay = document.getElementById('popupOverlay');
+        const closeBtn = document.getElementById('popupClose');
+        const titleEl = document.getElementById('popupTitle');
+        const bodyEl = document.getElementById('popupBody');
+
+        const popupData = {
+
+            // CRR
+            'crr': {
+                title: '🏦 CRR (Cash Reserve Ratio)',
+                body: `
+                    <p><strong>CRR</strong> = Cash Reserve Ratio</p>
+                    <p>बैंक को अपनी <strong>कुल जमा (Deposits)</strong> का एक निश्चित प्रतिशत <strong>RBI के पास नकद</strong> के रूप में रखना पड़ता है।</p>
+                    <p>यह पैसा बैंक <strong>किसी को Loan नहीं</strong> दे सकता।</p>
+                    <div class="popup-example">
+                        📌 <strong>उदाहरण:</strong> <br>
+                        Deposit = ₹1000, CRR = 4% <br>
+                        → RBI के पास = ₹40 <br>
+                        → Loan दे सकता है = ₹960
+                    </div>
+                    <p style="margin-top:8px;"><strong>🎯 CRR ↑ → Loan ↓ → Money Supply ↓</strong></p>
+                `
+            },
+
+            // SLR
+            'slr': {
+                title: '🏛️ SLR (Statutory Liquidity Ratio)',
+                body: `
+                    <p><strong>SLR</strong> = Statutory Liquidity Ratio</p>
+                    <p>बैंक को अपनी जमा का एक निश्चित हिस्सा <strong>अपने पास तरल परिसंपत्तियों</strong> (Liquid Assets) के रूप में रखना होता है।</p>
+                    <p>इसमें शामिल हैं: <strong>Cash + Gold + Government Securities</strong></p>
+                    <div class="popup-example">
+                        📌 <strong>उदाहरण:</strong> <br>
+                        Deposit = ₹1000, SLR = 18% <br>
+                        → बैंक को ₹180 अपने पास रखना होगा।
+                    </div>
+                    <p style="margin-top:8px;"><strong>🎯 SLR ↑ → Loan ↓ → Money Supply ↓</strong></p>
+                `
+            },
+
+            // Bank Rate
+            'bankrate': {
+                title: '🏦 Bank Rate',
+                body: `
+                    <p><strong>Bank Rate</strong> वह ब्याज दर है जिस पर <strong>RBI बैंकों को Long-term Loan</strong> देता है।</p>
+                    <p>यह <strong>Repo Rate</strong> से अलग है — Bank Rate <strong>बिना Collateral</strong> (गिरवी) के होता है।</p>
+                    <div class="popup-example">
+                        📌 <strong>अगर Bank Rate ↑ :</strong> <br>
+                        → बैंकों को Loan महंगा मिलेगा <br>
+                        → बैंक भी महंगा Loan देंगे <br>
+                        → <strong>Money Supply ↓</strong>
+                    </div>
+                `
+            },
+
+            // Repo Rate
+            'repo': {
+                title: '📈 Repo Rate',
+                body: `
+                    <p><strong>Repo Rate</strong> वह ब्याज दर है जिस पर <strong>RBI बैंकों को Short-term Loan</strong> (आमतौर पर 1-7 दिन) देता है।</p>
+                    <p>बैंक <strong>Government Securities</strong> (Bonds) को <strong>गिरवी</strong> (Collateral) रखकर पैसा लेते हैं।</p>
+                    <div class="popup-example">
+                        📌 <strong>अगर Repo Rate ↑ :</strong> <br>
+                        → बैंकों को Loan महंगा <br>
+                        → बैंक भी महंगा Loan देंगे <br>
+                        → लोग कम Loan लेंगे <br>
+                        → <strong>Money Supply ↓</strong>
+                    </div>
+                    <p style="margin-top:8px;">✅ यह RBI का <strong>सबसे महत्वपूर्ण</strong> Instrument है।</p>
+                `
+            },
+
+            // Reverse Repo Rate
+            'reverse': {
+                title: '📉 Reverse Repo Rate',
+                body: `
+                    <p><strong>Reverse Repo Rate</strong> वह ब्याज दर है जिस पर <strong>RBI बैंकों से पैसा उधार</strong> लेता है।</p>
+                    <p>यानी बैंक <strong>अपना extra पैसा RBI को देते हैं</strong> और उस पर ब्याज कमाते हैं।</p>
+                    <div class="popup-example">
+                        📌 <strong>अगर Reverse Repo Rate ↑ :</strong> <br>
+                        → बैंकों को RBI में पैसा रखना <strong>फायदेमंद</strong> लगेगा <br>
+                        → बैंक RBI में ज्यादा पैसा रखेंगे <br>
+                        → बाजार में कम पैसा <br>
+                        → <strong>Money Supply ↓</strong>
+                    </div>
+                `
+            },
+
+            // OMO
+            'omo': {
+                title: '🔄 OMO (Open Market Operations)',
+                body: `
+                    <p><strong>OMO</strong> = Open Market Operations</p>
+                    <p>RBI <strong>Government Securities</strong> (Bonds) को <strong>खरीदती</strong> या <strong>बेचती</strong> है।</p>
+                    <div class="popup-example">
+                        📌 <strong>OMO Buy (खरीदना) :</strong> <br>
+                        → RBI बाजार से Bonds खरीदता है <br>
+                        → बदले में पैसा बाजार में जाता है <br>
+                        → <strong style="color:#0a7a3a;">Money Supply ↑</strong> <br><br>
+                        📌 <strong>OMO Sell (बेचना) :</strong> <br>
+                        → RBI बाजार में Bonds बेचता है <br>
+                        → बदले में पैसा RBI के पास जाता है <br>
+                        → <strong style="color:#b00030;">Money Supply ↓</strong>
+                    </div>
+                    <p style="margin-top:8px;"><strong>🎯 OMO Buy = Money Inject, OMO Sell = Money Withdraw</strong></p>
+                `
+            }
+        };
+
+        function openPopup(key) {
+            const data = popupData[key];
+            if (!data) {
+                titleEl.textContent = 'जानकारी नहीं मिली';
+                bodyEl.innerHTML = 'इस शब्द के लिए कोई व्याख्या उपलब्ध नहीं है।';
+            } else {
+                titleEl.textContent = data.title;
+                bodyEl.innerHTML = data.body;
+            }
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.linked-word').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const key = this.dataset.popup;
+                if (key) openPopup(key);
+            });
+        });
+
+        closeBtn.addEventListener('click', closePopup);
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closePopup();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) closePopup();
+        });
+
+    })();
+</script>
+
+</body>
+</html>
