@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex-ante (प्रत्याशित) vs Ex-post (यथार्थ) · लिंक्ड नोट्स</title>
+    <style>
+        /* ----- GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f6fe;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 18px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 850px;
+            width: 100%;
+        }
+
+        /* ----- MAIN CARD ----- */
+        .notes-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 48px;
+            padding: 38px 40px;
+            box-shadow: 0 25px 50px -10px rgba(0, 20, 40, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0b2b46;
+            border-left: 10px solid #1f6f9e;
+            padding-left: 24px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #d3e4f3;
+            padding: 2px 20px;
+            border-radius: 60px;
+            color: #174b6b;
+        }
+
+        /* ----- STEP BLOCK ----- */
+        .step {
+            background: white;
+            border-radius: 30px;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+            border: 1px solid #e4eef9;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .step:hover {
+            border-color: #bed8ee;
+            box-shadow: 0 8px 20px rgba(24, 68, 102, 0.06);
+        }
+        .step-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 12px 18px;
+            margin-bottom: 12px;
+        }
+        .step-badge {
+            background: #1a4b72;
+            background: linear-gradient(145deg, #1a4b72, #266596);
+            color: white;
+            font-weight: 700;
+            padding: 4px 22px;
+            border-radius: 60px;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+        .step-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0d314b;
+        }
+        .step-sub {
+            background: #e5f0fa;
+            padding: 0 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #1a577a;
+            font-size: 0.95rem;
+        }
+
+        .definition {
+            background: #f4faff;
+            padding: 14px 22px;
+            border-radius: 24px;
+            border-left: 6px solid #2a7aaa;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #032b44;
+            margin: 8px 0 16px 0;
+        }
+
+        /* ----- PLAN vs REALITY BOX ----- */
+        .plan-box {
+            background: #eaf2fb;
+            border-radius: 24px;
+            padding: 18px 24px;
+            margin: 14px 0 6px 0;
+            border: 1px solid #d1e2f2;
+        }
+        .plan-box .plan {
+            background: #d4e4ff;
+            border-radius: 20px;
+            padding: 14px 20px;
+            border-left: 6px solid #1f6f9e;
+            margin-bottom: 12px;
+        }
+        .plan-box .plan .label {
+            font-weight: 700;
+            color: #004a99;
+        }
+        .plan-box .reality {
+            background: #d4edda;
+            border-radius: 20px;
+            padding: 14px 20px;
+            border-left: 6px solid #0a7a3a;
+        }
+        .plan-box .reality .label {
+            font-weight: 700;
+            color: #0a5a2a;
+        }
+        .plan-box .arrow-icon {
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .calc {
+            background: white;
+            border-radius: 24px;
+            padding: 16px 24px;
+            margin: 12px 0 0 0;
+            border: 1px dashed #2573a0;
+        }
+        .calc-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px 20px;
+            padding: 5px 0;
+            border-bottom: 1px solid #e1edf8;
+        }
+        .calc-row:last-child {
+            border-bottom: none;
+        }
+        .calc-label {
+            font-weight: 600;
+            color: #004066;
+            min-width: 120px;
+        }
+        .calc-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            background: #edf6fe;
+            padding: 2px 18px;
+            border-radius: 40px;
+            color: #003a5e;
+        }
+
+        /* ----- TRICK BOX ----- */
+        .trick-box {
+            background: linear-gradient(145deg, #0b2b46, #1a4f72);
+            color: white;
+            border-radius: 30px;
+            padding: 24px 30px;
+            margin-top: 20px;
+            box-shadow: 0 8px 24px rgba(0, 30, 60, 0.2);
+        }
+        .trick-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .trick-box .rule {
+            font-size: 1.4rem;
+            background: #fddc7a;
+            color: #0a2b42;
+            padding: 10px 28px;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 700;
+            margin: 6px 0;
+        }
+        .trick-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 30px;
+            margin-top: 12px;
+        }
+        .trick-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 1.1rem;
+        }
+        .trick-item .blue {
+            color: #8ab8ff;
+            font-weight: 700;
+        }
+        .trick-item .green {
+            color: #69db7c;
+            font-weight: 700;
+        }
+
+        /* ----- LINKED WORDS : BLUE + UNDERLINE ----- */
+        .linked-word {
+            color: #0066cc !important;
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 2px;
+            font-weight: 700;
+            background: transparent !important;
+            padding: 0 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .linked-word:hover {
+            color: #003d80 !important;
+            text-decoration-color: #003d80;
+            background: #dcecff !important;
+            transform: scale(1.02);
+        }
+        .linked-word:active { transform: scale(0.95); }
+
+        /* ----- POPUP OVERLAY ----- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 10, 20, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        .popup-overlay.active { display: flex; }
+        .popup-card {
+            background: white;
+            max-width: 520px;
+            width: 100%;
+            border-radius: 40px;
+            padding: 32px 30px 28px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideUp 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .popup-close {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #3d5f7a;
+            cursor: pointer;
+            line-height: 1;
+            transition: 0.15s;
+            padding: 0 8px;
+            border-radius: 60px;
+            background: transparent;
+            border: none;
+        }
+        .popup-close:hover {
+            color: #0a2b42;
+            transform: rotate(90deg);
+            background: #eef4fa;
+        }
+        .popup-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00345a;
+            margin-bottom: 8px;
+            border-bottom: 4px solid #b0d1ec;
+            padding-bottom: 8px;
+        }
+        .popup-body {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #042b44;
+            margin-top: 14px;
+        }
+        .popup-body strong { color: #004b77; }
+        .popup-example {
+            background: #eef6fe;
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            border-left: 4px solid #2a78a3;
+        }
+
+        /* ----- FOOTER ----- */
+        .footnote {
+            margin-top: 30px;
+            background: #dce9f5;
+            border-radius: 100px;
+            padding: 16px 28px;
+            text-align: center;
+            font-weight: 500;
+            color: #003153;
+            border: 1px solid #b9d2e8;
+            font-size: 1rem;
+        }
+        .footnote i {
+            background: #1f5a7a;
+            color: white;
+            padding: 2px 16px;
+            border-radius: 40px;
+            margin: 0 4px;
+            font-style: normal;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 700px) {
+            .notes-card { padding: 20px 16px; }
+            h1 { font-size: 1.8rem; }
+            .step-title { font-size: 1.5rem; }
+            .popup-card { padding: 24px 18px; }
+            .trick-box h3 { font-size: 1.4rem; }
+            .trick-box .rule { font-size: 1.1rem; padding: 8px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="notes-card">
+
+        <h1>
+            📊 Ex-ante vs Ex-post
+            <small>प्रत्याशित vs यथार्थ</small>
+        </h1>
+
+        <!-- ====== MAIN CONCEPT ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">1</span>
+                <span class="step-title"><span class="linked-word" data-popup="exante">Ex-ante</span> vs <span class="linked-word" data-popup="expost">Ex-post</span></span>
+            </div>
+            <div class="definition">
+                <strong>Ex-ante</strong> = <span class="linked-word" data-popup="planned">Planned</span> (योजना / अनुमान) <br>
+                <strong>Ex-post</strong> = <span class="linked-word" data-popup="actual">Actual</span> (वास्तविक / घटित)
+            </div>
+
+            <!-- EXAMPLE -->
+            <div class="plan-box">
+                <div class="plan">
+                    <div class="label">📋 Ex-ante (Planned / अनुमान)</div>
+                    <p style="margin-top:6px;">मान लो तुमने <strong>सोचा</strong>:</p>
+                    <div style="display:flex; flex-wrap:wrap; gap:20px; margin-top:6px;">
+                        <span style="background:#d4e4ff; padding:4px 18px; border-radius:40px;">₹5000 खर्च करूँगा</span>
+                        <span style="background:#d4e4ff; padding:4px 18px; border-radius:40px;">₹2000 बचाऊँगा</span>
+                    </div>
+                    <p style="margin-top:6px; color:#004a99;">👉 यह <strong>Plan</strong> है।</p>
+                </div>
+
+                <div class="arrow-icon">⬇️</div>
+
+                <div class="reality">
+                    <div class="label">📌 Ex-post (Actual / वास्तविक)</div>
+                    <p style="margin-top:6px;">लेकिन महीने के अंत में <strong>वास्तव में</strong>:</p>
+                    <div style="display:flex; flex-wrap:wrap; gap:20px; margin-top:6px;">
+                        <span style="background:#d4edda; padding:4px 18px; border-radius:40px;">₹4500 खर्च हुए</span>
+                        <span style="background:#d4edda; padding:4px 18px; border-radius:40px;">₹2500 बच गए</span>
+                    </div>
+                    <p style="margin-top:6px; color:#0a5a2a;">👉 यह <strong>Reality</strong> है।</p>
+                </div>
+            </div>
+
+            <!-- CALCULATION -->
+            <div class="calc">
+                <div style="font-weight:600; color:#004066; margin-bottom:8px;">📊 अंतर:</div>
+                <div class="calc-row">
+                    <span class="calc-label">Ex-ante (Plan)</span>
+                    <span class="calc-value">₹5000 खर्च + ₹2000 बचत</span>
+                </div>
+                <div class="calc-row">
+                    <span class="calc-label">Ex-post (Actual)</span>
+                    <span class="calc-value">₹4500 खर्च + ₹2500 बचत</span>
+                </div>
+                <div style="margin-top:8px; background:#f5f5f5; padding:8px 16px; border-radius:20px; display:inline-block;">
+                    <strong>अंतर:</strong> खर्च में ₹500 कम, बचत में ₹500 ज़्यादा
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== TRICK BOX ====== -->
+        <div class="trick-box">
+            <h3>🚀 Trick</h3>
+            <div style="text-align:center;">
+                <div class="rule">
+                    <span class="blue">Ex-ante</span> = <strong>Plan</strong>
+                </div>
+                <div style="font-size:2rem; color:#fddc7a; margin:4px 0;">⬇️</div>
+                <div class="rule">
+                    <span class="green">Ex-post</span> = <strong>Actual</strong>
+                </div>
+            </div>
+            <div style="margin-top:16px; background:rgba(255,255,255,0.08); border-radius:20px; padding:14px 20px; text-align:center;">
+                <p style="font-size:1.1rem;">
+                    "Ex-ante = <span style="color:#8ab8ff;">Plan</span> (पहले सोचा) <br>
+                    Ex-post = <span style="color:#69db7c;">Reality</span> (बाद में हुआ)"
+                </p>
+            </div>
+        </div>
+
+        <!-- ====== FOOTER ====== -->
+        <div class="footnote">
+            <i>🔗</i>  <strong style="color:#0066cc; text-decoration:underline;">नीले + अंडरलाइन वाले शब्द</strong> क्लिक करने योग्य हैं — उन पर क्लिक करें और <i>पॉपअप</i> में विस्तृत जानकारी पाएँ  <i>✕</i>
+        </div>
+
+    </div>
+</div>
+
+<!-- ====== POPUP ====== -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+        <button class="popup-close" id="popupClose">✕</button>
+        <div class="popup-title" id="popupTitle">शीर्षक</div>
+        <div class="popup-body" id="popupBody">
+            यहाँ व्याख्या आएगी।
+        </div>
+    </div>
+</div>
+
+<!-- ====== JAVASCRIPT : POPUP DATA ====== -->
+<script>
+    (function() {
+        const overlay = document.getElementById('popupOverlay');
+        const closeBtn = document.getElementById('popupClose');
+        const titleEl = document.getElementById('popupTitle');
+        const bodyEl = document.getElementById('popupBody');
+
+        const popupData = {
+
+            // Ex-ante
+            'exante': {
+                title: '📋 Ex-ante (प्रत्याशित)',
+                body: `
+                    <p><strong>Ex-ante</strong> लैटिन शब्द है, जिसका अर्थ है <strong>"पहले से"</strong> (Before the event)।</p>
+                    <p>यह <strong>योजना, अनुमान या प्रत्याशा</strong> को दर्शाता है – जो <strong>पहले से</strong> सोचा गया हो।</p>
+                    <div class="popup-example">
+                        📌 <strong>उदाहरण:</strong> <br>
+                        महीने की शुरुआत में: <br>
+                        "मैं ₹5000 खर्च करूँगा और ₹2000 बचाऊँगा" <br>
+                        → यह <strong>Ex-ante</strong> (Plan) है।
+                    </div>
+                    <p style="margin-top:8px;"><strong>🎯 याद रखें:</strong> Ex-ante = <strong>Plan / अनुमान</strong></p>
+                `
+            },
+
+            // Ex-post
+            'expost': {
+                title: '📌 Ex-post (यथार्थ)',
+                body: `
+                    <p><strong>Ex-post</strong> लैटिन शब्द है, जिसका अर्थ है <strong>"बाद में"</strong> (After the event)।</p>
+                    <p>यह <strong>वास्तविकता</strong> को दर्शाता है – जो <strong>घटित</strong> हुआ या <strong>परिणाम</strong> निकला।</p>
+                    <div class="popup-example">
+                        📌 <strong>उदाहरण:</strong> <br>
+                        महीने के अंत में: <br>
+                        "मैंने ₹4500 खर्च किए और ₹2500 बचे" <br>
+                        → यह <strong>Ex-post</strong> (Actual) है।
+                    </div>
+                    <p style="margin-top:8px;"><strong>🎯 याद रखें:</strong> Ex-post = <strong>Actual / Reality</strong></p>
+                `
+            },
+
+            // Planned
+            'planned': {
+                title: '📋 Planned (योजना)',
+                body: `
+                    <p><strong>Planned</strong> = वह जो <strong>पहले से सोचा</strong> या <strong>तय</strong> किया गया हो।</p>
+                    <p>यह <strong>Ex-ante</strong> का ही दूसरा नाम है – योजना या अनुमान।</p>
+                    <div class="popup-example">
+                        📌 <strong>उदाहरण:</strong> <br>
+                        "मैं इस महीने ₹5000 खर्च करूँगा" – यह <strong>Planned</strong> है।
+                    </div>
+                `
+            },
+
+            // Actual
+            'actual': {
+                title: '✅ Actual (वास्तविक)',
+                body: `
+                    <p><strong>Actual</strong> = वह जो <strong>वास्तव में</strong> हुआ या <strong>घटित</strong> हुआ।</p>
+                    <p>यह <strong>Ex-post</strong> का ही दूसरा नाम है – वास्तविकता / Reality।</p>
+                    <div class="popup-example">
+                        📌 <strong>उदाहरण:</strong> <br>
+                        "महीने के अंत में ₹4500 खर्च हुए" – यह <strong>Actual</strong> है।
+                    </div>
+                `
+            }
+        };
+
+        function openPopup(key) {
+            const data = popupData[key];
+            if (!data) {
+                titleEl.textContent = 'जानकारी नहीं मिली';
+                bodyEl.innerHTML = 'इस शब्द के लिए कोई व्याख्या उपलब्ध नहीं है।';
+            } else {
+                titleEl.textContent = data.title;
+                bodyEl.innerHTML = data.body;
+            }
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.linked-word').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const key = this.dataset.popup;
+                if (key) openPopup(key);
+            });
+        });
+
+        closeBtn.addEventListener('click', closePopup);
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closePopup();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) closePopup();
+        });
+
+    })();
+</script>
+
+</body>
+</html>
