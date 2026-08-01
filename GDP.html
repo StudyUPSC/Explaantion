@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDP, GNP, NNP और National Income (आसान नोट्स)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(145deg, #f5f9ff 0%, #e9f0fa 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 40px 45px;
+            box-shadow: 0 25px 50px -12px rgba(0, 20, 50, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.2s ease;
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #0b2b4a;
+            letter-spacing: -0.5px;
+            border-left: 10px solid #1e6f9f;
+            padding-left: 22px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #3a5d7c;
+            background: #d4e3f0;
+            padding: 2px 16px;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+        .step {
+            background: white;
+            border-radius: 28px;
+            padding: 24px 30px;
+            margin-bottom: 28px;
+            box-shadow: 0 6px 18px rgba(0, 20, 30, 0.06);
+            border: 1px solid #e8f0fe;
+            transition: 0.15s;
+        }
+        .step:hover {
+            border-color: #b6d2e9;
+            box-shadow: 0 10px 24px rgba(26, 80, 120, 0.08);
+        }
+        .step-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .step-badge {
+            background: #1a4972;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 6px 20px;
+            border-radius: 60px;
+            letter-spacing: 0.3px;
+            background: linear-gradient(135deg, #1a4972, #246b9e);
+        }
+        .step-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0e2e48;
+        }
+        .step-sub {
+            font-size: 1rem;
+            color: #1e5a7a;
+            background: #ebf3fa;
+            padding: 0 16px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+        .definition {
+            background: #f2f8ff;
+            border-radius: 20px;
+            padding: 16px 22px;
+            margin: 14px 0 18px 0;
+            border-left: 6px solid #2f7caa;
+            font-size: 1.08rem;
+            line-height: 1.6;
+            color: #0a2d45;
+        }
+        .example-box {
+            background: #eef5fa;
+            padding: 18px 24px;
+            border-radius: 20px;
+            margin: 18px 0 8px 0;
+            border: 1px solid #cfe0ee;
+        }
+        .example-box strong {
+            color: #003d66;
+        }
+        .green {
+            background: #d7f0dd;
+            color: #005a2c;
+            padding: 0 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .red {
+            background: #ffdede;
+            color: #a0002a;
+            padding: 0 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .highlight {
+            background: #fcebb5;
+            padding: 0 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .formula {
+            background: #152b3b;
+            color: #d8edff;
+            padding: 14px 24px;
+            border-radius: 50px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            margin: 10px 0 6px 0;
+            border: 1px solid #3c779b;
+        }
+        .formula span {
+            color: #ffe484;
+        }
+        .calc {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 18px 26px;
+            margin: 16px 0 0 0;
+            border: 1px dashed #1e6f9f;
+        }
+        .calc-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px 20px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e1ecf5;
+        }
+        .calc-row:last-child {
+            border-bottom: none;
+        }
+        .calc-label {
+            font-weight: 600;
+            color: #004066;
+            min-width: 150px;
+        }
+        .calc-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            background: #edf4fa;
+            padding: 2px 18px;
+            border-radius: 30px;
+            color: #003057;
+        }
+        .result {
+            background: #0b2b44;
+            color: white;
+            border-radius: 60px;
+            padding: 14px 28px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .result span {
+            color: #fddc7a;
+            font-weight: 400;
+            margin: 0 6px;
+        }
+        .footnote {
+            margin-top: 30px;
+            background: #dce8f3;
+            padding: 18px 28px;
+            border-radius: 100px;
+            text-align: center;
+            font-weight: 500;
+            color: #003153;
+            border: 1px solid #b5cee5;
+            font-size: 1.05rem;
+        }
+        .footnote i {
+            font-style: normal;
+            background: #1f5379;
+            color: white;
+            padding: 2px 14px;
+            border-radius: 40px;
+            margin: 0 6px;
+        }
+        ul {
+            margin: 12px 0 6px 22px;
+            line-height: 1.8;
+        }
+        li {
+            margin-bottom: 4px;
+        }
+        @media (max-width: 700px) {
+            .card {
+                padding: 24px 18px;
+            }
+            h1 {
+                font-size: 2rem;
+                flex-wrap: wrap;
+            }
+            .step-title {
+                font-size: 1.5rem;
+            }
+            .formula {
+                font-size: 1rem;
+                padding: 10px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>
+            📊 GDP · GNP · NNP · NI
+            <small>आसान भाषा में</small>
+        </h1>
+
+        <!-- Step 1: GDP -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">Step 1</span>
+                <span class="step-title">GDP</span>
+                <span class="step-sub">Gross Domestic Product</span>
+            </div>
+            <div class="definition">
+                <strong>GDP</strong> = भारत की सीमा के अंदर <strong>एक वर्ष</strong> में जितना उत्पादन हुआ। <br>
+                इससे फर्क नहीं पड़ता कि उत्पादन <strong>किसने</strong> किया।
+            </div>
+            <div class="example-box">
+                <strong>✅ उदाहरण :</strong>
+                <ul>
+                    <li>टाटा ने <strong>भारत</strong> में उत्पादन किया → <span class="green">GDP में ✅</span></li>
+                    <li>जापानी कंपनी ने <strong>भारत</strong> में उत्पादन किया → <span class="green">GDP में ✅</span></li>
+                    <li>भारतीय कंपनी ने <strong>अमेरिका</strong> में उत्पादन किया → <span class="red">GDP में नहीं ❌</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 2: GNP -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">Step 2</span>
+                <span class="step-title">GNP</span>
+                <span class="step-sub">Gross National Product</span>
+            </div>
+            <div class="definition">
+                <strong>GNP</strong> = GDP + <strong>NFIA</strong> <br>
+                NFIA = विदेशों से प्राप्त निवल कारक आय <br>
+                = <span class="highlight">विदेश में भारतीयों की कमाई</span> − <span class="highlight">भारत में विदेशियों की कमाई</span>
+            </div>
+            <div class="example-box">
+                <strong>🧮 उदाहरण :</strong>
+                <div class="calc">
+                    <div class="calc-row">
+                        <span class="calc-label">GDP</span>
+                        <span class="calc-value">₹1000 करोड़</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="calc-label">भारतीयों ने विदेश से कमाया</span>
+                        <span class="calc-value">₹80 करोड़</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="calc-label">विदेशियों ने भारत में कमाया</span>
+                        <span class="calc-value">₹30 करोड़</span>
+                    </div>
+                    <div class="calc-row" style="border-top:2px solid #b0cfe0; margin-top:8px; padding-top:12px;">
+                        <span class="calc-label">NFIA = 80 − 30</span>
+                        <span class="calc-value" style="background:#d9e8f5;">= ₹50 करोड़</span>
+                    </div>
+                    <div style="margin-top:12px;">
+                        <span class="formula">GNP = 1000 + 50 = <span>₹1050 करोड़</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: NNP -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">Step 3</span>
+                <span class="step-title">NNP</span>
+                <span class="step-sub">Net National Product</span>
+            </div>
+            <div class="definition">
+                <strong>Gross</strong> (सकल) = मशीनों का घिसना (Depreciation) भी शामिल है। <br>
+                <strong>Net</strong> (शुद्ध) = वास्तविक नई आय के लिए घिसावट घटाते हैं।
+            </div>
+            <div class="example-box">
+                <strong>⚙️ उदाहरण :</strong>
+                <div class="calc">
+                    <div class="calc-row">
+                        <span class="calc-label">GNP</span>
+                        <span class="calc-value">₹1050 करोड़</span>
+                    </div>
+                    <div class="calc-row">
+                        <span class="calc-label">Depreciation (घिसावट)</span>
+                        <span class="calc-value">₹50 करोड़</span>
+                    </div>
+                    <div style="margin-top:12px;">
+                        <span class="formula">NNP = 1050 − 50 = <span>₹1000 करोड़</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: National Income -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">Step 4</span>
+                <span class="step-title">राष्ट्रीय आय</span>
+                <span class="step-sub">National Income (NI)</span>
+            </div>
+            <div class="definition">
+                <strong>NNP</strong> अभी <strong>Market Price</strong> पर है। <br>
+                Market Price में अप्रत्यक्ष कर (Indirect Tax) भी शामिल होते हैं, जो उत्पादकों की आय नहीं होते। <br>
+                इसलिए <strong>शुद्ध अप्रत्यक्ष कर (NIT)</strong> घटाते हैं।
+            </div>
+            <div class="example-box">
+                <strong>📉 सूत्र :</strong><br>
+                <span class="formula" style="background:#1a3f54;">NNP<sub>FC</sub> = NNP<sub>MP</sub> − NIT</span>
+                <div style="margin-top:18px; background:#eaf1f9; padding:16px 20px; border-radius: 28px;">
+                    <p style="font-weight:500; margin-bottom:6px;">✅ <strong>NNP<sub>FC</sub></strong> ही <strong>National Income</strong> कहलाती है।</p>
+                    <p style="color:#003f66;">(FC = Factor Cost, MP = Market Price, NIT = Net Indirect Tax)</p>
+                </div>
+                <div style="margin-top:16px; background:#ffffff; border-radius: 30px; padding: 12px 20px; border:1px solid #b4d0e8;">
+                    <span style="font-weight:600;">मान लीजिए :</span> NNP<sub>MP</sub> = ₹1000 करोड़, NIT = ₹80 करोड़ <br>
+                    <span class="formula" style="background:#143142; margin-top:10px;">National Income = 1000 − 80 = <span>₹920 करोड़</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full summary / recap -->
+        <div class="footnote">
+            <i>🔁</i>  GDP → GNP → NNP → National Income  <i>📌</i>  <br style="display:none;">
+            <span style="background:#ffffff; padding:4px 16px; border-radius:40px; margin:0 4px; color:#003153;">
+                GNP = GDP + NFIA &nbsp;|&nbsp; NNP = GNP − Depreciation &nbsp;|&nbsp; NI = NNP<sub>MP</sub> − NIT
+            </span>
+        </div>
+
+        <div style="margin-top:20px; font-size:0.95rem; color:#2a577a; background:#e3eef9; padding:8px 24px; border-radius: 40px; text-align:center; border:1px solid #bfd9ef;">
+            ⭐ <strong>याद रखें :</strong> GDP = सीमा के अंदर · GNP = भारतीयों की कमाई (दुनिया में कहीं भी) · NNP = घिसावट घटाकर · National Income = शुद्ध आय (बिना अप्रत्यक्ष कर के)
+        </div>
+    </div>
+</body>
+</html>
