@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPI vs GDP Deflator (लिंक्ड नोट्स)</title>
+    <style>
+        /* ----- GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f6fe;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 30px 18px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1050px;
+            width: 100%;
+        }
+
+        /* ----- MAIN CARD ----- */
+        .notes-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 48px;
+            padding: 38px 40px;
+            box-shadow: 0 25px 50px -10px rgba(0, 20, 40, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0b2b46;
+            border-left: 10px solid #1f6f9e;
+            padding-left: 24px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #d3e4f3;
+            padding: 2px 20px;
+            border-radius: 60px;
+            color: #174b6b;
+        }
+
+        /* ----- STEP BLOCK ----- */
+        .step {
+            background: white;
+            border-radius: 30px;
+            padding: 22px 28px;
+            margin-bottom: 28px;
+            border: 1px solid #e4eef9;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .step:hover {
+            border-color: #bed8ee;
+            box-shadow: 0 8px 20px rgba(24, 68, 102, 0.06);
+        }
+        .step-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 12px 18px;
+            margin-bottom: 12px;
+        }
+        .step-badge {
+            background: #1a4b72;
+            background: linear-gradient(145deg, #1a4b72, #266596);
+            color: white;
+            font-weight: 700;
+            padding: 4px 22px;
+            border-radius: 60px;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+        }
+        .step-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0d314b;
+        }
+        .step-sub {
+            background: #e5f0fa;
+            padding: 0 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #1a577a;
+            font-size: 0.95rem;
+        }
+
+        .definition {
+            background: #f4faff;
+            padding: 14px 22px;
+            border-radius: 24px;
+            border-left: 6px solid #2a7aaa;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #032b44;
+            margin: 8px 0 16px 0;
+        }
+        .example-box {
+            background: #eaf2fb;
+            border-radius: 24px;
+            padding: 18px 24px;
+            margin: 14px 0 6px 0;
+            border: 1px solid #d1e2f2;
+        }
+        .calc {
+            background: white;
+            border-radius: 24px;
+            padding: 16px 24px;
+            margin: 12px 0 0 0;
+            border: 1px dashed #2573a0;
+        }
+        .calc-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px 20px;
+            padding: 6px 0;
+            border-bottom: 1px solid #e1edf8;
+        }
+        .calc-row:last-child {
+            border-bottom: none;
+        }
+        .calc-label {
+            font-weight: 600;
+            color: #004066;
+            min-width: 140px;
+        }
+        .calc-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            background: #edf6fe;
+            padding: 2px 18px;
+            border-radius: 40px;
+            color: #003a5e;
+        }
+        .formula {
+            background: #15303f;
+            color: #ddf0ff;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0 4px 0;
+            border: 1px solid #3d7fa3;
+        }
+        .formula span {
+            color: #ffda7a;
+        }
+        .green-tick {
+            color: #0a7a3a;
+            font-weight: 700;
+        }
+        .red-cross {
+            color: #b00030;
+            font-weight: 700;
+        }
+
+        /* COMPARISON TABLE */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .compare-table th {
+            background: #1a4b72;
+            color: white;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            text-align: left;
+        }
+        .compare-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #e6eff6;
+            font-size: 1rem;
+        }
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+        .compare-table tr:hover td {
+            background: #f5faff;
+        }
+
+        /* ----- LINKED WORDS : BLUE + UNDERLINE (important) ----- */
+        .linked-word {
+            color: #0066cc !important;
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 2px;
+            font-weight: 700;
+            background: transparent !important;
+            padding: 0 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .linked-word:hover {
+            color: #003d80 !important;
+            text-decoration-color: #003d80;
+            background: #dcecff !important;
+            transform: scale(1.02);
+        }
+        .linked-word:active {
+            transform: scale(0.95);
+        }
+
+        /* ----- POPUP OVERLAY ----- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 10, 20, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        .popup-overlay.active {
+            display: flex;
+        }
+        .popup-card {
+            background: white;
+            max-width: 500px;
+            width: 100%;
+            border-radius: 40px;
+            padding: 32px 30px 28px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideUp 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .popup-close {
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #3d5f7a;
+            cursor: pointer;
+            line-height: 1;
+            transition: 0.15s;
+            padding: 0 8px;
+            border-radius: 60px;
+            background: transparent;
+            border: none;
+        }
+        .popup-close:hover {
+            color: #0a2b42;
+            transform: rotate(90deg);
+            background: #eef4fa;
+        }
+        .popup-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00345a;
+            margin-bottom: 8px;
+            border-bottom: 4px solid #b0d1ec;
+            padding-bottom: 8px;
+        }
+        .popup-body {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #042b44;
+            margin-top: 14px;
+        }
+        .popup-body strong {
+            color: #004b77;
+        }
+        .popup-example {
+            background: #eef6fe;
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            border-left: 4px solid #2a78a3;
+        }
+        .popup-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+        .popup-table th {
+            background: #d4e4f5;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .popup-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #dce8f2;
+        }
+
+        /* ----- FOOTER ----- */
+        .footnote {
+            margin-top: 30px;
+            background: #dce9f5;
+            border-radius: 100px;
+            padding: 16px 28px;
+            text-align: center;
+            font-weight: 500;
+            color: #003153;
+            border: 1px solid #b9d2e8;
+            font-size: 1rem;
+        }
+        .footnote i {
+            background: #1f5a7a;
+            color: white;
+            padding: 2px 16px;
+            border-radius: 40px;
+            margin: 0 4px;
+            font-style: normal;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 700px) {
+            .notes-card {
+                padding: 20px 16px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .step-title {
+                font-size: 1.5rem;
+            }
+            .formula {
+                font-size: 1rem;
+                padding: 10px 16px;
+            }
+            .popup-card {
+                padding: 24px 18px;
+            }
+            .compare-table th,
+            .compare-table td {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="notes-card">
+
+        <h1>
+            📊 CPI vs GDP Deflator
+            <small>लिंक्ड नोट्स</small>
+        </h1>
+
+        <!-- ====== SECTION 1: CPI ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">1</span>
+                <span class="step-title">CPI</span>
+                <span class="step-sub">Consumer Price Index</span>
+            </div>
+            <div class="definition">
+                <strong>CPI</strong> देखता है कि <strong>आम आदमी</strong> जो सामान खरीदता है, उसकी कीमत कितनी बढ़ी।
+            </div>
+            <div class="example-box">
+                <strong>🛒 मान लो एक परिवार खरीदता है :</strong>
+                <div class="calc">
+                    <div class="calc-row"><span class="calc-label">भारतीय चावल</span><span class="calc-value">₹100</span></div>
+                    <div class="calc-row"><span class="calc-label">भारतीय दूध</span><span class="calc-value">₹50</span></div>
+                    <div class="calc-row"><span class="calc-label">चीन का मोबाइल (आयातित)</span><span class="calc-value">₹20,000</span></div>
+                </div>
+                <p style="margin-top:12px; font-weight:500;">
+                    ✅ CPI इन <strong>तीनों</strong> की कीमत देखेगा — <span class="green-tick">आयातित (Imported) सामान भी शामिल</span>।
+                </p>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 2: GDP Deflator ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">2</span>
+                <span class="step-title">GDP Deflator</span>
+                <span class="step-sub">GDP Deflator</span>
+            </div>
+            <div class="definition">
+                <strong>GDP Deflator</strong> केवल <strong>भारत में उत्पादित</strong> वस्तुओं और सेवाओं की कीमत देखता है। <br>
+                अगर मोबाइल चीन में बना है तो वह भारत के GDP का हिस्सा नहीं है।
+            </div>
+            <div class="example-box">
+                <strong>📦 उदाहरण :</strong>
+                <div class="calc">
+                    <div class="calc-row"><span class="calc-label">चावल</span><span class="calc-value green-tick">✅ शामिल</span></div>
+                    <div class="calc-row"><span class="calc-label">दूध</span><span class="calc-value green-tick">✅ शामिल</span></div>
+                    <div class="calc-row"><span class="calc-label">चीन का मोबाइल</span><span class="calc-value red-cross">❌ शामिल नहीं</span></div>
+                </div>
+                <p style="margin-top:12px; font-weight:500;">
+                    👉 <strong>GDP Deflator</strong> में <span class="red-cross">आयात शामिल नहीं</span> होता।
+                </p>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 3: Fixed vs Variable Weight ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">3</span>
+                <span class="step-title">Fixed vs Variable Weight</span>
+                <span class="step-sub">भार स्थिर vs भार बदलता</span>
+            </div>
+
+            <!-- CPI Fixed Weight -->
+            <div style="background:#eaf2fb; border-radius:24px; padding:18px 24px; margin-bottom:18px; border-left:6px solid #1f6f9e;">
+                <h3 style="color:#0b3b5a; margin-bottom:8px;">📌 CPI → <span class="linked-word" data-popup="weight">Fixed Weight</span> (भार स्थिर)</h3>
+                <p>सरकार पहले से तय कर देती है कि एक परिवार क्या-क्या खरीदता है।</p>
+                <div style="background:white; border-radius:20px; padding:14px 18px; margin-top:12px; border:1px solid #c5d9ec;">
+                    <strong>उदाहरण :</strong>
+                    <div style="display:flex; flex-wrap:wrap; gap:20px 40px; margin-top:6px;">
+                        <span>चावल → 40%</span>
+                        <span>दूध → 30%</span>
+                        <span>मोबाइल → 30%</span>
+                    </div>
+                    <p style="margin-top:6px; color:#004466; font-size:0.95rem;">✅ ये <span class="linked-word" data-popup="weight">वजन</span> कई वर्षों तक लगभग वही रहते हैं।</p>
+                </div>
+            </div>
+
+            <!-- GDP Deflator Variable Weight -->
+            <div style="background:#eaf2fb; border-radius:24px; padding:18px 24px; border-left:6px solid #b0601a;">
+                <h3 style="color:#0b3b5a; margin-bottom:8px;">📌 GDP Deflator → <span class="linked-word" data-popup="weight">Variable Weight</span> (भार बदलता है)</h3>
+                <p>यह देखता है कि <strong>इस साल</strong> देश ने कितना उत्पादन किया।</p>
+                <div style="background:white; border-radius:20px; padding:14px 18px; margin-top:12px; border:1px solid #c5d9ec;">
+                    <strong>उदाहरण :</strong>
+                    <div style="margin-top:6px;">
+                        <div style="background:#edf6fe; border-radius:12px; padding:8px 14px; margin-bottom:6px;">
+                            <strong>2025</strong> → चावल = 40% &nbsp;|&nbsp; कार = 60%
+                        </div>
+                        <div style="background:#edf6fe; border-radius:12px; padding:8px 14px;">
+                            <strong>2026</strong> (कारों का उत्पादन बहुत बढ़ गया) → चावल = 25% &nbsp;|&nbsp; कार = 75%
+                        </div>
+                    </div>
+                    <p style="margin-top:8px; color:#004466; font-size:0.95rem;">
+                        ✅ <span class="linked-word" data-popup="weight">वजन</span> हर साल <strong>उत्पादन के अनुसार</strong> बदल जाता है।
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECTION 4: Comparison Table ====== -->
+        <div class="step">
+            <div class="step-header">
+                <span class="step-badge">⚡</span>
+                <span class="step-title">एक लाइन में याद रखो</span>
+            </div>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>CPI</th>
+                        <th>GDP Deflator</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>उपभोक्ता क्या खरीदता है</td>
+                        <td>देश क्या उत्पादन करता है</td>
+                    </tr>
+                    <tr>
+                        <td><span class="green-tick">✅ आयात शामिल</span></td>
+                        <td><span class="red-cross">❌ आयात शामिल नहीं</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="linked-word" data-popup="weight">Fixed Weight</span></td>
+                        <td><span class="linked-word" data-popup="weight">Variable Weight</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ====== FOOTER ====== -->
+        <div class="footnote">
+            <i>🔗</i>  <strong style="color:#0066cc; text-decoration:underline;">नीले + अंडरलाइन वाले शब्द</strong> क्लिक करने योग्य हैं — उन पर क्लिक करें और <i>पॉपअप</i> में विस्तृत जानकारी पाएँ  <i>✕</i>
+        </div>
+
+    </div>
+</div>
+
+<!-- ====== POPUP ====== -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+        <button class="popup-close" id="popupClose">✕</button>
+        <div class="popup-title" id="popupTitle">शीर्षक</div>
+        <div class="popup-body" id="popupBody">
+            यहाँ व्याख्या आएगी।
+        </div>
+    </div>
+</div>
+
+<!-- ====== JAVASCRIPT : POPUP DATA ====== -->
+<script>
+    (function() {
+        // ----- POPUP ELEMENTS -----
+        const overlay = document.getElementById('popupOverlay');
+        const closeBtn = document.getElementById('popupClose');
+        const titleEl = document.getElementById('popupTitle');
+        const bodyEl = document.getElementById('popupBody');
+
+        // ----- DATA : all linked words -----
+        const popupData = {
+
+            // WEIGHT (main concept)
+            'weight': {
+                title: '📐 "Weight" (भार) का मतलब',
+                body: `
+                    <p><strong>यहाँ "Weight" का मतलब किलो (kg) वाला वजन नहीं है।</strong></p>
+                    <p>CPI में <strong>Weight (भार)</strong> का अर्थ है <strong>महत्त्व (Importance)</strong> या <strong>खर्च का हिस्सा (Expenditure Share)</strong>।</p>
+                    <div class="popup-example">
+                        <strong>📊 उदाहरण :</strong> मान लो एक परिवार हर महीने ₹10,000 खर्च करता है।
+                        <table class="popup-table">
+                            <thead><tr><th>वस्तु</th><th>खर्च</th><th>Weight</th></tr></thead>
+                            <tbody>
+                                <tr><td>भोजन</td><td>₹4,000</td><td><strong>40%</strong></td></tr>
+                                <tr><td>कपड़े</td><td>₹2,000</td><td><strong>20%</strong></td></tr>
+                                <tr><td>किराया</td><td>₹3,000</td><td><strong>30%</strong></td></tr>
+                                <tr><td>अन्य</td><td>₹1,000</td><td><strong>10%</strong></td></tr>
+                            </tbody>
+                        </table>
+                        <p style="margin-top:10px;">✅ यहाँ <strong>40%</strong> का मतलब <strong>40 kg</strong> नहीं, बल्कि <strong>कुल खर्च का 40%</strong> है।</p>
+                    </div>
+                `
+            }
+        };
+
+        // ----- open popup -----
+        function openPopup(key) {
+            const data = popupData[key];
+            if (!data) {
+                titleEl.textContent = 'जानकारी नहीं मिली';
+                bodyEl.innerHTML = 'इस शब्द के लिए कोई व्याख्या उपलब्ध नहीं है।';
+            } else {
+                titleEl.textContent = data.title;
+                bodyEl.innerHTML = data.body;
+            }
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ----- event listeners on all .linked-word -----
+        document.querySelectorAll('.linked-word').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const key = this.dataset.popup;
+                if (key) openPopup(key);
+            });
+        });
+
+        // close via button
+        closeBtn.addEventListener('click', closePopup);
+
+        // close via backdrop click
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closePopup();
+        });
+
+        // close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                closePopup();
+            }
+        });
+
+    })();
+</script>
+
+</body>
+</html>
