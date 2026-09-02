@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>दाब प्रवणता (Pressure Gradient)</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans Devanagari", "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #e0f2fe, #f8fafc, #dbeafe);
+      color: #172033;
+      line-height: 1.7;
+      padding: 25px 15px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    /* Header */
+    .hero {
+      text-align: center;
+      background: linear-gradient(135deg, #0f172a, #1d4ed8);
+      color: white;
+      padding: 40px 20px;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(30, 64, 175, 0.25);
+      margin-bottom: 25px;
+    }
+
+    .hero .icon {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 45px);
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(148,163,184,0.25);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 20px 0;
+      box-shadow: 0 8px 25px rgba(15,23,42,0.08);
+    }
+
+    .card h2 {
+      color: #1d4ed8;
+      margin-bottom: 15px;
+      font-size: 25px;
+    }
+
+    /* Definition */
+    .definition {
+      border-left: 6px solid #2563eb;
+      background: linear-gradient(90deg, #eff6ff, white);
+    }
+
+    .definition strong {
+      color: #1d4ed8;
+    }
+
+    /* Formula */
+    .formula {
+      text-align: center;
+      background: #0f172a;
+      color: white;
+      padding: 22px;
+      border-radius: 18px;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    .formula span {
+      color: #60a5fa;
+    }
+
+    /* Example Grid */
+    .examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .example {
+      padding: 25px;
+      border-radius: 20px;
+      background: white;
+      border: 2px solid #dbeafe;
+      transition: 0.3s;
+    }
+
+    .example:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 25px rgba(37,99,235,0.12);
+    }
+
+    .example h3 {
+      margin-bottom: 15px;
+      color: #1e40af;
+    }
+
+    .pressure {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .room {
+      flex: 1;
+      text-align: center;
+      padding: 15px 8px;
+      border-radius: 15px;
+      background: #eff6ff;
+    }
+
+    .room .number {
+      font-size: 25px;
+      font-weight: bold;
+      color: #1d4ed8;
+    }
+
+    .arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: #ef4444;
+    }
+
+    .result {
+      background: #f0fdf4;
+      color: #166534;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    /* Distance Comparison */
+    .comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .case {
+      padding: 22px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+    }
+
+    .case h3 {
+      margin-bottom: 12px;
+    }
+
+    .bar-container {
+      height: 18px;
+      background: #e2e8f0;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .bar {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #60a5fa, #2563eb);
+    }
+
+    .slow {
+      width: 25%;
+    }
+
+    .fast {
+      width: 100%;
+    }
+
+    /* Memory Trick */
+    .trick {
+      text-align: center;
+      background: linear-gradient(135deg, #fef3c7, #fff7ed);
+      border: 2px solid #f59e0b;
+    }
+
+    .trick h2 {
+      color: #b45309;
+    }
+
+    .trick-text {
+      font-size: 25px;
+      font-weight: bold;
+      color: #92400e;
+      padding: 15px;
+    }
+
+    /* Flow */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .flow-box {
+      padding: 15px 20px;
+      border-radius: 15px;
+      font-weight: bold;
+      background: #dbeafe;
+      color: #1e3a8a;
+    }
+
+    .flow-arrow {
+      font-size: 25px;
+      color: #dc2626;
+    }
+
+    /* Interactive */
+    .interactive {
+      background: linear-gradient(135deg, #eef2ff, #f0f9ff);
+    }
+
+    .slider-box {
+      margin-top: 20px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #2563eb;
+      cursor: pointer;
+    }
+
+    .speed-display {
+      text-align: center;
+      margin-top: 15px;
+      padding: 20px;
+      background: white;
+      border-radius: 15px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    #speedText {
+      color: #2563eb;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 25px 10px;
+      color: #475569;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 15px 10px;
+      }
+
+      .card {
+        padding: 20px 16px;
+      }
+
+      .pressure {
+        flex-direction: column;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+      }
+
+      .trick-text {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="icon">🌪️</div>
+    <h1>दाब प्रवणता</h1>
+    <p>Pressure Gradient को आसान भाषा में समझें</p>
+  </section>
+
+  <!-- DEFINITION -->
+  <section class="card definition">
+    <h2>📘 दाब प्रवणता क्या है?</h2>
+
+    <p>
+      <strong>दाब प्रवणता (Pressure Gradient)</strong> का मतलब है —
+      <strong>दो स्थानों के वायुदाब में अंतर और उस अंतर की दूरी।</strong>
+    </p>
+
+    <p style="margin-top:12px;">
+      सरल भाषा में:
+      <strong>दाब में जितना ज्यादा अंतर कम दूरी में होगा,
+      दाब प्रवणता उतनी अधिक होगी और पवन उतनी तेज चलेगी।</strong>
+    </p>
+
+    <div class="formula">
+      दाब प्रवणता =
+      <span>दाब का अंतर</span> ÷ <span>दूरी</span>
+    </div>
+  </section>
+
+  <!-- BASIC EXAMPLE -->
+  <section class="card">
+    <h2>🌍 उदाहरण: स्थान A और स्थान B</h2>
+
+    <div class="pressure">
+
+      <div class="room">
+        <div>स्थान A</div>
+        <div class="number">1020 mb</div>
+        <small>अधिक दाब</small>
+      </div>
+
+      <div class="arrow">➡️</div>
+
+      <div class="room">
+        <div>स्थान B</div>
+        <div class="number">1000 mb</div>
+        <small>कम दाब</small>
+      </div>
+
+    </div>
+
+    <p>
+      दाब का अंतर = <strong>20 mb</strong><br>
+      दूरी = <strong>100 km</strong>
+    </p>
+
+    <div class="result">
+      ⚡ अधिक दाब प्रवणता → तेज पवन
+    </div>
+  </section>
+
+  <!-- TWO ROOM EXAMPLE -->
+  <section class="card">
+    <h2>🏠 दो कमरों का उदाहरण</h2>
+
+    <div class="examples">
+
+      <!-- Case 1 -->
+      <div class="example">
+        <h3>Case 1 — 10 mb का अंतर</h3>
+
+        <div class="pressure">
+          <div class="room">
+            A<br>
+            <span class="number">1000</span> mb
+          </div>
+
+          <div class="arrow">➡️</div>
+
+          <div class="room">
+            B<br>
+            <span class="number">990</span> mb
+          </div>
+        </div>
+
+        <p>
+          दाब अंतर = <strong>10 mb</strong><br>
+          दूरी = <strong>100 km</strong>
+        </p>
+
+        <div class="result">
+          🌬️ पवन अपेक्षाकृत धीमी
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="example">
+        <h3>Case 2 — 100 mb का अंतर</h3>
+
+        <div class="pressure">
+          <div class="room">
+            A<br>
+            <span class="number">1000</span> mb
+          </div>
+
+          <div class="arrow">➡️</div>
+
+          <div class="room">
+            B<br>
+            <span class="number">900</span> mb
+          </div>
+        </div>
+
+        <p>
+          दाब अंतर = <strong>100 mb</strong><br>
+          दूरी = <strong>100 km</strong>
+        </p>
+
+        <div class="result">
+          🌪️ पवन बहुत तेज
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DIRECTION -->
+  <section class="card">
+    <h2>🧭 हवा किस दिशा में जाएगी?</h2>
+
+    <p style="text-align:center;">
+      हवा सामान्यतः <strong>अधिक दाब</strong> वाले क्षेत्र से
+      <strong>कम दाब</strong> वाले क्षेत्र की ओर चलती है।
+    </p>
+
+    <div class="flow">
+      <div class="flow-box">🔵 अधिक दाब</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-box">🔴 कम दाब</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-box">🌬️ पवन</div>
+    </div>
+  </section>
+
+  <!-- DISTANCE -->
+  <section class="card">
+    <h2>🔥 अब समझो "कम दूरी" का महत्व</h2>
+
+    <p>
+      मान लो दोनों मामलों में दाब का अंतर <strong>100 mb</strong> है।
+      लेकिन दूरी अलग-अलग है।
+    </p>
+
+    <div class="comparison" style="margin-top:20px;">
+
+      <div class="case">
+        <h3>🐢 Case 1: 1000 km</h3>
+
+        <p>
+          100 mb का अंतर<br>
+          दूरी = 1000 km
+        </p>
+
+        <div class="bar-container">
+          <div class="bar slow"></div>
+        </div>
+
+        <strong>दाब प्रवणता कम → पवन धीमी</strong>
+      </div>
+
+      <div class="case">
+        <h3>⚡ Case 2: 100 km</h3>
+
+        <p>
+          100 mb का अंतर<br>
+          दूरी = 100 km
+        </p>
+
+        <div class="bar-container">
+          <div class="bar fast"></div>
+        </div>
+
+        <strong>दाब प्रवणता अधिक → पवन तेज</strong>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE -->
+  <section class="card interactive">
+    <h2>🎮 Interactive: दाब अंतर बढ़ाकर देखो</h2>
+
+    <p>
+      नीचे slider को खिसकाकर दाब अंतर बदलें और देखें कि
+      पवन की गति पर क्या प्रभाव पड़ता है।
+    </p>
+
+    <div class="slider-box">
+      <input
+        type="range"
+        id="pressureSlider"
+        min="10"
+        max="100"
+        value="20"
+      >
+
+      <div class="speed-display">
+        दाब अंतर:
+        <span id="pressureValue">20</span> mb
+        <br><br>
+        पवन की स्थिति:
+        <span id="speedText">🌬️ धीमी</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMORY TRICK -->
+  <section class="card trick">
+    <h2>🧠 याद रखने की ट्रिक</h2>
+
+    <div class="trick-text">
+      “दाब का अंतर + कम दूरी
+      = तेज पवन” ⚡
+    </div>
+
+    <p>
+      यानी <strong>कम दूरी में ज्यादा दाब अंतर</strong>
+      होने पर <strong>दाब प्रवणता अधिक</strong> होगी
+      और <strong>पवन तेज</strong> चलेगी।
+    </p>
+  </section>
+
+  <!-- SUMMARY -->
+  <section class="card">
+    <h2>📌 एक नजर में पूरा Concept</h2>
+
+    <div class="examples">
+
+      <div class="example">
+        <h3>📈 दाब अंतर ज्यादा</h3>
+        <p>➡️ दाब प्रवणता ज्यादा</p>
+        <p>➡️ पवन तेज</p>
+      </div>
+
+      <div class="example">
+        <h3>📏 दूरी कम</h3>
+        <p>➡️ दाब प्रवणता ज्यादा</p>
+        <p>➡️ पवन तेज</p>
+      </div>
+
+      <div class="example">
+        <h3>📉 दाब अंतर कम</h3>
+        <p>➡️ दाब प्रवणता कम</p>
+        <p>➡️ पवन धीमी</p>
+      </div>
+
+      <div class="example">
+        <h3>📐 दूरी ज्यादा</h3>
+        <p>➡️ दाब प्रवणता कम</p>
+        <p>➡️ पवन धीमी</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    🌍 Geography Concept • Pressure Gradient • आसान भाषा में
+  </footer>
+
+</div>
+
+<script>
+  const slider = document.getElementById("pressureSlider");
+  const pressureValue = document.getElementById("pressureValue");
+  const speedText = document.getElementById("speedText");
+
+  slider.addEventListener("input", function () {
+
+    const value = Number(this.value);
+
+    pressureValue.textContent = value;
+
+    if (value <= 30) {
+      speedText.textContent = "🌿 बहुत धीमी";
+    } 
+    else if (value <= 50) {
+      speedText.textContent = "🌬️ धीमी";
+    } 
+    else if (value <= 70) {
+      speedText.textContent = "💨 मध्यम";
+    } 
+    else if (value <= 85) {
+      speedText.textContent = "🌪️ तेज";
+    } 
+    else {
+      speedText.textContent = "⚡ बहुत तेज";
+    }
+  });
+</script>
+
+</body>
+</html>
