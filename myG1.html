@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>6 कारक जो वायुदाब को प्रभावित करते हैं</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:"Noto Sans Devanagari","Segoe UI",sans-serif;
+  background:linear-gradient(135deg,#e0f2fe,#f8fafc,#dbeafe);
+  color:#172033;
+  line-height:1.75;
+  padding:20px 12px;
+}
+
+.container{
+  max-width:1050px;
+  margin:auto;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#0f172a,#1d4ed8,#2563eb);
+  color:white;
+  padding:42px 20px;
+  text-align:center;
+  border-radius:28px;
+  box-shadow:0 15px 40px rgba(30,64,175,.25);
+  margin-bottom:25px;
+}
+
+.hero-icon{
+  font-size:55px;
+  margin-bottom:5px;
+}
+
+.hero h1{
+  font-size:clamp(27px,5vw,44px);
+  line-height:1.3;
+}
+
+.hero p{
+  margin-top:8px;
+  font-size:18px;
+  opacity:.9;
+}
+
+/* INTRO */
+.intro{
+  background:white;
+  border-radius:22px;
+  padding:25px;
+  margin-bottom:25px;
+  box-shadow:0 8px 25px rgba(15,23,42,.08);
+  border-left:6px solid #2563eb;
+}
+
+.intro h2{
+  color:#1d4ed8;
+  margin-bottom:10px;
+}
+
+/* GRID */
+.factors{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
+}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,.94);
+  border-radius:22px;
+  padding:23px;
+  box-shadow:0 8px 25px rgba(15,23,42,.08);
+  border:1px solid #e2e8f0;
+  transition:.3s ease;
+  overflow:hidden;
+  position:relative;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 15px 35px rgba(37,99,235,.14);
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:5px;
+  background:linear-gradient(90deg,#2563eb,#60a5fa);
+}
+
+.card h2{
+  color:#1e40af;
+  font-size:22px;
+  margin-bottom:12px;
+}
+
+/* NUMBER */
+.number{
+  display:inline-flex;
+  width:42px;
+  height:42px;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#dbeafe;
+  color:#1d4ed8;
+  font-weight:bold;
+  font-size:20px;
+  margin-right:7px;
+}
+
+/* FLOW */
+.flow{
+  margin-top:17px;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.flow-item{
+  background:#eff6ff;
+  padding:9px 12px;
+  border-radius:12px;
+  font-weight:600;
+  text-align:center;
+  color:#1e3a8a;
+}
+
+.arrow{
+  text-align:center;
+  color:#ef4444;
+  font-size:22px;
+  line-height:1;
+}
+
+/* RESULT */
+.result{
+  margin-top:16px;
+  background:#f0fdf4;
+  color:#166534;
+  border-left:4px solid #22c55e;
+  padding:11px 13px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+/* WARNING */
+.warning{
+  margin-top:16px;
+  background:#fff7ed;
+  color:#9a3412;
+  border-left:4px solid #f97316;
+  padding:12px;
+  border-radius:12px;
+  font-size:14px;
+}
+
+/* MOISTURE */
+.moisture-box{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  text-align:center;
+  margin:18px 0;
+  gap:10px;
+}
+
+.moisture-item{
+  flex:1;
+  padding:15px 8px;
+  background:#f0f9ff;
+  border-radius:15px;
+}
+
+.moisture-item .big{
+  font-size:30px;
+}
+
+/* GRAVITY */
+.gravity{
+  text-align:center;
+  background:linear-gradient(180deg,#eff6ff,#ffffff);
+  padding:16px;
+  border-radius:15px;
+  margin-top:15px;
+}
+
+.gravity .down{
+  font-size:32px;
+  display:block;
+}
+
+/* DENSITY */
+.density{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:17px;
+}
+
+.density-box{
+  padding:17px;
+  border-radius:16px;
+  text-align:center;
+}
+
+.dense{
+  background:#dbeafe;
+}
+
+.light{
+  background:#f8fafc;
+}
+
+.density-icon{
+  font-size:30px;
+}
+
+/* SUMMARY */
+.summary{
+  margin-top:28px;
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  color:white;
+  padding:30px 20px;
+  border-radius:25px;
+  text-align:center;
+}
+
+.summary h2{
+  margin-bottom:20px;
+  font-size:28px;
+}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:14px;
+}
+
+.summary-item{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  padding:15px;
+  border-radius:15px;
+}
+
+/* MEMORY */
+.memory{
+  margin-top:25px;
+  padding:28px 20px;
+  background:linear-gradient(135deg,#fef3c7,#fff7ed);
+  border:2px solid #f59e0b;
+  border-radius:22px;
+  text-align:center;
+}
+
+.memory h2{
+  color:#b45309;
+  margin-bottom:10px;
+}
+
+.memory-text{
+  font-size:23px;
+  font-weight:bold;
+  color:#92400e;
+}
+
+/* QUIZ */
+.quiz{
+  margin-top:25px;
+  background:white;
+  padding:25px;
+  border-radius:22px;
+  box-shadow:0 8px 25px rgba(15,23,42,.08);
+}
+
+.quiz h2{
+  color:#1d4ed8;
+  margin-bottom:15px;
+}
+
+.option{
+  width:100%;
+  text-align:left;
+  border:2px solid #dbeafe;
+  background:#f8fafc;
+  padding:13px;
+  border-radius:13px;
+  margin:7px 0;
+  cursor:pointer;
+  font-size:16px;
+  font-family:inherit;
+  transition:.2s;
+}
+
+.option:hover{
+  background:#eff6ff;
+  border-color:#60a5fa;
+}
+
+#quizResult{
+  margin-top:12px;
+  font-weight:bold;
+  text-align:center;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  color:#64748b;
+  padding:25px 10px 10px;
+  font-size:14px;
+}
+
+@media(max-width:600px){
+  body{
+    padding:12px 8px;
+  }
+
+  .hero{
+    padding:32px 15px;
+  }
+
+  .card{
+    padding:20px 16px;
+  }
+
+  .density{
+    grid-template-columns:1fr;
+  }
+
+  .memory-text{
+    font-size:19px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-icon">🌍💨</div>
+
+  <h1>
+    6 कारक जो वायुदाब को प्रभावित करते हैं
+  </h1>
+
+  <p>
+    Pressure को समझने का आसान और रोचक तरीका
+  </p>
+
+</section>
+
+
+<!-- INTRO -->
+<section class="intro">
+
+  <h2>📘 सबसे पहले समझो</h2>
+
+  <p>
+    वायुदाब किसी स्थान पर मौजूद वायु के भार और उसके वितरण से
+    प्रभावित होता है। तापमान, पवन संचार, पृथ्वी का घूर्णन,
+    जलवाष्प, गुरुत्वाकर्षण और वायु का घनत्व इसके महत्वपूर्ण
+    कारक हैं।
+  </p>
+
+</section>
+
+
+<!-- SIX FACTORS -->
+<div class="factors">
+
+
+<!-- 1 TEMPERATURE -->
+<section class="card">
+
+  <h2>
+    <span class="number">1</span>
+    🌡️ तापमान
+  </h2>
+
+  <p>
+    तापमान बदलने पर हवा का घनत्व और उसका ऊर्ध्वाधर वितरण
+    बदलता है।
+  </p>
+
+  <div class="flow">
+
+    <div class="flow-item">
+      🔥 गर्म हवा
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ↔️ फैलती है
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ⚖️ घनत्व कम
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ⬆️ ऊपर उठती है
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="result">
+      📉 सतह का दाब कम हो सकता है
+    </div>
+
+  </div>
+
+  <hr style="margin:18px 0;border:0;border-top:1px solid #e2e8f0;">
+
+  <div class="flow">
+
+    <div class="flow-item">
+      ❄️ ठंडी हवा
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ↔️ सिकुड़ती है
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ⚖️ घनत्व अधिक
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ⬇️ नीचे बैठती है
+    </div>
+
+    <div class="result">
+      📈 सतह का दाब बढ़ सकता है
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 2 WIND -->
+<section class="card">
+
+  <h2>
+    <span class="number">2</span>
+    🌬️ पवन संचार
+  </h2>
+
+  <p>
+    हवा का किसी क्षेत्र से बाहर जाना या किसी क्षेत्र में
+    इकट्ठा होना वहाँ के वायुदाब को प्रभावित करता है।
+  </p>
+
+  <div class="flow">
+
+    <div class="flow-item">
+      🌬️ हवा बहकर बाहर गई
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      📦 हवा की मात्रा कम
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ⚖️ भार कम
+    </div>
+
+    <div class="result">
+      📉 वायुदाब कम
+    </div>
+
+  </div>
+
+  <div style="height:18px;"></div>
+
+  <div class="flow">
+
+    <div class="flow-item">
+      🌬️ हवा इकट्ठी हो रही है
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      📦 हवा की मात्रा बढ़ी
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ⚖️ भार बढ़ा
+    </div>
+
+    <div class="result">
+      📈 वायुदाब बढ़ा
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 3 ROTATION -->
+<section class="card">
+
+  <h2>
+    <span class="number">3</span>
+    🌍 पृथ्वी का घूर्णन
+  </h2>
+
+  <p>
+    पृथ्वी के घूमने के कारण चलती हुई हवा की दिशा और उसका
+    वितरण प्रभावित होता है।
+  </p>
+
+  <div class="flow">
+
+    <div class="flow-item">
+      🌍 पृथ्वी घूमती है
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      🌬️ हवा की दिशा बदलती/मुड़ती है
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      🗺️ हवा का वितरण बदलता है
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="result">
+      📊 दाब का वितरण प्रभावित होता है
+    </div>
+
+  </div>
+
+  <div class="warning">
+    ⚠️ ध्यान रखें: पृथ्वी का घूर्णन सीधे यह तय नहीं करता कि
+    ऊँचाई बढ़ने पर दाब घटेगा। यह मुख्यतः हवाओं के वितरण को
+    प्रभावित करता है।
+  </div>
+
+</section>
+
+
+<!-- 4 WATER VAPOUR -->
+<section class="card">
+
+  <h2>
+    <span class="number">4</span>
+    💧 जलवाष्प
+  </h2>
+
+  <p>
+    समान तापमान और दाब पर नम हवा का घनत्व सूखी हवा की तुलना
+    में कम होता है।
+  </p>
+
+  <div class="moisture-box">
+
+    <div class="moisture-item">
+      <div class="big">🌬️</div>
+      <strong>सूखी हवा</strong>
+      <br>
+      अधिक घनत्व
+    </div>
+
+    <div style="font-size:25px;">VS</div>
+
+    <div class="moisture-item">
+      <div class="big">💧🌬️</div>
+      <strong>नम हवा</strong>
+      <br>
+      कम घनत्व
+    </div>
+
+  </div>
+
+  <div class="result">
+    💧 नमी → हवा हल्की → घनत्व कम
+  </div>
+
+  <p style="margin-top:14px;">
+    इससे ऊँचाई के साथ दाब के घटने की दर में परिवर्तन हो सकता है।
+  </p>
+
+</section>
+
+
+<!-- 5 GRAVITY -->
+<section class="card">
+
+  <h2>
+    <span class="number">5</span>
+    ⚖️ गुरुत्वाकर्षण
+  </h2>
+
+  <p>
+    पृथ्वी हर वस्तु को अपनी ओर खींचती है। हवा भी गुरुत्वाकर्षण
+    के कारण पृथ्वी की ओर खिंचती है।
+  </p>
+
+  <div class="gravity">
+
+    <span class="down">⬇️</span>
+
+    <strong>
+      गुरुत्वाकर्षण हवा को नीचे की ओर खींचता है
+    </strong>
+
+    <div style="margin-top:12px;">
+      🌫️🌫️🌫️🌫️🌫️
+    </div>
+
+  </div>
+
+  <div class="flow">
+
+    <div class="flow-item">
+      ⬇️ नीचे हवा ज्यादा जमा
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ⚖️ हवा का भार अधिक
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="result">
+      📈 समुद्र तल पर दाब अधिक
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="flow-item">
+      ⛰️ ऊँचाई बढ़ने पर हवा कम
+    </div>
+
+    <div class="result">
+      📉 ऊँचाई बढ़ने पर दाब घटता है
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 6 DENSITY -->
+<section class="card">
+
+  <h2>
+    <span class="number">6</span>
+    📦 वायु का घनत्व
+  </h2>
+
+  <p>
+    घनत्व का अर्थ है — एक निश्चित जगह में मौजूद हवा का
+    द्रव्यमान कितना है।
+  </p>
+
+  <div class="density">
+
+    <div class="density-box dense">
+
+      <div class="density-icon">
+        📦📦📦
+      </div>
+
+      <h3>घनी हवा</h3>
+
+      <p>
+        ज्यादा द्रव्यमान
+        <br>
+        ↓
+        <br>
+        ज्यादा भार
+        <br>
+        ↓
+        <strong>📈 दाब ज्यादा</strong>
+      </p>
+
+    </div>
+
+    <div class="density-box light">
+
+      <div class="density-icon">
+        📦
+      </div>
+
+      <h3>कम घनी हवा</h3>
+
+      <p>
+        कम द्रव्यमान
+        <br>
+        ↓
+        <br>
+        कम भार
+        <br>
+        ↓
+        <strong>📉 दाब कम</strong>
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+
+
+<!-- SUMMARY -->
+<section class="summary">
+
+  <h2>📊 6 कारक — एक नजर में</h2>
+
+  <div class="summary-grid">
+
+    <div class="summary-item">
+      🌡️ <strong>तापमान</strong><br>
+      घनत्व व ऊर्ध्वाधर वितरण बदलता है
+    </div>
+
+    <div class="summary-item">
+      🌬️ <strong>पवन संचार</strong><br>
+      हवा का आना-जाना दाब बदलता है
+    </div>
+
+    <div class="summary-item">
+      🌍 <strong>पृथ्वी का घूर्णन</strong><br>
+      हवाओं का वितरण प्रभावित करता है
+    </div>
+
+    <div class="summary-item">
+      💧 <strong>जलवाष्प</strong><br>
+      नम हवा का घनत्व कम होता है
+    </div>
+
+    <div class="summary-item">
+      ⚖️ <strong>गुरुत्वाकर्षण</strong><br>
+      हवा को पृथ्वी की ओर खींचता है
+    </div>
+
+    <div class="summary-item">
+      📦 <strong>वायु का घनत्व</strong><br>
+      ज्यादा घनत्व → ज्यादा भार → ज्यादा दाब
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MEMORY -->
+<section class="memory">
+
+  <h2>🧠 परीक्षा के लिए याद रखने की ट्रिक</h2>
+
+  <div class="memory-text">
+    🌡️ तापमान + 🌬️ पवन + 🌍 घूर्णन
+    <br>
+    + 💧 जलवाष्प + ⚖️ गुरुत्व + 📦 घनत्व
+  </div>
+
+  <p style="margin-top:12px;">
+    ये सभी वायुमंडल में हवा की मात्रा, घनत्व और वितरण को
+    प्रभावित करके वायुदाब को प्रभावित करते हैं।
+  </p>
+
+</section>
+
+
+<!-- QUIZ -->
+<section class="quiz">
+
+  <h2>🎯 Quick Quiz</h2>
+
+  <p>
+    <strong>प्रश्न:</strong> ऊँचाई बढ़ने पर वायुदाब घटने का
+    मुख्य कारण क्या है?
+  </p>
+
+  <button class="option" onclick="checkAnswer(this,false)">
+    A. पृथ्वी का घूर्णन
+  </button>
+
+  <button class="option" onclick="checkAnswer(this,true)">
+    B. गुरुत्वाकर्षण और ऊपर जाते हुए वायु की मात्रा का कम होना
+  </button>
+
+  <button class="option" onclick="checkAnswer(this,false)">
+    C. केवल जलवाष्प
+  </button>
+
+  <button class="option" onclick="checkAnswer(this,false)">
+    D. केवल पवन की दिशा
+  </button>
+
+  <div id="quizResult"></div>
+
+</section>
+
+
+<footer>
+  🌍 Geography Notes • वायुदाब के 6 प्रमुख कारक
+</footer>
+
+</div>
+
+
+<script>
+
+function checkAnswer(button, correct){
+
+  const result = document.getElementById("quizResult");
+
+  if(correct){
+
+    result.innerHTML =
+      "🎉 बिल्कुल सही! गुरुत्वाकर्षण के कारण नीचे हवा का भार अधिक होता है, इसलिए ऊँचाई बढ़ने पर दाब घटता है।";
+
+    result.style.color = "#15803d";
+
+  }else{
+
+    result.innerHTML =
+      "❌ फिर से सोचिए! ऊँचाई के साथ दाब घटने में गुरुत्वाकर्षण की महत्वपूर्ण भूमिका है।";
+
+    result.style.color = "#dc2626";
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
