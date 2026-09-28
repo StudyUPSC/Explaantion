@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>संचारी एवं गैर-संचारी रोग</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
+        background: #f4f7fb;
+        color: #172033;
+        line-height: 1.7;
+    }
+
+    .container {
+        width: min(1100px, 94%);
+        margin: 30px auto;
+    }
+
+    /* Header */
+    .hero {
+        background: linear-gradient(135deg, #172554, #2563eb);
+        color: white;
+        padding: 35px 30px;
+        border-radius: 24px;
+        margin-bottom: 25px;
+        box-shadow: 0 15px 35px rgba(37, 99, 235, 0.20);
+    }
+
+    .hero h1 {
+        font-size: clamp(25px, 4vw, 40px);
+        margin-bottom: 8px;
+    }
+
+    .hero p {
+        opacity: 0.9;
+        font-size: 16px;
+    }
+
+    /* Grid */
+    .disease-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+    }
+
+    /* Cards */
+    .card {
+        background: white;
+        border-radius: 22px;
+        padding: 26px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e7ebf2;
+        transition: 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.13);
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-bottom: 18px;
+    }
+
+    .icon {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        font-size: 27px;
+    }
+
+    .infectious .icon {
+        background: #fee2e2;
+    }
+
+    .non-infectious .icon {
+        background: #ffe4e6;
+    }
+
+    .card h2 {
+        font-size: 22px;
+        color: #172033;
+    }
+
+    .english {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    .definition {
+        background: #f8fafc;
+        border-left: 4px solid #2563eb;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .non-infectious .definition {
+        border-left-color: #e11d48;
+    }
+
+    .examples-title {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .examples {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+    }
+
+    .tag {
+        background: #eff6ff;
+        color: #1d4ed8;
+        padding: 6px 12px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .non-infectious .tag {
+        background: #fff1f2;
+        color: #be123c;
+    }
+
+    .info {
+        margin-top: 18px;
+        padding: 14px;
+        background: #f8fafc;
+        border-radius: 12px;
+        font-size: 14px;
+    }
+
+    /* Memory Section */
+    .memory {
+        margin-top: 25px;
+        background: white;
+        border-radius: 22px;
+        padding: 28px;
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    .memory h2 {
+        margin-bottom: 18px;
+        font-size: 23px;
+    }
+
+    .memory-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .memory-item {
+        padding: 18px;
+        border-radius: 15px;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .memory-item:first-child {
+        background: #fff1f2;
+        color: #be123c;
+    }
+
+    .memory-item:last-child {
+        background: #eff6ff;
+        color: #1d4ed8;
+    }
+
+    /* Double burden */
+    .burden {
+        margin-top: 25px;
+        padding: 28px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: white;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+    }
+
+    .burden h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .burden strong {
+        color: #93c5fd;
+    }
+
+    .highlight {
+        margin-top: 18px;
+        padding: 17px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.09);
+        border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        margin: 25px 0;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+
+        .container {
+            width: 94%;
+            margin: 18px auto;
+        }
+
+        .hero {
+            padding: 25px 20px;
+            border-radius: 19px;
+        }
+
+        .disease-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .card {
+            padding: 21px;
+        }
+
+        .memory-box {
+            grid-template-columns: 1fr;
+        }
+
+        .card h2 {
+            font-size: 19px;
+        }
+
+        .burden {
+            padding: 22px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <section class="hero">
+        <h1>🦠 रोगों का वर्गीकरण</h1>
+        <p>संचारी एवं गैर-संचारी रोगों को सरल और परीक्षा उपयोगी तरीके से समझें</p>
+    </section>
+
+
+    <!-- Disease Cards -->
+    <div class="disease-grid">
+
+        <!-- Communicable -->
+        <div class="card infectious">
+
+            <div class="card-header">
+                <div class="icon">🦠</div>
+
+                <div>
+                    <h2>संचारी रोग</h2>
+                    <div class="english">
+                        Communicable Diseases
+                    </div>
+                </div>
+            </div>
+
+            <div class="definition">
+                वे रोग जो <strong>एक व्यक्ति से दूसरे व्यक्ति तक फैल सकते हैं।</strong>
+            </div>
+
+            <div class="examples-title">
+                📌 उदाहरण
+            </div>
+
+            <div class="examples">
+                <span class="tag">TB (तपेदिक)</span>
+                <span class="tag">मलेरिया</span>
+                <span class="tag">डेंगू</span>
+                <span class="tag">COVID-19</span>
+                <span class="tag">हैजा</span>
+            </div>
+
+            <div class="info">
+                💡 ये वायरस, बैक्टीरिया, परजीवी आदि से हो सकते हैं और
+                संक्रमण के माध्यम से फैलते हैं।
+            </div>
+
+        </div>
+
+
+        <!-- Non Communicable -->
+        <div class="card non-infectious">
+
+            <div class="card-header">
+                <div class="icon">❤️</div>
+
+                <div>
+                    <h2>गैर-संचारी रोग</h2>
+                    <div class="english">
+                        NCDs – Non-Communicable Diseases
+                    </div>
+                </div>
+            </div>
+
+            <div class="definition">
+                वे रोग जो <strong>एक व्यक्ति से दूसरे व्यक्ति तक सामान्यतः नहीं फैलते</strong>
+                और अक्सर लंबे समय तक बने रहते हैं।
+            </div>
+
+            <div class="examples-title">
+                📌 उदाहरण
+            </div>
+
+            <div class="examples">
+                <span class="tag">मधुमेह</span>
+                <span class="tag">हृदय रोग</span>
+                <span class="tag">कैंसर</span>
+                <span class="tag">उच्च रक्तचाप</span>
+                <span class="tag">स्ट्रोक</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Easy Memory -->
+    <section class="memory">
+
+        <h2>🧠 आसान तरीके से याद रखें</h2>
+
+        <div class="memory-box">
+
+            <div class="memory-item">
+                🦠 संचारी = फैलने वाले रोग
+            </div>
+
+            <div class="memory-item">
+                ❤️ गैर-संचारी = न फैलने वाले / दीर्घकालिक रोग
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Double Disease Burden -->
+    <section class="burden">
+
+        <h2>🇮🇳 भारत में दोहरा रोग-भार</h2>
+
+        <p>
+            भारत को एक साथ <strong>संक्रमण से फैलने वाले रोगों</strong>
+            तथा <strong>लंबे समय तक रहने वाले गैर-संचारी रोगों</strong>
+            दोनों का सामना करना पड़ता है।
+        </p>
+
+        <div class="highlight">
+            🔹 <strong>संचारी रोग</strong> → संक्रमण के माध्यम से फैलते हैं<br>
+            🔹 <strong>गैर-संचारी रोग</strong> → सामान्यतः व्यक्ति से व्यक्ति नहीं फैलते<br>
+            🔹 दोनों का एक साथ होना → <strong>दोहरा रोग-भार</strong>
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+        📚 UPSC Study Notes • Health & Disease
+    </div>
+
+</div>
+
+</body>
+</html>
