@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Loading…</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        background: linear-gradient(
+          160deg,
+          #0b1a2e 0%,
+          #122840 50%,
+          #1a2f44 100%
+        );
+        min-height: 100vh;
+        font-family:
+          "Segoe UI",
+          Roboto,
+          system-ui,
+          -apple-system,
+          sans-serif;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        color: #e5e7eb;
+      }
+      .quiz-wrapper {
+        max-width: 720px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 26px;
+        padding: 18px 16px 28px;
+        box-shadow:
+          0 25px 50px -12px rgba(0, 0, 0, 0.85),
+          0 0 0 1px rgba(255, 255, 255, 0.06);
+        margin-bottom: 20px;
+      }
+      .quiz-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .title-block h1 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #f0f9ff;
+        letter-spacing: -0.3px;
+        line-height: 1.3;
+      }
+      .title-block .sub {
+        font-size: 0.72rem;
+        color: #9fc0dd;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 4px;
+      }
+      .lang-toggle {
+        display: flex;
+        background: #1e3a5a;
+        border-radius: 40px;
+        padding: 3px;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+      }
+      .lang-toggle button {
+        background: transparent;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        cursor: pointer;
+        color: #b0cde0;
+        transition: 0.2s;
+      }
+      .lang-toggle button.active {
+        background: #4b7eb3;
+        color: white;
+        box-shadow: 0 3px 8px rgba(0, 80, 180, 0.5);
+      }
+      .progress-area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #c7dcee;
+        margin-bottom: 14px;
+        font-size: 0.78rem;
+        background: rgba(0, 0, 0, 0.28);
+        padding: 7px 14px;
+        border-radius: 40px;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-weight: 600;
+      }
+      .timer-badge {
+        background: #1d4b6e;
+        padding: 3px 12px;
+        border-radius: 30px;
+        font-variant-numeric: tabular-nums;
+        color: #a7d8ff;
+      }
+      .question-box {
+        background: rgba(18, 34, 54, 0.75);
+        border-radius: 20px;
+        padding: 18px 16px;
+        margin-bottom: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .question-text {
+        font-size: 0.98rem;
+        font-weight: 500;
+        line-height: 1.75;
+        color: #eef6ff;
+        margin-bottom: 14px;
+        white-space: pre-line;
+        word-break: break-word;
+      }
+      .options-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .option-item {
+        background: rgba(40, 65, 95, 0.5);
+        border-radius: 14px;
+        padding: 12px 14px;
+        color: #e3edf8;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        cursor: pointer;
+        transition: 0.15s;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.88rem;
+        line-height: 1.55;
+      }
+      .option-item:active:not(.disabled-opt) {
+        transform: scale(0.99);
+      }
+      .option-item.selected {
+        background: #1f6390;
+        border-color: #8fcbff;
+        box-shadow: 0 0 0 2px #8fcbff55;
+      }
+      .option-item.correct-answer {
+        background: #1d7548;
+        border-color: #6fda9e;
+      }
+      .option-item.wrong-answer {
+        background: #90333a;
+        border-color: #ff7a7a;
+      }
+      .option-prefix {
+        font-weight: 700;
+        color: #8bb3da;
+        min-width: 20px;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+      }
+      .option-text {
+        flex: 1;
+        word-break: break-word;
+        white-space: pre-line;
+      }
+      .action-bar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .btn {
+        border: none;
+        color: white;
+        padding: 11px 20px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: 0.15s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        flex: 1;
+        min-width: 90px;
+        letter-spacing: 0.2px;
+      }
+      .btn-primary {
+        background: #3274b0;
+      }
+      .btn-primary:active:not(:disabled) {
+        background: #4287c7;
+      }
+      .btn-secondary {
+        background: #3f4f66;
+      }
+      .btn-secondary:active:not(:disabled) {
+        background: #566f8a;
+      }
+      .btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+      .btn-success {
+        background: #298b5a;
+      }
+      .btn-success:active:not(:disabled) {
+        background: #33a36b;
+      }
+      .btn-download {
+        background: #7c3aed;
+      }
+      .btn-download:active:not(:disabled) {
+        background: #8b5cf6;
+      }
+
+      .explanation-box {
+        background: #0b1f31;
+        border-left: 5px solid #4b8ac4;
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin: 16px 0 6px;
+        color: #dcebfa;
+        font-size: 0.85rem;
+        line-height: 1.7;
+        white-space: pre-line;
+        word-break: break-word;
+      }
+      .explanation-box strong {
+        color: #b3daff;
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.85rem;
+      }
+
+      /* ===== START SCREEN ===== */
+      .start-screen {
+        position: relative;
+        text-align: center;
+        padding: 26px 6px 8px;
+        overflow: hidden;
+        animation: fade 0.4s ease;
+      }
+      .start-glow {
+        position: absolute;
+        top: -90px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.28), transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .start-screen > *:not(.start-glow) {
+        position: relative;
+        z-index: 1;
+      }
+      .start-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        color: #1f1300;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+        padding: 4px 14px;
+        border-radius: 30px;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+      }
+      .start-icon {
+        width: 84px;
+        height: 84px;
+        margin: 0 auto 16px;
+        border-radius: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.4rem;
+        background: linear-gradient(135deg, #2563eb, #38bdf8);
+        box-shadow: 0 12px 30px rgba(56, 189, 248, 0.35);
+        animation: floaty 3s ease-in-out infinite;
+      }
+      @keyframes floaty {
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      .start-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.3;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #f0f9ff, #8fcbff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .start-source {
+        display: inline-block;
+        font-size: 0.74rem;
+        color: #9fc0dd;
+        background: rgba(255, 255, 255, 0.07);
+        padding: 5px 14px;
+        border-radius: 30px;
+        margin-bottom: 22px;
+      }
+      .start-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 18px;
+        text-align: left;
+      }
+      .start-tile {
+        background: rgba(40, 65, 95, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 16px;
+        padding: 12px 14px;
+      }
+      .start-tile .tl {
+        font-size: 0.62rem;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 4px;
+      }
+      .start-tile .tv {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #eef6ff;
+        line-height: 1.35;
+        word-break: break-word;
+      }
+      .start-rules {
+        list-style: none;
+        text-align: left;
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 16px;
+        padding: 12px 16px;
+        margin-bottom: 24px;
+        font-size: 0.78rem;
+        color: #c7dcee;
+        line-height: 1.9;
+      }
+      .play-btn {
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        max-width: 320px;
+        padding: 15px 24px;
+        border-radius: 50px;
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: #fff;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        box-shadow: 0 10px 28px rgba(34, 197, 94, 0.4);
+        animation: pulse 2s infinite;
+        transition: transform 0.15s;
+      }
+      .play-btn:active {
+        transform: scale(0.97);
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+        }
+        70% {
+          box-shadow: 0 0 0 16px rgba(34, 197, 94, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+        }
+      }
+
+      /* ===== RESULT SCREEN ===== */
+      .result-screen {
+        display: none;
+        animation: fade 0.35s ease;
+      }
+      .result-card {
+        background: rgba(18, 34, 54, 0.9);
+        border-radius: 24px;
+        padding: 22px 18px;
+        border: 1px solid rgba(56, 189, 248, 0.28);
+        box-shadow: 0 0 40px rgba(56, 189, 248, 0.1);
+      }
+      .result-title {
+        text-align: center;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #f0f9ff;
+        margin-bottom: 4px;
+      }
+      .result-sub {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.78rem;
+        margin-bottom: 18px;
+      }
+      .score-circle {
+        width: 118px;
+        height: 118px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: conic-gradient(#22c55e calc(var(--pct) * 1%), #1e3a5a 0);
+        position: relative;
+      }
+      .score-circle::before {
+        content: "";
+        position: absolute;
+        inset: 9px;
+        border-radius: 50%;
+        background: #0f1e2e;
+      }
+      .score-inner {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+      .score-inner .big {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #f0f9ff;
+        line-height: 1.1;
+      }
+      .score-inner .small {
+        font-size: 0.72rem;
+        color: #94a3b8;
+        letter-spacing: 0.4px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 9px;
+        margin-bottom: 20px;
+      }
+      .stat-box {
+        background: rgba(40, 65, 95, 0.45);
+        border-radius: 14px;
+        padding: 12px 8px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .stat-box .val {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #eef6ff;
+        font-variant-numeric: tabular-nums;
+      }
+      .stat-box .lbl {
+        font-size: 0.65rem;
+        color: #94a3b8;
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .stat-box.green .val {
+        color: #6fda9e;
+      }
+      .stat-box.red .val {
+        color: #ff9b9b;
+      }
+      .stat-box.blue .val {
+        color: #8fcbff;
+      }
+      .stat-box.gold .val {
+        color: #fde68a;
+      }
+
+      .review-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #b3daff;
+        margin: 6px 0 12px;
+      }
+      .review-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .review-item {
+        background: rgba(40, 65, 95, 0.38);
+        border-radius: 14px;
+        padding: 12px 13px;
+        border-left: 4px solid #3f4f66;
+        font-size: 0.8rem;
+        line-height: 1.6;
+      }
+      .review-item.correct {
+        border-left-color: #22c55e;
+      }
+      .review-item.wrong {
+        border-left-color: #ef4444;
+      }
+      .review-item.skipped {
+        border-left-color: #facc15;
+      }
+      .review-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .review-qno {
+        font-weight: 700;
+        color: #eef6ff;
+        font-size: 0.8rem;
+      }
+      .review-status {
+        font-size: 0.66rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 30px;
+      }
+      .status-correct {
+        background: rgba(34, 197, 94, 0.2);
+        color: #6fda9e;
+      }
+      .status-wrong {
+        background: rgba(239, 68, 68, 0.2);
+        color: #ff9b9b;
+      }
+      .status-skipped {
+        background: rgba(250, 204, 21, 0.2);
+        color: #fde68a;
+      }
+      .review-qtext {
+        color: #cbd5e1;
+        margin-bottom: 10px;
+        line-height: 1.75;
+        word-break: break-word;
+        border-left: 2px solid #2a4f77;
+        padding-left: 10px;
+        font-size: 0.78rem;
+        white-space: pre-line;
+        font-weight: 500;
+      }
+      .review-ans {
+        color: #cbd5e1;
+        line-height: 1.7;
+        font-size: 0.78rem;
+        word-break: break-word;
+      }
+      .review-ans b {
+        color: #8fcbff;
+      }
+      .review-ans .correct-mark {
+        color: #6fda9e;
+      }
+      .review-ans .wrong-mark {
+        color: #ff9b9b;
+      }
+      .review-ans .exp {
+        display: block;
+        margin-top: 8px;
+        padding: 9px 11px;
+        background: rgba(250, 204, 21, 0.07);
+        border-left: 3px solid #facc15;
+        border-radius: 6px;
+        color: #fde68a;
+        font-size: 0.74rem;
+        line-height: 1.7;
+        white-space: pre-line;
+      }
+
+      .result-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 22px;
+      }
+      .result-actions .btn {
+        width: 100%;
+        padding: 13px 20px;
+        font-size: 0.88rem;
+      }
+
+      .center {
+        text-align: center;
+        margin-top: 10px;
+      }
+      .badge {
+        background: #254f77;
+        padding: 5px 14px;
+        border-radius: 40px;
+        font-size: 0.7rem;
+        color: #c3dcf2;
+      }
+      .fade-in {
+        animation: fade 0.25s ease;
+      }
+      @keyframes fade {
+        from {
+          opacity: 0.4;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .pdf-header {
+        display: none;
+        text-align: center;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #38bdf8;
+      }
+      .pdf-header h1 {
+        color: #0f172a;
+        font-size: 1.3rem;
+        margin-bottom: 4px;
+      }
+      .pdf-header p {
+        color: #475569;
+        font-size: 0.78rem;
+      }
+
+      @media (min-width: 480px) {
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .result-actions {
+          flex-direction: row;
+        }
+        .result-actions .btn {
+          flex: 1;
+        }
+        .title-block h1 {
+          font-size: 1.3rem;
+        }
+      }
+      @media (max-width: 360px) {
+        .quiz-wrapper {
+          padding: 14px 12px 22px;
+        }
+        .question-text {
+          font-size: 0.9rem;
+        }
+        .option-item {
+          font-size: 0.82rem;
+          padding: 10px 12px;
+        }
+        .btn {
+          font-size: 0.76rem;
+          padding: 10px 14px;
+        }
+      }
+
+      /* ===== Question Palette (exam style) ===== */
+      .pal-toggle {
+        background: #2f5f7a;
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .pal-toggle:active {
+        background: #3d7a9c;
+      }
+      .pal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 90;
+      }
+      .pal-overlay.open {
+        display: block;
+      }
+      .pal-sheet {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0 auto;
+        max-width: 720px;
+        max-height: 78vh;
+        overflow-y: auto;
+        background: #10243a;
+        border-radius: 22px 22px 0 0;
+        padding: 14px 14px 22px;
+        z-index: 100;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.7);
+        transform: translateY(105%);
+        visibility: hidden;
+        transition:
+          transform 0.25s ease,
+          visibility 0.25s;
+      }
+      .pal-sheet.open {
+        transform: translateY(0);
+        visibility: visible;
+      }
+      .pal-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        color: #f0f9ff;
+        font-size: 0.95rem;
+      }
+      .pal-close {
+        background: #3f4f66;
+        color: #fff;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      .pal-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        margin-bottom: 12px;
+        font-size: 0.74rem;
+        color: #c7dcee;
+      }
+      .pal-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .pal-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 5px;
+        display: inline-block;
+      }
+      .pal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+        gap: 8px;
+      }
+      .pal-btn {
+        height: 44px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: #fff;
+        background: #56657a; /* unseen */
+        cursor: pointer;
+      }
+      .pal-btn.ans {
+        background: #298b5a; /* attended */
+      }
+      .pal-btn.skip {
+        background: #b8434b; /* not attended */
+      }
+      .pal-btn.cur {
+        outline: 3px solid #8fcbff;
+        outline-offset: 2px;
+      }
+      .pal-btn:active {
+        transform: scale(0.94);
+      }
+
+      /* ===== Always-visible number strip ===== */
+      .pal-strip {
+        position: relative;
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        padding: 4px 2px 8px;
+        margin-bottom: 12px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #4b7eb3 transparent;
+      }
+      .pal-strip::-webkit-scrollbar {
+        height: 5px;
+      }
+      .pal-strip::-webkit-scrollbar-thumb {
+        background: #4b7eb3;
+        border-radius: 5px;
+      }
+      .pal-mini {
+        flex: 0 0 auto;
+        width: 38px;
+        height: 38px;
+        font-size: 0.82rem;
+        border-radius: 9px;
+      }
+
+      /* ===== Strip show/hide (☰ / ✕) + "All" button ===== */
+      .hdr-tools {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .strip-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: #1e3a5a;
+        color: #e6f3ff;
+        font-size: 1.1rem;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+      }
+      .strip-toggle:active {
+        background: #2f5f7a;
+      }
+      .pal-bar {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .pal-bar.hidden {
+        display: none;
+      }
+      .pal-bar .pal-strip {
+        flex: 1;
+        min-width: 0;
+        margin-bottom: 0;
+      }
+      .pal-all {
+        flex: 0 0 auto;
+        height: 38px;
+        margin-top: 4px;
+        border-radius: 9px;
+        padding: 0 11px;
+      }
+
+      .pal-arrow {
+        flex: 0 0 auto;
+        width: 30px;
+        height: 38px;
+        margin-top: 4px;
+        border: none;
+        border-radius: 9px;
+        background: #2f5f7a;
+        color: #fff;
+        font-size: 1.3rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .pal-arrow:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-wrapper" id="quizWrapper">
+      <!-- ============ START SCREEN ============ -->
+      <div id="startScreen" class="start-screen">
+        <div class="start-glow"></div>
+        <div class="start-badge" id="stPlan"></div>
+        <div class="start-icon">📝</div>
+        <h1 class="start-title" id="stTitle"></h1>
+        <div class="start-source" id="stSource"></div>
+
+        <div class="start-grid">
+          <div class="start-tile">
+            <div class="tl">📘 Subject</div>
+            <div class="tv" id="stSubject"></div>
+          </div>
+          <div class="start-tile">
+            <div class="tl">❓ Questions</div>
+            <div class="tv" id="stCount"></div>
+          </div>
+          <div class="start-tile">
+            <div class="tl">🕗 Schedule</div>
+            <div class="tv" id="stSchedule"></div>
+          </div>
+          <div class="start-tile">
+            <div class="tl">🌐 Language</div>
+            <div class="tv">English / हिंदी</div>
+          </div>
+        </div>
+
+        <ul class="start-rules">
+          <li>⏱ Play dabate hi timer start ho jayega</li>
+          <li>✅ Option chunte hi answer + explanation dikhega</li>
+          <li>🌐 Kabhi bhi EN / हिं switch kar sakte ho</li>
+        </ul>
+
+        <button class="play-btn" id="playBtn">▶ Play</button>
+      </div>
+
+      <!-- ============ QUIZ SCREEN ============ -->
+      <div id="quizScreen" style="display: none">
+        <div class="quiz-header">
+          <div class="title-block">
+            <h1 id="pageTitle"></h1>
+            <div class="sub">
+              <span id="subSubject"></span>
+              <span id="subSchedule"></span>
+            </div>
+          </div>
+          <div class="hdr-tools">
+            <button class="strip-toggle" id="stripToggle" aria-label="Question list">✕</button>
+            <div class="lang-toggle" id="langToggle">
+              <button class="active" data-lang="en">EN</button>
+              <button data-lang="hi">हिं</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-area">
+          <span id="qCounter">Q 1 / 10</span>
+          <span class="timer-badge" id="timerDisplay">⏱ 00:00</span>
+          <span id="scoreDisplay">⭐ 0</span>
+        </div>
+
+        <div class="pal-bar" id="palBar">
+          <button class="pal-toggle pal-all" id="palToggle">All</button>
+          <button class="pal-arrow" id="palPrev" aria-label="Scroll left">‹</button>
+          <div class="pal-strip" id="palStrip"></div>
+          <button class="pal-arrow" id="palNext" aria-label="Scroll right">›</button>
+        </div>
+
+        <div class="question-box fade-in" id="questionCard">
+          <div class="question-text" id="questionText">Loading...</div>
+          <div class="options-grid" id="optionsContainer"></div>
+        </div>
+
+        <div id="explanationBox" class="explanation-box" style="display: none">
+          <strong id="expLabel">💡 Explanation</strong>
+          <span id="explanationText"></span>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn btn-secondary" id="prevBtn" disabled>
+            ◀ Prev
+          </button>
+          <button class="btn btn-primary" id="nextBtn">Next ▶</button>
+          <button class="btn btn-success" id="submitBtn" style="display: none">
+            ✅ Submit
+          </button>
+          <button
+            class="btn btn-secondary"
+            id="resetBtn"
+            style="background: #2f5f7a; flex: 0 0 auto"
+          >
+            ↺
+          </button>
+        </div>
+        <div class="center">
+          <span class="badge" id="langHint">🌐 English / हिंदी</span>
+        </div>
+      </div>
+
+      <!-- ============ RESULT SCREEN ============ -->
+      <div id="resultScreen" class="result-screen">
+        <div class="result-card" id="resultCard">
+          <div class="pdf-header" id="pdfHeader">
+            <h1 id="pdfTitle"></h1>
+            <p id="pdfSub"></p>
+          </div>
+
+          <div class="result-title" id="resultTitle">🎉 Quiz Complete!</div>
+          <div class="result-sub" id="resultSub">Your Performance</div>
+
+          <div class="score-circle" id="scoreCircle" style="--pct: 0">
+            <div class="score-inner">
+              <div class="big" id="finalScore">0/10</div>
+              <div class="small" id="finalPct">0%</div>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-box green">
+              <div class="val" id="statCorrect">0</div>
+              <div class="lbl">✅ Correct</div>
+            </div>
+            <div class="stat-box red">
+              <div class="val" id="statWrong">0</div>
+              <div class="lbl">❌ Wrong</div>
+            </div>
+            <div class="stat-box gold">
+              <div class="val" id="statSkipped">0</div>
+              <div class="lbl">⏭ Skipped</div>
+            </div>
+            <div class="stat-box blue">
+              <div class="val" id="statTime">00:00</div>
+              <div class="lbl">⏱ Time</div>
+            </div>
+          </div>
+
+          <div class="review-title">📋 Detailed Review</div>
+          <div class="review-list" id="reviewList"></div>
+
+          <div class="result-actions">
+            <button class="btn btn-download" id="downloadBtn">
+              📄 Download PDF
+            </button>
+            <button class="btn btn-primary" id="retakeBtn">
+              🔄 Retake Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question Palette -->
+    <div class="pal-overlay" id="palOverlay"></div>
+    <div class="pal-sheet" id="palSheet">
+      <div class="pal-head">
+        <b id="palTitle">Question Palette</b>
+        <button class="pal-close" id="palClose">✕</button>
+      </div>
+      <div class="pal-legend" id="palLegend"></div>
+      <div class="pal-grid" id="palGrid"></div>
+    </div>
+
+    <script>function _0x33f2(_0x2cdca7,_0x531ed0){_0x2cdca7=_0x2cdca7-0x14c;const _0x50e58b=_0x50e5();let _0x33f220=_0x50e58b[_0x2cdca7];return _0x33f220;}(function(_0x2d6045,_0x496c66){const _0x465e69=_0x33f2,_0x46e3ab=_0x2d6045();while(!![]){try{const _0x3d35dd=-parseInt(_0x465e69(0x3b3))/0x1*(-parseInt(_0x465e69(0x3e5))/0x2)+parseInt(_0x465e69(0x462))/0x3+-parseInt(_0x465e69(0x393))/0x4+parseInt(_0x465e69(0x44d))/0x5+parseInt(_0x465e69(0x3ac))/0x6+parseInt(_0x465e69(0x14f))/0x7+parseInt(_0x465e69(0x3b7))/0x8*(-parseInt(_0x465e69(0x34b))/0x9);if(_0x3d35dd===_0x496c66)break;else _0x46e3ab['push'](_0x46e3ab['shift']());}catch(_0x4b689c){_0x46e3ab['push'](_0x46e3ab['shift']());}}}(_0x50e5,0x75f8a),(function(){const _0x4deef1=_0x33f2,_0x266b9e={'id':_0x4deef1(0x319),'title':'Practice\x20Set\x2021','subject':_0x4deef1(0x39e),'plan':_0x4deef1(0x522),'schedule':_0x4deef1(0x354),'questions':[{'id':0x1,'type':'normal','question':_0x4deef1(0x1cb),'questionHindi':_0x4deef1(0x160),'options':['Ropar',_0x4deef1(0x369),'Banawali',_0x4deef1(0x473),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x3a9),_0x4deef1(0x508),_0x4deef1(0x29e),_0x4deef1(0x40f),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x0,'explanation':_0x4deef1(0x1ee),'explanationHindi':'पंजाब\x20स्थित\x20रोपड़\x20का\x20उत्खनन\x20स्वतंत्रता\x20के\x20बाद\x20हुआ;\x20इसका\x20आधुनिक\x20नाम\x20रूपनगर\x20है।'},{'id':0x2,'type':'normal','question':_0x4deef1(0x3ef),'questionHindi':_0x4deef1(0x47c),'options':[_0x4deef1(0x1e5),_0x4deef1(0x291),'Tomaras','Chandelas',_0x4deef1(0x1af)],'optionsHindi':['गहड़वालों',_0x4deef1(0x1e7),_0x4deef1(0x302),_0x4deef1(0x298),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x2,'explanation':_0x4deef1(0x3e3),'explanationHindi':_0x4deef1(0x16e)},{'id':0x3,'type':_0x4deef1(0x3d5),'question':'Consider\x20the\x20statements\x20about\x20the\x20Delhi\x20Sultanate:\x201.\x20Sultan\x20Iltutmish\x20built\x20Sultan\x20Ghari.\x202.\x20It\x20was\x20the\x20first\x20tomb\x20built\x20by\x20the\x20Turks\x20in\x20Delhi.\x20Which\x20is\x20correct?','questionHindi':'दिल्ली\x20सल्तनत\x20के\x20संबंध\x20में\x20कथनों\x20पर\x20विचार\x20कीजिए:\x201.\x20सुल्तान\x20इल्तुतमिश\x20ने\x20सुल्तानगढ़ी\x20बनवाया।\x202.\x20यह\x20दिल्ली\x20में\x20तुर्कों\x20द्वारा\x20निर्मित\x20पहला\x20मकबरा\x20था।\x20सही\x20विकल्प\x20चुनिए।','options':[_0x4deef1(0x41d),_0x4deef1(0x1a9),'Both\x201\x20and\x202',_0x4deef1(0x24e),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x4d5),_0x4deef1(0x3ed),_0x4deef1(0x347),_0x4deef1(0x344),_0x4deef1(0x420)],'answer':0x2,'explanation':'Both\x20statements\x20are\x20correct:\x20Iltutmish\x20built\x20Sultan\x20Ghari\x20in\x20memory\x20of\x20his\x20eldest\x20son.','explanationHindi':'दोनों\x20कथन\x20सही\x20हैं।\x20इल्तुतमिश\x20ने\x20अपने\x20ज्येष्ठ\x20पुत्र\x20की\x20स्मृति\x20में\x20सुल्तानगढ़ी\x20का\x20निर्माण\x20कराया\x20था।'},{'id':0x4,'type':'normal','question':'Which\x20Mughal\x20ruler\x20learned\x20Hindustani\x20music\x20from\x20Lala\x20Kalawant?','questionHindi':_0x4deef1(0x515),'options':[_0x4deef1(0x27b),_0x4deef1(0x38c),_0x4deef1(0x296),_0x4deef1(0x27c),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x4c4),_0x4deef1(0x458),'अकबर','शाहजहाँ',_0x4deef1(0x420)],'answer':0x2,'explanation':'Akbar\x20received\x20Hindustani\x20music\x20training\x20from\x20Lala\x20Kalawant.','explanationHindi':_0x4deef1(0x209)},{'id':0x5,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1be),'questionHindi':_0x4deef1(0x485),'options':[_0x4deef1(0x2e1),_0x4deef1(0x4d0),_0x4deef1(0x4dc),'Cotton',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x478),_0x4deef1(0x2a0),_0x4deef1(0x1c3),_0x4deef1(0x482),_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x187),'explanationHindi':_0x4deef1(0x47d)},{'id':0x6,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x503),'questionHindi':_0x4deef1(0x174),'options':[_0x4deef1(0x325),'Chandra\x20Shekhar\x20Azad',_0x4deef1(0x528),'Bhagat\x20Singh',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x49f),_0x4deef1(0x2a2),'सुखदेव','भगत\x20सिंह',_0x4deef1(0x420)],'answer':0x3,'explanation':'The\x20statement\x20is\x20attributed\x20to\x20Bhagat\x20Singh\x20in\x20this\x20practice\x20set.','explanationHindi':_0x4deef1(0x1da)},{'id':0x7,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x50b),'questionHindi':_0x4deef1(0x34a),'options':[_0x4deef1(0x490),_0x4deef1(0x328),'7\x20July\x201942,\x20Lahore',_0x4deef1(0x1ba),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x435),_0x4deef1(0x4f7),_0x4deef1(0x154),_0x4deef1(0x281),_0x4deef1(0x420)],'answer':0x0,'explanation':'The\x20Quit\x20India\x20resolution\x20was\x20adopted\x20in\x20Bombay\x20on\x208\x20August\x201942.','explanationHindi':'भारत\x20छोड़ो\x20प्रस्ताव\x208\x20अगस्त\x201942\x20को\x20बंबई\x20में\x20पारित\x20हुआ।'},{'id':0x8,'type':'normal','question':'Which\x20group\x20regularly\x20broadcast\x20programmes\x20on\x20Congress\x20Radio\x20during\x20the\x20Quit\x20India\x20Movement?','questionHindi':_0x4deef1(0x244),'options':[_0x4deef1(0x28f),_0x4deef1(0x1fe),_0x4deef1(0x44c),'Sardar\x20Patel',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x429),_0x4deef1(0x466),_0x4deef1(0x3c8),_0x4deef1(0x4b6),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x2,'explanation':_0x4deef1(0x2cb),'explanationHindi':_0x4deef1(0x161)},{'id':0x9,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1b9),'questionHindi':'लंदन\x20में\x20इंडिया\x20हाउस\x20की\x20स्थापना\x20किसने\x20की?','options':[_0x4deef1(0x387),'Barakatullah',_0x4deef1(0x29b),_0x4deef1(0x45d),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x4dd),_0x4deef1(0x352),_0x4deef1(0x381),_0x4deef1(0x384),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x268),'explanationHindi':_0x4deef1(0x4b3)},{'id':0xa,'type':'normal','question':_0x4deef1(0x495),'questionHindi':_0x4deef1(0x26d),'options':[_0x4deef1(0x1d2),'Gwalior\x20Fort',_0x4deef1(0x46a),_0x4deef1(0x35c),_0x4deef1(0x1af)],'optionsHindi':['लाल\x20किला,\x20दिल्ली',_0x4deef1(0x1fb),'आमेर\x20किला,\x20जयपुर',_0x4deef1(0x4ab),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x1b2),'explanationHindi':'आज़ाद\x20हिंद\x20फ़ौज\x20के\x20मुकदमे\x20नवंबर\x201945\x20में\x20दिल्ली\x20के\x20लाल\x20किले\x20में\x20चले।'},{'id':0xb,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1f2),'questionHindi':_0x4deef1(0x39a),'options':[_0x4deef1(0x334),'Nigeria','Greece','Turkey',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x441),_0x4deef1(0x297),_0x4deef1(0x16b),_0x4deef1(0x2b2),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x524),'explanationHindi':_0x4deef1(0x1fa)},{'id':0xc,'type':_0x4deef1(0x3d5),'question':'India\x27s\x20standard\x20meridian\x20is\x20which\x20longitude?','questionHindi':_0x4deef1(0x405),'options':[_0x4deef1(0x4a1),_0x4deef1(0x19f),_0x4deef1(0x439),_0x4deef1(0x172),'None\x20of\x20these'],'optionsHindi':['82°30′\x20पश्चिम','82°30′\x20पूर्व','92°30′\x20पश्चिम',_0x4deef1(0x1bb),_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x416),'explanationHindi':_0x4deef1(0x253)},{'id':0xd,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x402),'questionHindi':_0x4deef1(0x44b),'options':['Jharkhand',_0x4deef1(0x2af),_0x4deef1(0x4fb),_0x4deef1(0x27a),'None\x20of\x20these'],'optionsHindi':['झारखंड',_0x4deef1(0x2b5),_0x4deef1(0x4fa),_0x4deef1(0x434),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x2ee),'explanationHindi':_0x4deef1(0x2dd)},{'id':0xe,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x375),'questionHindi':_0x4deef1(0x3dd),'options':[_0x4deef1(0x357),_0x4deef1(0x22a),_0x4deef1(0x211),_0x4deef1(0x51b),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x30a),_0x4deef1(0x446),'मणिपुर',_0x4deef1(0x286),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x359),'explanationHindi':'नामचिक–नामफुक\x20कोयला\x20क्षेत्र\x20अरुणाचल\x20प्रदेश\x20में\x20स्थित\x20है।'},{'id':0xf,'type':'normal','question':_0x4deef1(0x1dc),'questionHindi':'गोबी\x20मरुस्थल\x20किस\x20देश/क्षेत्र\x20में\x20स्थित\x20है?','options':[_0x4deef1(0x203),_0x4deef1(0x30f),'Egypt','Turkmenistan',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x323),'सोमालिया',_0x4deef1(0x441),_0x4deef1(0x4e1),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x4,'explanation':'The\x20Gobi\x20Desert\x20lies\x20mainly\x20in\x20Mongolia\x20and\x20China,\x20so\x20none\x20of\x20the\x20listed\x20options\x20is\x20correct.','explanationHindi':_0x4deef1(0x163)},{'id':0x10,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x2de),'questionHindi':_0x4deef1(0x303),'options':[_0x4deef1(0x1ed),_0x4deef1(0x4b8),_0x4deef1(0x412),'Part\x20XII',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x1d4),_0x4deef1(0x23d),'भाग\x20IVA','भाग\x20XII',_0x4deef1(0x420)],'answer':0x2,'explanation':'Fundamental\x20Duties\x20are\x20in\x20Part\x20IVA,\x20Article\x2051A.','explanationHindi':_0x4deef1(0x1d8)},{'id':0x11,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x265),'questionHindi':'राजभाषा\x20से\x20संबंधित\x20प्रावधानों\x20में\x20संसद\x20किस\x20बहुमत\x20से\x20संशोधन\x20कर\x20सकती\x20है?','options':['Simple\x20majority\x20of\x20members\x20present\x20and\x20voting',_0x4deef1(0x236),_0x4deef1(0x295),_0x4deef1(0x401),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x23a),_0x4deef1(0x1fd),'तीन-चौथाई\x20बहुमत',_0x4deef1(0x2cd),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x33f),'explanationHindi':_0x4deef1(0x345)},{'id':0x12,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1f0),'questionHindi':_0x4deef1(0x2c3),'options':['Legislature',_0x4deef1(0x31f),_0x4deef1(0x18a),_0x4deef1(0x2ed),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x22d),_0x4deef1(0x4f4),_0x4deef1(0x3db),_0x4deef1(0x20f),_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x2e4),'explanationHindi':'न्यायपालिका,\x20विशेषकर\x20सर्वोच्च\x20न्यायालय,\x20संवैधानिक\x20संतुलन\x20की\x20रक्षा\x20करती\x20है।'},{'id':0x13,'type':_0x4deef1(0x3d5),'question':'Consider\x20the\x20statements\x20on\x20local\x20self-government:\x201.\x20The\x20district\x20planning\x20committee\x20prepares\x20an\x20integrated\x20district\x20development\x20plan.\x202.\x20The\x20state\x20legislature\x20determines\x20its\x20composition\x20by\x20law.\x20Which\x20is\x20correct?','questionHindi':_0x4deef1(0x324),'options':['Only\x201',_0x4deef1(0x24e),_0x4deef1(0x1aa),_0x4deef1(0x1a9),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x4d5),'केवल\x202',_0x4deef1(0x347),_0x4deef1(0x3ed),_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x1dd),'explanationHindi':_0x4deef1(0x19b)},{'id':0x14,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x49a),'questionHindi':_0x4deef1(0x494),'options':[_0x4deef1(0x470),_0x4deef1(0x173),_0x4deef1(0x35d),_0x4deef1(0x396),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x20c),_0x4deef1(0x39f),_0x4deef1(0x36b),_0x4deef1(0x2b9),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x2ab),'explanationHindi':_0x4deef1(0x40a)},{'id':0x15,'type':_0x4deef1(0x3d5),'question':'An\x20air\x20bubble\x20inside\x20water\x20behaves\x20like\x20which\x20type\x20of\x20lens?','questionHindi':_0x4deef1(0x222),'options':[_0x4deef1(0x3e8),_0x4deef1(0x1c7),_0x4deef1(0x277),'Plano-convex\x20lens',_0x4deef1(0x1af)],'optionsHindi':['द्वि-उत्तल\x20लेंस','अभिसारी\x20लेंस',_0x4deef1(0x4da),_0x4deef1(0x37e),_0x4deef1(0x420)],'answer':0x2,'explanation':'An\x20air\x20bubble\x20in\x20water\x20behaves\x20like\x20a\x20diverging\x20(concave)\x20lens.','explanationHindi':_0x4deef1(0x41f)},{'id':0x16,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x2fb),'questionHindi':'केल्विन\x20पैमाने\x20पर\x20पानी\x20का\x20क्वथनांक\x20कितना\x20है?','options':['100\x20K',_0x4deef1(0x2e3),'373\x20K',_0x4deef1(0x2da),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x1d1),'272\x20K','373\x20K',_0x4deef1(0x2da),_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x1e8),'explanationHindi':_0x4deef1(0x2bf)},{'id':0x17,'type':_0x4deef1(0x3d5),'question':'Graphene\x20is:','questionHindi':'ग्राफीन\x20क्या\x20है?','options':[_0x4deef1(0x500),'A\x20nano-form\x20of\x20carbon','An\x20isotope\x20of\x20carbon',_0x4deef1(0x3b5),_0x4deef1(0x1af)],'optionsHindi':['कार्बन\x20की\x20मिश्रधातु',_0x4deef1(0x340),'कार्बन\x20का\x20समस्थानिक',_0x4deef1(0x3e7),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x235),'explanationHindi':_0x4deef1(0x2f2)},{'id':0x18,'type':'normal','question':_0x4deef1(0x309),'questionHindi':'मानव\x20शरीर\x20का\x20सामान्य\x20तापमान\x20ऋतुओं\x20के\x20साथ\x20किस\x20प्रकार\x20बदलता\x20है?','options':['Decreases\x20in\x20winter',_0x4deef1(0x28b),_0x4deef1(0x445),_0x4deef1(0x498),_0x4deef1(0x1af)],'optionsHindi':['सर्दियों\x20में\x20घटता\x20है',_0x4deef1(0x310),'न\x20सर्दियों\x20में\x20घटता\x20है,\x20न\x20गर्मियों\x20में\x20बढ़ता\x20है','सर्दियों\x20में\x20बढ़ता\x20है','इनमें\x20से\x20कोई\x20नहीं'],'answer':0x2,'explanation':_0x4deef1(0x31d),'explanationHindi':_0x4deef1(0x4c6)},{'id':0x19,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x2c7),'questionHindi':_0x4deef1(0x386),'options':[_0x4deef1(0x432),_0x4deef1(0x3b8),'Smallpox',_0x4deef1(0x358),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x33c),_0x4deef1(0x1c2),'चेचक',_0x4deef1(0x41a),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x0,'explanation':_0x4deef1(0x3d2),'explanationHindi':_0x4deef1(0x35e)},{'id':0x1a,'type':'normal','question':_0x4deef1(0x4ec),'questionHindi':_0x4deef1(0x4d4),'options':[_0x4deef1(0x233),_0x4deef1(0x2f9),_0x4deef1(0x239),_0x4deef1(0x3d4),_0x4deef1(0x1af)],'optionsHindi':['1937',_0x4deef1(0x2f9),_0x4deef1(0x239),_0x4deef1(0x3d4),_0x4deef1(0x420)],'answer':0x0,'explanation':'The\x20answer\x20key\x20gives\x201937\x20for\x20the\x20Act\x20associated\x20with\x20grading\x20and\x20marking\x20agricultural\x20produce.','explanationHindi':_0x4deef1(0x194)},{'id':0x1b,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x4a4),'questionHindi':_0x4deef1(0x231),'options':[_0x4deef1(0x2ff),_0x4deef1(0x3f9),'M.B.I.',_0x4deef1(0x27d),_0x4deef1(0x1af)],'optionsHindi':['RBI',_0x4deef1(0x197),'एम.बी.आई.',_0x4deef1(0x3ae),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x24d),'explanationHindi':_0x4deef1(0x4a7)},{'id':0x1c,'type':'normal','question':_0x4deef1(0x22e),'questionHindi':_0x4deef1(0x3f4),'options':[_0x4deef1(0x3cc),_0x4deef1(0x22b),_0x4deef1(0x371),_0x4deef1(0x523),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x3f8),_0x4deef1(0x4e9),_0x4deef1(0x2b6),_0x4deef1(0x414),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x351),'explanationHindi':_0x4deef1(0x25c)},{'id':0x1d,'type':'normal','question':_0x4deef1(0x263),'questionHindi':'भारत\x20में\x20संपूर्ण\x20सहकारी\x20आंदोलन\x20का\x20प्रतिनिधित्व\x20कौन-सा\x20संगठन\x20करता\x20है?','options':[_0x4deef1(0x24f),_0x4deef1(0x477),_0x4deef1(0x32a),'NABARD',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x24f),_0x4deef1(0x31e),_0x4deef1(0x32a),'नाबार्ड',_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x370),'explanationHindi':_0x4deef1(0x224)},{'id':0x1e,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x2a1),'questionHindi':_0x4deef1(0x38f),'options':[_0x4deef1(0x4d8),_0x4deef1(0x327),'Land-plus\x20approach','Credit-plus\x20approach','None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x213),_0x4deef1(0x261),_0x4deef1(0x2ac),_0x4deef1(0x225),_0x4deef1(0x420)],'answer':0x0,'explanation':'MSP\x20decisions\x20consider\x20production\x20costs\x20along\x20with\x20demand-supply\x20and\x20other\x20relevant\x20factors.','explanationHindi':_0x4deef1(0x4f0)},{'id':0x1f,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x471),'questionHindi':_0x4deef1(0x30b),'options':[_0x4deef1(0x238),_0x4deef1(0x18b),'Chhau',_0x4deef1(0x3dc),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x3a1),'कलरिपयट्टू','छऊ',_0x4deef1(0x3e2),_0x4deef1(0x420)],'answer':0x0,'explanation':'Bhavai\x20is\x20a\x20traditional\x20folk\x20dance;\x20the\x20answer\x20key\x20selects\x20it\x20as\x20not\x20a\x20martial-art\x20form.','explanationHindi':_0x4deef1(0x2e6)},{'id':0x20,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x15d),'questionHindi':_0x4deef1(0x1fc),'options':[_0x4deef1(0x26c),_0x4deef1(0x2f6),_0x4deef1(0x267),'World\x20Water\x20Day',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x3bc),_0x4deef1(0x499),_0x4deef1(0x3aa),_0x4deef1(0x210),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x1b8),'explanationHindi':_0x4deef1(0x29a)},{'id':0x21,'type':'normal','question':_0x4deef1(0x27e),'questionHindi':_0x4deef1(0x3ca),'options':[_0x4deef1(0x168),_0x4deef1(0x373),_0x4deef1(0x4c5),_0x4deef1(0x4ee),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x3f6),_0x4deef1(0x341),_0x4deef1(0x2c9),_0x4deef1(0x436),_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x2b8),'explanationHindi':'उत्तर-कुंजी\x20में\x20‘स्मैशर’\x20शब्द\x20को\x20वॉलीबॉल\x20से\x20संबंधित\x20बताया\x20गया\x20है।'},{'id':0x22,'type':'normal','question':_0x4deef1(0x2d2),'questionHindi':_0x4deef1(0x30c),'options':[_0x4deef1(0x1e1),_0x4deef1(0x289),_0x4deef1(0x150),_0x4deef1(0x22c),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x3d6),'गुवाहाटी','भोपाल','इंदौर',_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x1cc),'explanationHindi':'कामाख्या\x20मंदिर\x20असम\x20के\x20गुवाहाटी\x20में\x20नीलाचल\x20पहाड़ी\x20पर\x20स्थित\x20है।'},{'id':0x23,'type':'normal','question':_0x4deef1(0x43f),'questionHindi':'इस\x20प्रश्न\x20में\x20उल्लिखित\x20उपभोक्ता\x20संरक्षण\x20अधिनियम\x20किस\x20वर्ष\x20अधिनियमित\x20हुआ?','options':[_0x4deef1(0x330),'1988',_0x4deef1(0x193),_0x4deef1(0x301),_0x4deef1(0x1af)],'optionsHindi':['1990','1988',_0x4deef1(0x193),'1985',_0x4deef1(0x420)],'answer':0x4,'explanation':_0x4deef1(0x23e),'explanationHindi':_0x4deef1(0x419)},{'id':0x24,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x37a),'questionHindi':_0x4deef1(0x3d1),'options':[_0x4deef1(0x50e),'Thailand',_0x4deef1(0x1b6),_0x4deef1(0x1f4),_0x4deef1(0x1af)],'optionsHindi':['ईरान',_0x4deef1(0x428),'चीन',_0x4deef1(0x26f),_0x4deef1(0x420)],'answer':0x4,'explanation':'Baghdad\x20is\x20the\x20capital\x20of\x20Iraq,\x20which\x20is\x20not\x20among\x20the\x20listed\x20options.','explanationHindi':_0x4deef1(0x366)},{'id':0x25,'type':'normal','question':_0x4deef1(0x40d),'questionHindi':_0x4deef1(0x374),'options':[_0x4deef1(0x1f6),_0x4deef1(0x398),_0x4deef1(0x415),_0x4deef1(0x3fc),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x2b0),_0x4deef1(0x474),'6\x20वर्ष','3\x20वर्ष',_0x4deef1(0x420)],'answer':0x1,'explanation':'The\x20normal\x20term\x20of\x20a\x20State\x20Legislative\x20Assembly\x20is\x20five\x20years.','explanationHindi':_0x4deef1(0x21d)},{'id':0x26,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x237),'questionHindi':_0x4deef1(0x4bd),'options':[_0x4deef1(0x4f3),_0x4deef1(0x49c),_0x4deef1(0x3de),_0x4deef1(0x511),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x26b),'लक्षद्वीप',_0x4deef1(0x4f1),_0x4deef1(0x32e),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x3,'explanation':'Puducherry\x20is\x20represented\x20in\x20the\x20Rajya\x20Sabha\x20among\x20these\x20options.','explanationHindi':'इन\x20विकल्पों\x20में\x20पुदुचेरी\x20का\x20राज्यसभा\x20में\x20प्रतिनिधित्व\x20है।'},{'id':0x27,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x2d6),'questionHindi':_0x4deef1(0x3a2),'options':[_0x4deef1(0x2d7),_0x4deef1(0x512),_0x4deef1(0x285),_0x4deef1(0x521),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x4a0),_0x4deef1(0x4ff),_0x4deef1(0x1ac),'14\x20दिसंबर',_0x4deef1(0x420)],'answer':0x4,'explanation':_0x4deef1(0x4c1),'explanationHindi':'अंतरराष्ट्रीय\x20प्रवासी\x20दिवस\x2018\x20दिसंबर\x20को\x20मनाया\x20जाता\x20है,\x20जो\x20विकल्पों\x20में\x20नहीं\x20है।'},{'id':0x28,'type':'normal','question':_0x4deef1(0x260),'questionHindi':_0x4deef1(0x20a),'options':[_0x4deef1(0x31a),_0x4deef1(0x181),'20\x20February','21\x20February',_0x4deef1(0x1af)],'optionsHindi':['18\x20फरवरी',_0x4deef1(0x25d),_0x4deef1(0x329),_0x4deef1(0x4b2),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x2,'explanation':_0x4deef1(0x410),'explanationHindi':_0x4deef1(0x4e2)},{'id':0x29,'type':_0x4deef1(0x3d5),'question':'Find\x20the\x20fractional\x20form\x20of\x208.46.','questionHindi':_0x4deef1(0x464),'options':[_0x4deef1(0x3bd),_0x4deef1(0x3bd),_0x4deef1(0x312),_0x4deef1(0x312),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x3bd),_0x4deef1(0x3bd),_0x4deef1(0x312),'838/99',_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x3b2),'explanationHindi':_0x4deef1(0x4f8)},{'id':0x2a,'type':_0x4deef1(0x3d5),'question':'If\x20a:b\x20=\x207:3,\x20find\x20(3a\x20+\x202b):(3a\x20−\x202b).','questionHindi':'यदि\x20a:b\x20=\x207:3\x20है,\x20तो\x20(3a\x20+\x202b):(3a\x20−\x202b)\x20ज्ञात\x20कीजिए।','options':['(7\x20+\x202√21)/(7\x20−\x202√21)',_0x4deef1(0x232),'(2\x20+\x202√21)/(−2\x20−\x202√21)','(2\x20−\x202√21)/(2\x20+\x202√21)',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x218),_0x4deef1(0x232),_0x4deef1(0x2c2),_0x4deef1(0x2f7),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x2c1),'explanationHindi':_0x4deef1(0x4c2)},{'id':0x2b,'type':_0x4deef1(0x3d5),'question':'A\x20student’s\x20average\x20marks\x20in\x20five\x20subjects\x20is\x2075.\x20The\x20average\x20in\x20the\x20first\x20two\x20is\x2065\x20and\x20in\x20the\x20last\x20two\x20is\x2085.\x20Find\x20the\x20marks\x20in\x20the\x20third\x20subject.','questionHindi':_0x4deef1(0x255),'options':['80','65','75','70',_0x4deef1(0x1af)],'optionsHindi':['80','65','75','70',_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x246),'explanationHindi':_0x4deef1(0x38d)},{'id':0x2c,'type':_0x4deef1(0x3d5),'question':'Two\x20devices\x20cost\x20₹15,000\x20and\x20₹20,000.\x20Discounts\x20are\x208%\x20and\x2012%,\x20respectively.\x20Find\x20their\x20total\x20selling\x20price.','questionHindi':'दो\x20उपकरणों\x20के\x20क्रय\x20मूल्य\x20₹15,000\x20और\x20₹20,000\x20हैं।\x20उन\x20पर\x20क्रमशः\x208%\x20और\x2012%\x20छूट\x20है।\x20कुल\x20विक्रय\x20मूल्य\x20ज्ञात\x20कीजिए।','options':[_0x4deef1(0x51f),_0x4deef1(0x2e9),_0x4deef1(0x1ea),_0x4deef1(0x36c),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x51f),'₹28,600',_0x4deef1(0x1ea),_0x4deef1(0x36c),_0x4deef1(0x420)],'answer':0x2,'explanation':'Selling\x20prices\x20are\x20₹13,800\x20and\x20₹17,600;\x20total\x20=\x20₹31,400.','explanationHindi':_0x4deef1(0x2ca)},{'id':0x2d,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x278),'questionHindi':_0x4deef1(0x320),'options':[_0x4deef1(0x270),'0.8%\x20increase',_0x4deef1(0x520),_0x4deef1(0x4fc),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x39c),_0x4deef1(0x36a),_0x4deef1(0x1f7),'8%\x20वृद्धि',_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x26e),'explanationHindi':'नया\x20क्षेत्रफल\x20गुणक\x201.15×0.80\x20=\x200.92\x20है;\x20अतः\x208%\x20कमी\x20होगी।'},{'id':0x2e,'type':'normal','question':_0x4deef1(0x1ec),'questionHindi':_0x4deef1(0x41b),'options':[_0x4deef1(0x526),'BTBNT',_0x4deef1(0x465),'BTNTB',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x526),'BTBNT',_0x4deef1(0x465),_0x4deef1(0x152),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x3f0),'explanationHindi':_0x4deef1(0x249)},{'id':0x2f,'type':'normal','question':_0x4deef1(0x3eb),'questionHindi':_0x4deef1(0x1e6),'options':['36–27',_0x4deef1(0x337),_0x4deef1(0x39b),_0x4deef1(0x16c),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x368),_0x4deef1(0x337),'23–14',_0x4deef1(0x16c),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x426),'explanationHindi':_0x4deef1(0x31b)},{'id':0x30,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x461),'questionHindi':'3:25\x20बजे\x20घड़ी\x20की\x20घंटे\x20और\x20मिनट\x20की\x20सुइयों\x20के\x20बीच\x20कोण\x20कितना\x20होगा?','options':[_0x4deef1(0x221),_0x4deef1(0x2ce),'54°',_0x4deef1(0x406),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x221),_0x4deef1(0x2ce),_0x4deef1(0x186),'45.5°',_0x4deef1(0x420)],'answer':0x4,'explanation':_0x4deef1(0x15f),'explanationHindi':_0x4deef1(0x3ff)},{'id':0x31,'type':_0x4deef1(0x3d5),'question':'Pointing\x20to\x20Ambika,\x20Rituraj\x20says:\x20“His\x20only\x20brother’s\x20son\x20is\x20my\x20wife’s\x20brother.”\x20How\x20is\x20Ambika\x20related\x20to\x20Rituraj?','questionHindi':'अंबिका\x20की\x20ओर\x20इशारा\x20करते\x20हुए\x20ऋतुराज\x20कहता\x20है,\x20“इसके\x20इकलौते\x20भाई\x20का\x20बेटा\x20मेरी\x20पत्नी\x20का\x20भाई\x20है।”\x20अंबिका\x20का\x20ऋतुराज\x20से\x20क्या\x20संबंध\x20है?','options':[_0x4deef1(0x1f5),_0x4deef1(0x3e9),'Mother-in-law',_0x4deef1(0x46e),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x516),_0x4deef1(0x496),'सास',_0x4deef1(0x4d7),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x3,'explanation':_0x4deef1(0x31c),'explanationHindi':'उत्तर-कुंजी\x20के\x20अनुसार\x20अंबिका,\x20ऋतुराज\x20के\x20ससुर\x20की\x20बहन\x20है।'},{'id':0x32,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x3df),'questionHindi':_0x4deef1(0x43e),'options':[_0x4deef1(0x169),_0x4deef1(0x42e),_0x4deef1(0x23c),_0x4deef1(0x283),_0x4deef1(0x1af)],'optionsHindi':['केवल\x20I',_0x4deef1(0x3af),_0x4deef1(0x3a5),_0x4deef1(0x4b4),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x4cf),'explanationHindi':_0x4deef1(0x42b)},{'id':0x33,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x2d8),'questionHindi':'“Between\x20Scylla\x20and\x20Charybdis”\x20मुहावरे\x20का\x20सही\x20अर्थ\x20चुनिए।','options':['Winning\x20a\x20competition',_0x4deef1(0x3c2),'Choice\x20between\x20two\x20unpleasant\x20alternatives',_0x4deef1(0x467),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x51a),_0x4deef1(0x38b),'दो\x20अप्रिय\x20विकल्पों\x20में\x20चुनाव',_0x4deef1(0x1bc),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x2,'explanation':_0x4deef1(0x379),'explanationHindi':_0x4deef1(0x35f)},{'id':0x34,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x34d),'questionHindi':'“Falling\x20head\x20over\x20heels”\x20का\x20सही\x20अर्थ\x20चुनिए।','options':[_0x4deef1(0x4ca),_0x4deef1(0x45e),_0x4deef1(0x21b),_0x4deef1(0x293),_0x4deef1(0x1af)],'optionsHindi':['ज़रूरतमंदों\x20के\x20प्रति\x20गहरी\x20सहानुभूति','दूसरों\x20में\x20दोष\x20निकालना','किसी\x20के\x20प्रेम\x20में\x20गहराई\x20से\x20पड़ना',_0x4deef1(0x251),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x2,'explanation':'The\x20idiom\x20means\x20falling\x20deeply\x20in\x20love.','explanationHindi':_0x4deef1(0x506)},{'id':0x35,'type':'normal','question':_0x4deef1(0x259),'questionHindi':_0x4deef1(0x1ef),'options':['Gentle','Domesticated',_0x4deef1(0x2b1),'Fierce',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x4ae),_0x4deef1(0x491),_0x4deef1(0x196),_0x4deef1(0x279),_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x4cb),'explanationHindi':'Ferocious\x20का\x20अर्थ\x20उग्र,\x20भयंकर\x20या\x20हिंसक\x20होता\x20है।'},{'id':0x36,'type':'normal','question':_0x4deef1(0x1cf),'questionHindi':_0x4deef1(0x484),'options':[_0x4deef1(0x2df),_0x4deef1(0x2e8),_0x4deef1(0x403),_0x4deef1(0x4db),_0x4deef1(0x1af)],'optionsHindi':['are\x20proved','have\x20proved',_0x4deef1(0x403),_0x4deef1(0x4db),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x3b9),'explanationHindi':'बहुवचन\x20कर्ता\x20“alerts”\x20के\x20साथ\x20“have\x20proved”\x20का\x20प्रयोग\x20होगा।'},{'id':0x37,'type':'normal','question':_0x4deef1(0x2f5),'questionHindi':_0x4deef1(0x34e),'options':[_0x4deef1(0x1df),'Aksa\x20Thomas\x20has\x20come\x20to\x20attend\x20the\x20session\x20so\x20early.',_0x4deef1(0x2d5),_0x4deef1(0x200),_0x4deef1(0x1af)],'optionsHindi':['Aksa\x20Thomas\x20came\x20to\x20attend\x20the\x20session\x20so\x20early.',_0x4deef1(0x400),_0x4deef1(0x2d5),'Aksa\x20Thomas\x20will\x20come\x20to\x20attend\x20the\x20session\x20so\x20early.',_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x195),'explanationHindi':_0x4deef1(0x28e)},{'id':0x38,'type':_0x4deef1(0x3d5),'question':'Choose\x20the\x20correct\x20sandhi-viched\x20of\x20‘निष्करुण’.','questionHindi':_0x4deef1(0x4e3),'options':['निष्\x20+\x20करुण',_0x4deef1(0x178),_0x4deef1(0x453),_0x4deef1(0x192),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x3ba),_0x4deef1(0x178),_0x4deef1(0x453),_0x4deef1(0x192),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x1,'explanation':_0x4deef1(0x350),'explanationHindi':_0x4deef1(0x4cc)},{'id':0x39,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x170),'questionHindi':_0x4deef1(0x448),'options':[_0x4deef1(0x438),'अंश',_0x4deef1(0x493),'दर्प',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x438),_0x4deef1(0x1ff),_0x4deef1(0x493),_0x4deef1(0x4e5),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x457),'explanationHindi':_0x4deef1(0x501)},{'id':0x3a,'type':'normal','question':_0x4deef1(0x364),'questionHindi':_0x4deef1(0x355),'options':[_0x4deef1(0x21a),_0x4deef1(0x35b),_0x4deef1(0x2d0),_0x4deef1(0x208),_0x4deef1(0x1af)],'optionsHindi':['वेद-संबंधी\x20:\x20आईना',_0x4deef1(0x346),_0x4deef1(0x3bf),_0x4deef1(0x455),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x4f9),'explanationHindi':_0x4deef1(0x424)},{'id':0x3b,'type':_0x4deef1(0x3d5),'question':'What\x20is\x20the\x20suitable\x20word\x20for\x20a\x20decision\x20based\x20on\x20known\x20or\x20assumed\x20facts?','questionHindi':_0x4deef1(0x17f),'options':[_0x4deef1(0x421),_0x4deef1(0x363),'अनुमान','परिकल्पना','None\x20of\x20these'],'optionsHindi':['अपठित','अनुमोदन',_0x4deef1(0x43a),'परिकल्पना',_0x4deef1(0x420)],'answer':0x4,'explanation':_0x4deef1(0x25f),'explanationHindi':_0x4deef1(0x257)},{'id':0x3c,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x40b),'questionHindi':_0x4deef1(0x17a),'options':[_0x4deef1(0x30d),_0x4deef1(0x214),_0x4deef1(0x527),_0x4deef1(0x389),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x2d1),_0x4deef1(0x214),'ऊँट\x20के\x20मुँह\x20में\x20जीरा\x20—\x20आवश्यकता\x20से\x20बहुत\x20कम',_0x4deef1(0x389),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x3,'explanation':_0x4deef1(0x1c6),'explanationHindi':_0x4deef1(0x1e4)},{'id':0x3d,'type':'normal','question':_0x4deef1(0x2f1),'questionHindi':_0x4deef1(0x45a),'options':[_0x4deef1(0x220),_0x4deef1(0x3be),'Work\x20hard',_0x4deef1(0x43c),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x2b7),_0x4deef1(0x198),_0x4deef1(0x234),'लगातार\x20सोचते\x20रहना',_0x4deef1(0x420)],'answer':0x2,'explanation':'The\x20passage\x20emphasizes\x20continuous\x20hard\x20work\x20to\x20fulfil\x20the\x20promises\x20and\x20dreams.','explanationHindi':_0x4deef1(0x339)},{'id':0x3e,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x189),'questionHindi':_0x4deef1(0x305),'options':[_0x4deef1(0x156),'Become\x20a\x20great\x20singer','Wipe\x20tears\x20from\x20every\x20eye','Become\x20a\x20great\x20musician','None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x3a6),_0x4deef1(0x3d9),'हर\x20आँख\x20से\x20आँसू\x20मिटाना',_0x4deef1(0x17e),_0x4deef1(0x420)],'answer':0x2,'explanation':'The\x20passage\x20states\x20the\x20aspiration\x20was\x20to\x20wipe\x20tears\x20from\x20every\x20eye.','explanationHindi':_0x4deef1(0x4b9)},{'id':0x3f,'type':_0x4deef1(0x3d5),'question':'For\x20future\x20Indians,\x20what\x20is\x20required?','questionHindi':_0x4deef1(0x3fb),'options':[_0x4deef1(0x16a),_0x4deef1(0x2a7),_0x4deef1(0x175),_0x4deef1(0x16d),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x304),'भरपूर\x20आनंद\x20लेना',_0x4deef1(0x269),_0x4deef1(0x4b5),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x1cd),'explanationHindi':_0x4deef1(0x202)},{'id':0x40,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x17c),'questionHindi':'भारत\x20ने\x20अपनी\x20अनंत\x20खोज\x20के\x20दौरान\x20क्या\x20नहीं\x20भुलाया?','options':['Its\x20sovereignty','Its\x20God',_0x4deef1(0x3b6),'Its\x20prosperity',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x271),_0x4deef1(0x1d9),_0x4deef1(0x51c),_0x4deef1(0x276),_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x171),'explanationHindi':'गद्यांश\x20के\x20अनुसार\x20भारत\x20ने\x20अपने\x20आदर्शों\x20को\x20कभी\x20नहीं\x20भुलाया।'},{'id':0x41,'type':_0x4deef1(0x3d5),'question':'Which\x20is\x20not\x20meant\x20by\x20‘service\x20to\x20India’\x20in\x20the\x20passage?','questionHindi':'गद्यांश\x20में\x20‘भारत\x20की\x20सेवा’\x20का\x20आशय\x20किससे\x20नहीं\x20है?','options':[_0x4deef1(0x3ad),_0x4deef1(0x349),_0x4deef1(0x23b),_0x4deef1(0x504),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x413),'अज्ञानता\x20और\x20बीमारियाँ\x20मिटाना',_0x4deef1(0x29d),_0x4deef1(0x1e0),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x3,'explanation':_0x4deef1(0x1e2),'explanationHindi':_0x4deef1(0x3ce)},{'id':0x42,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1a1),'questionHindi':_0x4deef1(0x38a),'options':[_0x4deef1(0x433),'A\x20quality\x20that\x20makes\x20humans\x20artists',_0x4deef1(0x32c),'A\x20saga\x20of\x20independent\x20human\x20thought',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x20d),_0x4deef1(0x45c),_0x4deef1(0x2db),'स्वाधीन\x20मानवीय\x20चिंतन\x20की\x20गाथा','इनमें\x20से\x20कोई\x20नहीं'],'answer':0x2,'explanation':'The\x20passage\x20describes\x20civilization\x20as\x20the\x20quality\x20that\x20advances\x20material\x20development.','explanationHindi':_0x4deef1(0x472)},{'id':0x43,'type':_0x4deef1(0x3d5),'question':'According\x20to\x20the\x20passage,\x20‘culture’\x20means:','questionHindi':_0x4deef1(0x488),'options':[_0x4deef1(0x19c),_0x4deef1(0x1b0),_0x4deef1(0x4ba),'A\x20special\x20way\x20of\x20celebrating\x20joy',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x335),_0x4deef1(0x162),_0x4deef1(0x49d),_0x4deef1(0x3a4),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x44e),'explanationHindi':_0x4deef1(0x288)},{'id':0x44,'type':'normal','question':_0x4deef1(0x505),'questionHindi':'संस्कृति\x20का\x20मूल\x20स्वभाव\x20क्या\x20है?','options':[_0x4deef1(0x3b4),_0x4deef1(0x380),_0x4deef1(0x165),'It\x20grows\x20through\x20exchange','None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x38e),_0x4deef1(0x184),_0x4deef1(0x4eb),'यह\x20आदान-प्रदान\x20से\x20बढ़ती\x20है','इनमें\x20से\x20कोई\x20नहीं'],'answer':0x3,'explanation':_0x4deef1(0x2c5),'explanationHindi':_0x4deef1(0x3c3)},{'id':0x45,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x365),'questionHindi':'संस्कृति\x20सभ्यता\x20से\x20किस\x20प्रकार\x20भिन्न\x20है?','options':[_0x4deef1(0x3a7),_0x4deef1(0x2e7),_0x4deef1(0x3c5),_0x4deef1(0x2cf),_0x4deef1(0x1af)],'optionsHindi':['संस्कृति\x20समन्वयकारी\x20और\x20सभ्यता\x20मौलिक\x20है','संस्कृति\x20अधिक\x20विस्तृत\x20और\x20स्पष्ट\x20है',_0x4deef1(0x240),_0x4deef1(0x411),_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x427),'explanationHindi':_0x4deef1(0x437)},{'id':0x46,'type':_0x4deef1(0x3d5),'question':'Humanity\x20is\x20reflected\x20in\x20a\x20person’s\x20ability\x20to:','questionHindi':_0x4deef1(0x155),'options':[_0x4deef1(0x35a),_0x4deef1(0x14d),'Remain\x20committed\x20to\x20enriching\x20one’s\x20culture','Try\x20to\x20control\x20existing\x20defects\x20of\x20the\x20mind',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x2d4),_0x4deef1(0x2e2),'अपनी\x20संस्कृति\x20को\x20समृद्ध\x20करने\x20के\x20लिए\x20प्रतिबद्ध\x20रहना',_0x4deef1(0x1bd),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x4,'explanation':_0x4deef1(0x422),'explanationHindi':_0x4deef1(0x17d)},{'id':0x47,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x311),'questionHindi':_0x4deef1(0x49e),'options':[_0x4deef1(0x47b),_0x4deef1(0x4f6),_0x4deef1(0x2e9),_0x4deef1(0x16f),_0x4deef1(0x1af)],'optionsHindi':['₹28,400',_0x4deef1(0x4f6),_0x4deef1(0x2e9),_0x4deef1(0x16f),_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x17b),'explanationHindi':_0x4deef1(0x4be)},{'id':0x48,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x409),'questionHindi':_0x4deef1(0x188),'options':[_0x4deef1(0x50a),'₹150',_0x4deef1(0x19e),'₹225','None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x50a),_0x4deef1(0x20b),'₹175',_0x4deef1(0x1f1),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x4c3),'explanationHindi':_0x4deef1(0x1b7)},{'id':0x49,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x2c4),'questionHindi':'शुक्रवार\x20को\x20गुरुवार\x20की\x20तुलना\x20में\x20रेडियम\x20और\x20प्लूटोनियम\x20के\x20प्रति\x20ग्राम\x20मूल्य\x20क्रमशः\x2010%\x20और\x2020%\x20बढ़ते\x20हैं।\x20शुक्रवार\x20का\x20संयुक्त\x20मूल्य\x20ज्ञात\x20कीजिए।','options':[_0x4deef1(0x4e4),_0x4deef1(0x2eb),_0x4deef1(0x28a),_0x4deef1(0x348),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x4e4),_0x4deef1(0x2eb),_0x4deef1(0x28a),'₹8,460','इनमें\x20से\x20कोई\x20नहीं'],'answer':0x1,'explanation':_0x4deef1(0x266),'explanationHindi':_0x4deef1(0x48b)},{'id':0x4a,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x4fd),'questionHindi':_0x4deef1(0x2a4),'options':[_0x4deef1(0x356),_0x4deef1(0x388),_0x4deef1(0x1ca),'49:47',_0x4deef1(0x1af)],'optionsHindi':['45:47',_0x4deef1(0x388),_0x4deef1(0x1ca),_0x4deef1(0x41e),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x3,'explanation':_0x4deef1(0x1c0),'explanationHindi':'सोमवार\x20का\x20कुल\x20₹7,350\x20और\x20गुरुवार\x20का\x20₹7,050\x20है;\x20अनुपात\x207350:7050\x20=\x2049:47।'},{'id':0x4b,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x3c1),'questionHindi':'अमन\x20बुधवार\x20को\x20रेडियम\x20और\x20प्लूटोनियम\x202-2\x20ग्राम\x20खरीदता\x20है\x20और\x20गुरुवार\x20के\x20मूल्य\x20पर\x20बेचता\x20है।\x20लाभ\x20ज्ञात\x20कीजिए।','options':[_0x4deef1(0x4de),_0x4deef1(0x20b),_0x4deef1(0x32f),_0x4deef1(0x4ea),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x4de),'₹150',_0x4deef1(0x32f),_0x4deef1(0x4ea),_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x431),'explanationHindi':'क्रय\x20मूल्य\x20₹13,900\x20और\x20विक्रय\x20मूल्य\x20₹14,100\x20है;\x20लाभ\x20₹200\x20है।'},{'id':0x4c,'type':'normal','question':_0x4deef1(0x1d5),'questionHindi':_0x4deef1(0x205),'options':['Y3','Y2','Y1','Y4',_0x4deef1(0x1af)],'optionsHindi':['Y3','Y2','Y1','Y4',_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x228),'explanationHindi':_0x4deef1(0x4ce)},{'id':0x4d,'type':'normal','question':_0x4deef1(0x306),'questionHindi':_0x4deef1(0x32b),'options':['Y1','Y2','Y3','Y5',_0x4deef1(0x1af)],'optionsHindi':['Y1','Y2','Y3','Y5',_0x4deef1(0x420)],'answer':0x0,'explanation':'Export/import\x20ratios\x20are\x20highest\x20for\x20Y1:\x20465/508\x20≈\x200.915.','explanationHindi':_0x4deef1(0x3fd)},{'id':0x4e,'type':_0x4deef1(0x3d5),'question':'What\x20is\x20the\x20average\x20annual\x20Chinese\x20import\x20value\x20(in\x20crore\x20rupees)\x20across\x20the\x20five\x20years?','questionHindi':_0x4deef1(0x2ea),'options':[_0x4deef1(0x331),_0x4deef1(0x3f1),_0x4deef1(0x158),_0x4deef1(0x331),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x331),_0x4deef1(0x3f1),'589.2',_0x4deef1(0x331),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x48f),'explanationHindi':_0x4deef1(0x332)},{'id':0x4f,'type':'normal','question':_0x4deef1(0x3ab),'questionHindi':_0x4deef1(0x229),'options':['Y4','Y2','Y5','Y3',_0x4deef1(0x1af)],'optionsHindi':['Y4','Y2','Y5','Y3',_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x51e),'explanationHindi':_0x4deef1(0x376)},{'id':0x50,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x517),'questionHindi':_0x4deef1(0x507),'options':['81.65%',_0x4deef1(0x37c),_0x4deef1(0x487),_0x4deef1(0x442),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x204),_0x4deef1(0x37c),_0x4deef1(0x487),_0x4deef1(0x442),_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x18d),'explanationHindi':_0x4deef1(0x23f)},{'id':0x51,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1db),'questionHindi':_0x4deef1(0x326),'options':[_0x4deef1(0x2a6),'22%\x20decrease','25%\x20decrease',_0x4deef1(0x1c8),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x45b),'22%\x20कमी',_0x4deef1(0x2dc),_0x4deef1(0x3e0),_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x25a),'explanationHindi':_0x4deef1(0x157)},{'id':0x52,'type':'normal','question':_0x4deef1(0x336),'questionHindi':'कितने\x20वर्षों\x20में\x20कंपनी\x20की\x20बिक्री\x202011\x20की\x20बिक्री\x20से\x20अधिक\x20थी?','options':['4','3','5','2',_0x4deef1(0x1af)],'optionsHindi':['4','3','5','2','इनमें\x20से\x20कोई\x20नहीं'],'answer':0x1,'explanation':_0x4deef1(0x282),'explanationHindi':'उत्तर-कुंजी\x20के\x20अनुसार\x20तीन\x20वर्ष।'},{'id':0x53,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x42d),'questionHindi':_0x4deef1(0x50d),'options':['157','156',_0x4deef1(0x2ef),_0x4deef1(0x1d0),_0x4deef1(0x1af)],'optionsHindi':['157',_0x4deef1(0x3e1),'165',_0x4deef1(0x1d0),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x1d3),'explanationHindi':_0x4deef1(0x1f9)},{'id':0x54,'type':_0x4deef1(0x3d5),'question':'For\x20how\x20many\x20years\x20was\x20company\x20sales\x20a\x20multiple\x20of\x20₹10\x20crore?','questionHindi':_0x4deef1(0x3c0),'options':['6','4','3','5',_0x4deef1(0x1af)],'optionsHindi':['6','4','3','5','इनमें\x20से\x20कोई\x20नहीं'],'answer':0x3,'explanation':_0x4deef1(0x315),'explanationHindi':_0x4deef1(0x34f)},{'id':0x55,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1a4),'questionHindi':'2009\x20से\x202010\x20तक\x20कंपनी\x20की\x20बिक्री\x20में\x20कितने\x20प्रतिशत\x20वृद्धि\x20हुई?','options':['10%','15%',_0x4deef1(0x4af),_0x4deef1(0x1a5),_0x4deef1(0x1af)],'optionsHindi':['10%',_0x4deef1(0x43b),_0x4deef1(0x4af),_0x4deef1(0x1a5),'इनमें\x20से\x20कोई\x20नहीं'],'answer':0x4,'explanation':_0x4deef1(0x450),'explanationHindi':_0x4deef1(0x2cc)},{'id':0x56,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x4c0),'questionHindi':_0x4deef1(0x250),'options':[_0x4deef1(0x40c),_0x4deef1(0x290),_0x4deef1(0x19a),'150%','None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x40c),_0x4deef1(0x290),_0x4deef1(0x19a),'150%',_0x4deef1(0x420)],'answer':0x2,'explanation':'Company\x20D\x20bikes\x20=\x20200,000\x20and\x20company\x20G\x20C1\x20cars\x20=\x20100,000;\x20ratio\x20=\x20200%.','explanationHindi':_0x4deef1(0x39d)},{'id':0x57,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x258),'questionHindi':_0x4deef1(0x395),'options':[_0x4deef1(0x2a8),_0x4deef1(0x1a3),_0x4deef1(0x4e0),'62,000','None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x2a8),_0x4deef1(0x1a3),_0x4deef1(0x4e0),_0x4deef1(0x3da),_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x3c7),'explanationHindi':_0x4deef1(0x440)},{'id':0x58,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x4a2),'questionHindi':_0x4deef1(0x417),'options':[_0x4deef1(0x423),'40,000',_0x4deef1(0x430),'42,000','None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x423),_0x4deef1(0x37f),_0x4deef1(0x430),_0x4deef1(0x353),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x21e),'explanationHindi':_0x4deef1(0x2e0)},{'id':0x59,'type':'normal','question':_0x4deef1(0x4a8),'questionHindi':_0x4deef1(0x399),'options':[_0x4deef1(0x46d),_0x4deef1(0x408),'1.15',_0x4deef1(0x1af),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x46d),_0x4deef1(0x408),_0x4deef1(0x216),_0x4deef1(0x420),_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x1b4),'explanationHindi':_0x4deef1(0x444)},{'id':0x5a,'type':'normal','question':'A\x20is\x20the\x20total\x20vehicles\x20produced\x20by\x20all\x20companies;\x20K\x20is\x20the\x20difference\x20between\x20H’s\x20C3\x20cars\x20and\x20E’s\x20B3\x20bikes.\x20Find\x20A:K.','questionHindi':_0x4deef1(0x2ae),'options':[_0x4deef1(0x2fe),_0x4deef1(0x2a5),_0x4deef1(0x4f2),_0x4deef1(0x2f8),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x2fe),_0x4deef1(0x2a5),_0x4deef1(0x4f2),'185:4',_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x18f),'explanationHindi':_0x4deef1(0x27f)},{'id':0x5b,'type':'normal','question':'TROPEX-25,\x20discussed\x20in\x20February\x202025,\x20is\x20associated\x20with\x20which\x20country?','questionHindi':'फरवरी\x202025\x20में\x20चर्चा\x20में\x20रहा\x20TROPEX-25\x20किस\x20देश\x20से\x20संबंधित\x20है?','options':[_0x4deef1(0x3c4),_0x4deef1(0x227),_0x4deef1(0x29c),_0x4deef1(0x1b6),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x1c1),_0x4deef1(0x489),_0x4deef1(0x321),_0x4deef1(0x217),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x518),'explanationHindi':_0x4deef1(0x206)},{'id':0x5c,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1ae),'questionHindi':_0x4deef1(0x3a0),'options':['Nikita\x20Porwal',_0x4deef1(0x4b0),'Victoria\x20Theilvig',_0x4deef1(0x3f3),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x243),_0x4deef1(0x3bb),_0x4deef1(0x40e),'क्रिस्टीना\x20पिस्ज़कोवा',_0x4deef1(0x420)],'answer':0x1,'explanation':'The\x20answer\x20key\x20identifies\x20Thesego\x20Gaele;\x20note\x20that\x20the\x20question’s\x20event/date\x20wording\x20may\x20be\x20inconsistent\x20with\x20the\x20detailed\x20solution.','explanationHindi':_0x4deef1(0x256)},{'id':0x5d,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x1a7),'questionHindi':'पूर्वोत्तर\x20भारत\x20का\x20पहला\x20‘ग्रीन\x20रेटेड’\x20स्कूल\x20किस\x20राज्य\x20में\x20स्थित\x20है?','options':['Sikkim',_0x4deef1(0x2f0),'Manipur',_0x4deef1(0x51b),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x3ea),'असम','मणिपुर','मिजोरम',_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x317),'explanationHindi':_0x4deef1(0x4fe)},{'id':0x5e,'type':'normal','question':_0x4deef1(0x3a8),'questionHindi':_0x4deef1(0x24b),'options':[_0x4deef1(0x2d3),'Odisha',_0x4deef1(0x342),_0x4deef1(0x4c8),_0x4deef1(0x1af)],'optionsHindi':['उत्तर\x20प्रदेश','ओडिशा',_0x4deef1(0x15a),_0x4deef1(0x44a),_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x4a6),'explanationHindi':'डायमंड\x20ट्रायंगल\x20में\x20ओडिशा\x20के\x20रत्नागिरि,\x20उदयगिरि\x20और\x20ललितगिरि\x20शामिल\x20हैं।'},{'id':0x5f,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x322),'questionHindi':'फरवरी\x202025\x20में\x20भारतीय\x20सेना\x20ने\x20बाँस-आधारित\x20बंकर\x20बनाने\x20के\x20लिए\x20किस\x20IIT\x20के\x20साथ\x20समझौता\x20किया?','options':['IIT\x20Madras',_0x4deef1(0x3cf),'IIT\x20Bombay','IIT\x20Roorkee',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x42c),_0x4deef1(0x3f7),'IIT\x20बॉम्बे',_0x4deef1(0x47f),_0x4deef1(0x420)],'answer':0x1,'explanation':'The\x20agreement\x20was\x20with\x20IIT\x20Guwahati\x20for\x20technical\x20expertise\x20in\x20developing\x20bamboo-based\x20bunkers.','explanationHindi':_0x4deef1(0x1d7)},{'id':0x60,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x24c),'questionHindi':_0x4deef1(0x33d),'options':[_0x4deef1(0x4c7),'Brazil',_0x4deef1(0x248),_0x4deef1(0x199),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x42a),_0x4deef1(0x481),_0x4deef1(0x167),_0x4deef1(0x502),_0x4deef1(0x420)],'answer':0x2,'explanation':_0x4deef1(0x4cd),'explanationHindi':_0x4deef1(0x509)},{'id':0x61,'type':_0x4deef1(0x3d5),'question':'The\x20Ghadar-380\x20term\x20discussed\x20in\x20February\x202025\x20is\x20related\x20to:','questionHindi':_0x4deef1(0x4e6),'options':[_0x4deef1(0x2fa),_0x4deef1(0x338),_0x4deef1(0x1b3),_0x4deef1(0x33b),'None\x20of\x20these'],'optionsHindi':[_0x4deef1(0x452),_0x4deef1(0x4e7),_0x4deef1(0x28c),'ईरान\x20का\x20उपग्रह',_0x4deef1(0x420)],'answer':0x1,'explanation':_0x4deef1(0x25b),'explanationHindi':_0x4deef1(0x33e)},{'id':0x62,'type':'normal','question':_0x4deef1(0x1ce),'questionHindi':_0x4deef1(0x519),'options':[_0x4deef1(0x3c4),'Japan','USA',_0x4deef1(0x29c),_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x1c1),_0x4deef1(0x36e),'अमेरिका',_0x4deef1(0x321),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x1b1),'explanationHindi':_0x4deef1(0x14e)},{'id':0x63,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x32d),'questionHindi':_0x4deef1(0x3d0),'options':[_0x4deef1(0x227),_0x4deef1(0x3b0),_0x4deef1(0x1f4),'China',_0x4deef1(0x1af)],'optionsHindi':['अमेरिका',_0x4deef1(0x44f),_0x4deef1(0x26f),_0x4deef1(0x217),_0x4deef1(0x420)],'answer':0x0,'explanation':_0x4deef1(0x3e6),'explanationHindi':_0x4deef1(0x1a6)},{'id':0x64,'type':_0x4deef1(0x3d5),'question':_0x4deef1(0x45f),'questionHindi':_0x4deef1(0x4aa),'options':['Uttar\x20Pradesh','Assam',_0x4deef1(0x4fb),'Haryana',_0x4deef1(0x1af)],'optionsHindi':[_0x4deef1(0x4d3),_0x4deef1(0x4f5),_0x4deef1(0x4fa),'हरियाणा',_0x4deef1(0x420)],'answer':0x3,'explanation':_0x4deef1(0x36f),'explanationHindi':_0x4deef1(0x262)}]},_0x420534=_0x266b9e[_0x4deef1(0x190)];let _0x56babd='en',_0x35c9ae=0x0,_0x97c1d7=new Array(_0x420534[_0x4deef1(0x153)])['fill'](null),_0x42373c=new Array(_0x420534[_0x4deef1(0x153)])[_0x4deef1(0x3f5)](![]),_0xfcb19e=new Array(_0x420534[_0x4deef1(0x153)])[_0x4deef1(0x3f5)](null),_0x4f22d2=new Array(_0x420534[_0x4deef1(0x153)])['fill'](![]),_0x1e51ba=0x0,_0x232e3b=![],_0x3c242a=null,_0x2442ff=null,_0x43a7fd=0x0;const _0x44bf92=document[_0x4deef1(0x3cd)](_0x4deef1(0x3c6)),_0x218dd8=document['getElementById'](_0x4deef1(0x3d7)),_0x200562=document[_0x4deef1(0x3cd)]('questionText'),_0x233bda=document[_0x4deef1(0x3cd)](_0x4deef1(0x242)),_0x393bff=document['getElementById'](_0x4deef1(0x2f4)),_0x2acf06=document[_0x4deef1(0x3cd)]('nextBtn'),_0x2f95c3=document[_0x4deef1(0x3cd)](_0x4deef1(0x460)),_0x565d0e=document[_0x4deef1(0x3cd)](_0x4deef1(0x1c4)),_0x1f06d8=document[_0x4deef1(0x3cd)]('retakeBtn'),_0x4c6653=document[_0x4deef1(0x3cd)]('downloadBtn'),_0x3eceb0=document[_0x4deef1(0x3cd)](_0x4deef1(0x159)),_0x419384=document[_0x4deef1(0x3cd)](_0x4deef1(0x1ad)),_0x45643a=document['getElementById'](_0x4deef1(0x397)),_0x95fede=document[_0x4deef1(0x3cd)](_0x4deef1(0x476)),_0x13b635=document[_0x4deef1(0x3cd)](_0x4deef1(0x177)),_0x46e487=document[_0x4deef1(0x3cd)](_0x4deef1(0x2a3)),_0x52f3df=document[_0x4deef1(0x2bc)](_0x4deef1(0x4d6));function _0x401c15(_0x4b7242,_0x28dd37){return _0x56babd==='hi'?_0x28dd37||_0x4b7242:_0x4b7242;}function _0x5766b6(){const _0x4f6dd0=_0x4deef1,_0x5af475=_0x401c15(_0x266b9e['title'],_0x266b9e[_0x4f6dd0(0x219)]);document[_0x4f6dd0(0x3cd)](_0x4f6dd0(0x385))[_0x4f6dd0(0x459)]=_0x5af475,document[_0x4f6dd0(0x3cd)]('subSubject')[_0x4f6dd0(0x459)]=_0x4f6dd0(0x525)+_0x401c15(_0x266b9e['subject'],_0x266b9e['subjectHindi']),document[_0x4f6dd0(0x3cd)]('subSchedule')[_0x4f6dd0(0x459)]=_0x4f6dd0(0x179)+_0x401c15(_0x266b9e[_0x4f6dd0(0x468)],_0x266b9e[_0x4f6dd0(0x3c9)]),document[_0x4f6dd0(0x1f3)]=_0x5af475,document[_0x4f6dd0(0x3cd)](_0x4f6dd0(0x3fe))['textContent']=_0x4f6dd0(0x3fa)+_0x5af475+_0x4f6dd0(0x46f),document[_0x4f6dd0(0x3cd)](_0x4f6dd0(0x21c))[_0x4f6dd0(0x459)]=[_0x266b9e['subject'],_0x420534[_0x4f6dd0(0x153)]+'\x20Questions',_0x266b9e[_0x4f6dd0(0x2ba)]][_0x4f6dd0(0x226)](Boolean)[_0x4f6dd0(0x367)](_0x4f6dd0(0x2b3));}function _0x4fed60(){const _0xeeb481=_0x4deef1,_0x364b1c=_0x24da61=>document[_0xeeb481(0x3cd)](_0x24da61);_0x364b1c('stTitle')['textContent']=_0x266b9e[_0xeeb481(0x1f3)],_0x364b1c(_0xeeb481(0x191))['textContent']=_0x266b9e[_0xeeb481(0x391)]||'—',_0x364b1c('stCount')[_0xeeb481(0x459)]=_0x420534[_0xeeb481(0x153)]+'\x20Questions',_0x364b1c('stSchedule')['textContent']=_0x266b9e[_0xeeb481(0x468)]||'—';if(_0x266b9e['source'])_0x364b1c(_0xeeb481(0x514))[_0xeeb481(0x459)]=_0xeeb481(0x2bd)+_0x266b9e[_0xeeb481(0x2ba)];else _0x364b1c(_0xeeb481(0x514))[_0xeeb481(0x245)]['display']='none';if(_0x266b9e[_0xeeb481(0x3b1)])_0x364b1c(_0xeeb481(0x48c))[_0xeeb481(0x459)]=_0x266b9e[_0xeeb481(0x3b1)];else _0x364b1c('stPlan')['style'][_0xeeb481(0x49b)]='none';document[_0xeeb481(0x1f3)]=_0x266b9e[_0xeeb481(0x1f3)];}function _0x55d69e(){const _0x4e1def=_0x4deef1;document[_0x4e1def(0x3cd)](_0x4e1def(0x2d9))[_0x4e1def(0x245)][_0x4e1def(0x49b)]=_0x4e1def(0x483),_0x44bf92[_0x4e1def(0x245)]['display']=_0x4e1def(0x292),_0x1b4dfc(),window[_0x4e1def(0x1c9)]({'top':0x0,'behavior':_0x4e1def(0x41c)});}function _0x12b6e3(_0x1fcaef){const _0x4bfe96=_0x4deef1,_0x4ce277=Math[_0x4bfe96(0x4ac)](_0x1fcaef/0x3c)[_0x4bfe96(0x20e)]()[_0x4bfe96(0x1de)](0x2,'0'),_0x470520=(_0x1fcaef%0x3c)[_0x4bfe96(0x20e)]()['padStart'](0x2,'0');return _0x4ce277+':'+_0x470520;}function _0x1b4dfc(){const _0xc2e8d7=_0x4deef1;if(_0x3c242a!==null)return;_0x3c242a=Date[_0xc2e8d7(0x4d9)](),_0x2442ff=setInterval(()=>{const _0x3c8005=_0xc2e8d7;_0x43a7fd=Math[_0x3c8005(0x4ac)]((Date[_0x3c8005(0x4d9)]()-_0x3c242a)/0x3e8),_0x45643a[_0x3c8005(0x459)]='⏱\x20'+_0x12b6e3(_0x43a7fd);},0x3e8);}function _0x4577fc(){_0x2442ff&&(clearInterval(_0x2442ff),_0x2442ff=null);}function _0x1c7cf8(){const _0x3ceb8a=_0x4deef1;_0x4577fc(),_0x3c242a=null,_0x43a7fd=0x0,_0x45643a[_0x3ceb8a(0x459)]='⏱\x2000:00';}function _0x20f15a(){return _0x420534[_0x35c9ae];}function _0x4ff60e(){const _0x26b4a9=_0x4deef1,_0x462b6f=_0x20f15a();return _0x56babd==='hi'?_0x462b6f['optionsHindi']||_0x462b6f['options']:_0x462b6f[_0x26b4a9(0x394)];}function _0x103b41(){const _0xbf22f=_0x4deef1,_0x3de21a=_0x20f15a();return _0x56babd==='hi'?_0x3de21a[_0xbf22f(0x3f2)]||_0x3de21a[_0xbf22f(0x14c)]:_0x3de21a[_0xbf22f(0x14c)];}function _0x20c583(){const _0x51d21c=_0x4deef1,_0x454b87=_0x20f15a();return _0x56babd==='hi'?_0x454b87[_0x51d21c(0x308)]||_0x454b87[_0x51d21c(0x30e)]:_0x454b87[_0x51d21c(0x30e)];}function _0x31ee21(_0x38f507){const _0xdec50f=_0x4deef1;return String[_0xdec50f(0x492)](0x41+_0x38f507);}function _0x41d1ca(){const _0x4e0fe8=_0x4deef1;let _0xd99879=0x0;for(let _0x677cf6=0x0;_0x677cf6<_0x420534[_0x4e0fe8(0x153)];_0x677cf6++)if(_0xfcb19e[_0x677cf6]===!![])_0xd99879++;_0x1e51ba=_0xd99879,_0x419384[_0x4e0fe8(0x459)]='⭐\x20'+_0x1e51ba;}function _0x1febc2(){const _0x1857b3=_0x4deef1,_0x51ab0b=_0x20f15a(),_0x42743d=_0x4ff60e();_0x200562['textContent']=_0x103b41(),_0x233bda[_0x1857b3(0x25e)]='',_0x42743d[_0x1857b3(0x378)]((_0x1b72cf,_0x1af6ee)=>{const _0xe98118=_0x1857b3,_0x5a0ba0=document[_0xe98118(0x22f)](_0xe98118(0x486));_0x5a0ba0[_0xe98118(0x280)]='option-item';if(_0x42373c[_0x35c9ae])_0x5a0ba0['classList'][_0xe98118(0x201)]('disabled-opt');if(_0x97c1d7[_0x35c9ae]===_0x1af6ee){_0x5a0ba0[_0xe98118(0x51d)][_0xe98118(0x201)]('selected');if(_0xfcb19e[_0x35c9ae]===!![])_0x5a0ba0[_0xe98118(0x51d)][_0xe98118(0x201)](_0xe98118(0x29f));else{if(_0xfcb19e[_0x35c9ae]===![])_0x5a0ba0['classList'][_0xe98118(0x201)](_0xe98118(0x463));}}if(_0x42373c[_0x35c9ae]&&_0x1af6ee===_0x51ab0b['answer'])_0x5a0ba0[_0xe98118(0x51d)]['add'](_0xe98118(0x29f));const _0x21c779=document[_0xe98118(0x22f)]('span');_0x21c779[_0xe98118(0x280)]=_0xe98118(0x418),_0x21c779[_0xe98118(0x459)]=_0x31ee21(_0x1af6ee)+'.';const _0xf002b1=document['createElement'](_0xe98118(0x4d2));_0xf002b1[_0xe98118(0x280)]=_0xe98118(0x1c5),_0xf002b1[_0xe98118(0x459)]=_0x1b72cf,_0x5a0ba0[_0xe98118(0x443)](_0x21c779),_0x5a0ba0[_0xe98118(0x443)](_0xf002b1),_0x5a0ba0[_0xe98118(0x513)](_0xe98118(0x361),function(){if(_0x42373c[_0x35c9ae]||_0x232e3b)return;if(_0x3c242a===null)_0x1b4dfc();_0xfba6a3(_0x1af6ee);}),_0x233bda[_0xe98118(0x443)](_0x5a0ba0);}),_0x42373c[_0x35c9ae]?(_0x13b635['textContent']=_0x20c583(),_0x95fede[_0x1857b3(0x245)][_0x1857b3(0x49b)]=_0x1857b3(0x292),_0x46e487[_0x1857b3(0x459)]=_0x56babd==='hi'?_0x1857b3(0x333):_0x1857b3(0x19d)):_0x95fede[_0x1857b3(0x245)][_0x1857b3(0x49b)]=_0x1857b3(0x483),_0x3eceb0[_0x1857b3(0x459)]=_0x56babd==='hi'?_0x1857b3(0x316)+(_0x35c9ae+0x1)+_0x1857b3(0x34c)+_0x420534['length']:'Q\x20'+(_0x35c9ae+0x1)+_0x1857b3(0x34c)+_0x420534['length'],_0x41d1ca(),_0x393bff[_0x1857b3(0x15c)]=_0x35c9ae===0x0,_0x35c9ae===_0x420534[_0x1857b3(0x153)]-0x1?(_0x2acf06['style'][_0x1857b3(0x49b)]=_0x1857b3(0x483),_0x2f95c3[_0x1857b3(0x245)][_0x1857b3(0x49b)]=_0x1857b3(0x360)):(_0x2acf06[_0x1857b3(0x245)]['display']=_0x1857b3(0x360),_0x2f95c3['style'][_0x1857b3(0x49b)]='none'),_0x2acf06[_0x1857b3(0x459)]=_0x56babd==='hi'?_0x1857b3(0x284):_0x1857b3(0x241),_0x2f95c3[_0x1857b3(0x459)]=_0x56babd==='hi'?_0x1857b3(0x48d):_0x1857b3(0x207),_0x393bff[_0x1857b3(0x459)]=_0x56babd==='hi'?'◀\x20पिछला':_0x1857b3(0x2c8),_0x5766b6(),_0x4f22d2[_0x35c9ae]=!![],_0x23f78f();}function _0xfba6a3(_0x5b1570){if(_0x42373c[_0x35c9ae])return;const _0x439068=_0x20f15a(),_0xe38d6f=_0x5b1570===_0x439068['answer'];_0x97c1d7[_0x35c9ae]=_0x5b1570,_0x42373c[_0x35c9ae]=!![],_0xfcb19e[_0x35c9ae]=_0xe38d6f,_0x1febc2();}function _0x2dfd67(){_0x35c9ae>0x0&&(_0x35c9ae--,_0x1febc2());}function _0x196aa3(){const _0x7b31a4=_0x4deef1;_0x35c9ae<_0x420534[_0x7b31a4(0x153)]-0x1&&(_0x35c9ae++,_0x1febc2());}function _0x1e5655(){const _0x43e32a=_0x4deef1;if(_0x232e3b)return;_0x232e3b=!![],_0x4577fc();let _0x5b0124=0x0,_0x92ded5=0x0,_0x413bef=0x0;for(let _0x4c9246=0x0;_0x4c9246<_0x420534['length'];_0x4c9246++){if(_0x97c1d7[_0x4c9246]===null)_0x413bef++;else{if(_0xfcb19e[_0x4c9246]===!![])_0x5b0124++;else _0x92ded5++;}}const _0x3962f6=_0x420534[_0x43e32a(0x153)],_0x5ade79=Math['round'](_0x5b0124/_0x3962f6*0x64);document[_0x43e32a(0x3cd)](_0x43e32a(0x1b5))[_0x43e32a(0x459)]=_0x5b0124+'/'+_0x3962f6,document['getElementById']('finalPct')[_0x43e32a(0x459)]=_0x5ade79+'%',document[_0x43e32a(0x3cd)]('scoreCircle')[_0x43e32a(0x245)]['setProperty'](_0x43e32a(0x3d3),_0x5ade79),document['getElementById'](_0x43e32a(0x273))[_0x43e32a(0x459)]=_0x5b0124,document['getElementById'](_0x43e32a(0x18c))[_0x43e32a(0x459)]=_0x92ded5,document[_0x43e32a(0x3cd)](_0x43e32a(0x404))[_0x43e32a(0x459)]=_0x413bef,document['getElementById']('statTime')['textContent']=_0x12b6e3(_0x43a7fd);let _0x309f0b=_0x43e32a(0x1f8);if(_0x5ade79>=0x50)_0x309f0b=_0x43e32a(0x4a9);else{if(_0x5ade79>=0x3c)_0x309f0b='👍\x20Good\x20Job!';else{if(_0x5ade79>=0x28)_0x309f0b=_0x43e32a(0x151);else _0x309f0b=_0x43e32a(0x362);}}document[_0x43e32a(0x3cd)](_0x43e32a(0x451))[_0x43e32a(0x459)]=_0x309f0b,document['getElementById'](_0x43e32a(0x300))[_0x43e32a(0x459)]=_0x56babd==='hi'?'आपका\x20प्रदर्शन':_0x43e32a(0x294);const _0x165cef=document[_0x43e32a(0x3cd)](_0x43e32a(0x18e));_0x165cef['innerHTML']='',_0x420534[_0x43e32a(0x378)]((_0x3188ee,_0x5f5558)=>{const _0x343c50=_0x43e32a,_0x3fe69e=document[_0x343c50(0x22f)]('div');_0x3fe69e[_0x343c50(0x280)]=_0x343c50(0x2bb);let _0x5d1025,_0x569bab,_0x130418;if(_0x97c1d7[_0x5f5558]===null)_0x3fe69e[_0x343c50(0x51d)][_0x343c50(0x201)](_0x343c50(0x1eb)),_0x5d1025=_0x56babd==='hi'?'छोड़ा\x20गया':_0x343c50(0x449),_0x569bab=_0x343c50(0x37d),_0x130418='⏭';else _0xfcb19e[_0x5f5558]===!![]?(_0x3fe69e['classList'][_0x343c50(0x201)](_0x343c50(0x50c)),_0x5d1025=_0x56babd==='hi'?_0x343c50(0x28d):'Correct',_0x569bab=_0x343c50(0x3cb),_0x130418='✅'):(_0x3fe69e[_0x343c50(0x51d)][_0x343c50(0x201)]('wrong'),_0x5d1025=_0x56babd==='hi'?_0x343c50(0x1e9):'Wrong',_0x569bab='status-wrong',_0x130418='❌');const _0x55983d=_0x56babd==='hi'?_0x3188ee[_0x343c50(0x3f2)]:_0x3188ee[_0x343c50(0x14c)],_0x48df6a=(_0x56babd==='hi'?_0x3188ee[_0x343c50(0x2aa)]:_0x3188ee[_0x343c50(0x394)])[_0x3188ee[_0x343c50(0x497)]],_0x1402ca=_0x97c1d7[_0x5f5558]!==null?(_0x56babd==='hi'?_0x3188ee[_0x343c50(0x2aa)]:_0x3188ee[_0x343c50(0x394)])[_0x97c1d7[_0x5f5558]]:'—',_0x497956=_0x56babd==='hi'?_0x3188ee[_0x343c50(0x308)]:_0x3188ee[_0x343c50(0x30e)],_0x154407=_0x56babd==='hi'?{'q':_0x343c50(0x37b),'correct':_0x343c50(0x479),'your':_0x343c50(0x390),'exp':_0x343c50(0x510)}:{'q':'Q','correct':'Correct','your':_0x343c50(0x252),'exp':'Explanation'};_0x3fe69e['innerHTML']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22review-head\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22review-qno\x22>'+_0x154407['q']+'\x20'+(_0x5f5558+0x1)+_0x343c50(0x4bb)+_0x569bab+'\x22>'+_0x130418+'\x20'+_0x5d1025+_0x343c50(0x4a3)+_0xd8f136(_0x55983d)+_0x343c50(0x254)+_0x154407[_0x343c50(0x50c)]+_0x343c50(0x2fd)+String['fromCharCode'](0x41+_0x3188ee[_0x343c50(0x497)])+'.\x20'+_0xd8f136(_0x48df6a)+'</span><br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<b>'+_0x154407[_0x343c50(0x287)]+':</b>\x20<span\x20class=\x22'+(_0xfcb19e[_0x5f5558]===!![]?'correct-mark':_0x97c1d7[_0x5f5558]===null?'':'wrong-mark')+'\x22>'+(_0x97c1d7[_0x5f5558]!==null?String[_0x343c50(0x492)](0x41+_0x97c1d7[_0x5f5558])+'.\x20'+_0xd8f136(_0x1402ca):'—')+_0x343c50(0x185)+_0x154407['exp']+_0x343c50(0x212)+_0xd8f136(_0x497956)+_0x343c50(0x274),_0x165cef[_0x343c50(0x443)](_0x3fe69e);}),_0x44bf92['style']['display']='none',_0x218dd8[_0x43e32a(0x245)][_0x43e32a(0x49b)]='block',window[_0x43e32a(0x1c9)]({'top':0x0,'behavior':'smooth'});}function _0xd8f136(_0x55d908){const _0x3b9148=_0x4deef1;return String(_0x55d908)[_0x3b9148(0x307)](/&/g,_0x3b9148(0x299))[_0x3b9148(0x307)](/</g,_0x3b9148(0x48a))[_0x3b9148(0x307)](/>/g,_0x3b9148(0x46c))[_0x3b9148(0x307)](/"/g,'&quot;')[_0x3b9148(0x307)](/'/g,'&#039;');}function _0x5995cc(){const _0x2d8676=_0x4deef1;_0x35c9ae=0x0,_0x97c1d7=new Array(_0x420534['length'])[_0x2d8676(0x3f5)](null),_0x42373c=new Array(_0x420534['length'])[_0x2d8676(0x3f5)](![]),_0xfcb19e=new Array(_0x420534[_0x2d8676(0x153)])[_0x2d8676(0x3f5)](null),_0x4f22d2=new Array(_0x420534[_0x2d8676(0x153)])['fill'](![]),_0x1e51ba=0x0,_0x232e3b=![],_0x1c7cf8(),_0x1b4dfc(),_0x1febc2();}function _0x5ccc9a(){const _0x3859b7=_0x4deef1;_0x5995cc(),_0x218dd8['style'][_0x3859b7(0x49b)]=_0x3859b7(0x483),_0x44bf92[_0x3859b7(0x245)][_0x3859b7(0x49b)]='block',window['scrollTo']({'top':0x0,'behavior':'smooth'});}function _0x39026e(_0x1752b8){const _0x5a0d93=_0x4deef1;_0x56babd=_0x1752b8,_0x52f3df[_0x5a0d93(0x378)](_0xabefaf=>{const _0x3acb21=_0x5a0d93;_0xabefaf['classList'][_0x3acb21(0x4df)](_0x3acb21(0x47a));if(_0xabefaf['dataset'][_0x3acb21(0x2ad)]===_0x1752b8)_0xabefaf['classList'][_0x3acb21(0x201)](_0x3acb21(0x47a));}),_0x1febc2();}function _0x4ac938(){const _0x4b0dc8=_0x4deef1,_0x5778f5=document['getElementById'](_0x4b0dc8(0x230)),_0xe6b661=_0x4c6653['textContent'];_0x4c6653[_0x4b0dc8(0x459)]=_0x4b0dc8(0x4e8),_0x4c6653[_0x4b0dc8(0x15c)]=!![];const _0x1e805a=_0x5778f5[_0x4b0dc8(0x176)](!![]),_0x3bce40=_0x1e805a[_0x4b0dc8(0x4d1)](_0x4b0dc8(0x343));if(_0x3bce40)_0x3bce40[_0x4b0dc8(0x4df)]();const _0xbf49ee=_0x1e805a[_0x4b0dc8(0x4d1)](_0x4b0dc8(0x47e));if(_0xbf49ee)_0xbf49ee[_0x4b0dc8(0x4df)]();const _0x3b0412=_0x4b0dc8(0x4c9),_0x14d73e=window[_0x4b0dc8(0x469)]('',_0x4b0dc8(0x1e3));_0x14d73e[_0x4b0dc8(0x377)][_0x4b0dc8(0x314)](_0x4b0dc8(0x383)+_0xd8f136(_0x266b9e[_0x4b0dc8(0x1f3)])+_0x4b0dc8(0x3ee)),_0x14d73e[_0x4b0dc8(0x377)]['write'](_0x4b0dc8(0x475)),_0x14d73e[_0x4b0dc8(0x377)][_0x4b0dc8(0x314)](_0x4b0dc8(0x46b)+_0x3b0412+_0x4b0dc8(0x3a3)),_0x14d73e[_0x4b0dc8(0x377)][_0x4b0dc8(0x314)](_0x4b0dc8(0x2e5)),_0x14d73e[_0x4b0dc8(0x377)][_0x4b0dc8(0x314)](_0x1e805a[_0x4b0dc8(0x43d)]),_0x14d73e[_0x4b0dc8(0x377)][_0x4b0dc8(0x314)](_0x4b0dc8(0x4ad)),_0x14d73e[_0x4b0dc8(0x377)][_0x4b0dc8(0x33a)](),setTimeout(()=>{const _0x1773f8=_0x4b0dc8;_0x14d73e[_0x1773f8(0x3d8)](),_0x14d73e[_0x1773f8(0x15b)](),_0x4c6653[_0x1773f8(0x459)]=_0xe6b661,_0x4c6653[_0x1773f8(0x15c)]=![];},0x2bc);}const _0x29218e=document[_0x4deef1(0x3cd)]('palToggle'),_0x143071=document['getElementById'](_0x4deef1(0x223)),_0x102bb7=document[_0x4deef1(0x3cd)]('palOverlay'),_0x44e13e=document[_0x4deef1(0x3cd)](_0x4deef1(0x2f3)),_0x382fa7=document['getElementById']('palStrip'),_0x40a05d=document[_0x4deef1(0x3cd)](_0x4deef1(0x36d)),_0x17a522=document['getElementById'](_0x4deef1(0x4ef)),_0x433b5d=document[_0x4deef1(0x3cd)](_0x4deef1(0x2fc)),_0x4b1d4d=document[_0x4deef1(0x3cd)](_0x4deef1(0x4ed)),_0x5b42a5=document[_0x4deef1(0x3cd)]('palLegend'),_0xc55343=document[_0x4deef1(0x3cd)](_0x4deef1(0x2ec)),_0x2bc85f=document['getElementById'](_0x4deef1(0x456));function _0x4d8655(_0x135de3){const _0x211c1b=_0x4deef1;if(_0x232e3b)return;_0x35c9ae=_0x135de3,_0x1febc2(),_0x3c6853(),window['scrollTo']({'top':0x0,'behavior':_0x211c1b(0x41c)});}function _0x37e22a(){const _0x50c2a8=_0x4deef1;_0x44e13e[_0x50c2a8(0x25e)]='',_0x382fa7['innerHTML']='';for(let _0x146218=0x0;_0x146218<_0x420534['length'];_0x146218++){const _0x1d236b=document[_0x50c2a8(0x22f)](_0x50c2a8(0x425));_0x1d236b[_0x50c2a8(0x280)]=_0x50c2a8(0x3e4),_0x1d236b['textContent']=_0x146218+0x1,_0x1d236b['addEventListener'](_0x50c2a8(0x361),function(){_0x4d8655(_0x146218);}),_0x44e13e['appendChild'](_0x1d236b);const _0x4eee53=document[_0x50c2a8(0x22f)]('button');_0x4eee53[_0x50c2a8(0x280)]=_0x50c2a8(0x1a2),_0x4eee53[_0x50c2a8(0x459)]=_0x146218+0x1,_0x4eee53[_0x50c2a8(0x513)]('click',function(){_0x4d8655(_0x146218);}),_0x382fa7['appendChild'](_0x4eee53);}}function _0x23f78f(){const _0x43c99d=_0x4deef1,_0x42c731=_0x56babd==='hi';let _0x1b7c72=0x0,_0x4ce5b4=0x0,_0x442273=0x0;const _0x18a8d6=_0x44e13e['children'],_0x338cb8=_0x382fa7[_0x43c99d(0x529)];for(let _0x3f15b8=0x0;_0x3f15b8<_0x18a8d6[_0x43c99d(0x153)];_0x3f15b8++){let _0x5bf29d=_0x43c99d(0x3e4);if(_0x42373c[_0x3f15b8])_0x5bf29d+=_0x43c99d(0x4b1),_0x1b7c72++;else{if(_0x4f22d2[_0x3f15b8])_0x5bf29d+=_0x43c99d(0x1a8),_0x4ce5b4++;else _0x442273++;}if(_0x3f15b8===_0x35c9ae)_0x5bf29d+=_0x43c99d(0x447);_0x18a8d6[_0x3f15b8]['className']=_0x5bf29d,_0x338cb8[_0x3f15b8][_0x43c99d(0x280)]=_0x5bf29d+_0x43c99d(0x2a9);}const _0x1ffd21=_0x338cb8[_0x35c9ae];if(_0x1ffd21)_0x382fa7['scrollTo']({'left':_0x1ffd21[_0x43c99d(0x164)]-_0x382fa7[_0x43c99d(0x26a)]/0x2+_0x1ffd21[_0x43c99d(0x4bc)]/0x2,'behavior':_0x43c99d(0x41c)});_0xc55343[_0x43c99d(0x459)]=_0x42c731?_0x43c99d(0x50f):_0x43c99d(0x4bf),_0x29218e[_0x43c99d(0x459)]=_0x42c731?_0x43c99d(0x2c6):_0x43c99d(0x1a0),_0x5b42a5[_0x43c99d(0x25e)]=_0x43c99d(0x4a5)+(_0x42c731?_0x43c99d(0x372):_0x43c99d(0x407))+'\x20('+_0x1b7c72+_0x43c99d(0x1d6)+_0x43c99d(0x313)+(_0x42c731?_0x43c99d(0x215):'Not\x20attended')+'\x20('+_0x4ce5b4+_0x43c99d(0x1d6)+_0x43c99d(0x183)+(_0x42c731?_0x43c99d(0x480):_0x43c99d(0x2c0))+'\x20('+_0x442273+_0x43c99d(0x1d6)+_0x43c99d(0x42f)+(_0x42c731?_0x43c99d(0x318):_0x43c99d(0x3ec))+_0x43c99d(0x1bf);}function _0x462a2b(){const _0x111889=_0x4deef1;_0x23f78f(),_0x143071[_0x111889(0x51d)][_0x111889(0x201)](_0x111889(0x469)),_0x102bb7[_0x111889(0x51d)][_0x111889(0x201)](_0x111889(0x469));const _0x20360a=_0x44e13e[_0x111889(0x529)][_0x35c9ae];if(_0x20360a)_0x20360a[_0x111889(0x166)]({'block':_0x111889(0x4b7)});}function _0x3c6853(){const _0x1bc05b=_0x4deef1;_0x143071[_0x1bc05b(0x51d)]['remove'](_0x1bc05b(0x469)),_0x102bb7[_0x1bc05b(0x51d)][_0x1bc05b(0x4df)](_0x1bc05b(0x469));}function _0x5982b9(){const _0x32ddb6=_0x4deef1;_0x17a522[_0x32ddb6(0x15c)]=_0x382fa7['scrollLeft']<=0x2,_0x433b5d[_0x32ddb6(0x15c)]=_0x382fa7[_0x32ddb6(0x180)]+_0x382fa7['clientWidth']>=_0x382fa7[_0x32ddb6(0x454)]-0x2;}function _0x33839c(_0x423e87){const _0x1373d1=_0x4deef1;_0x40a05d[_0x1373d1(0x51d)][_0x1373d1(0x264)](_0x1373d1(0x247),!_0x423e87),_0x4b1d4d[_0x1373d1(0x459)]=_0x423e87?'✕':'☰',_0x423e87&&(_0x23f78f(),_0x5982b9());}function _0x88304f(){const _0x3f980=_0x4deef1;_0x37e22a(),_0x17a522[_0x3f980(0x513)](_0x3f980(0x361),function(){const _0x39dc54=_0x3f980;_0x382fa7[_0x39dc54(0x182)]({'left':-_0x382fa7[_0x39dc54(0x26a)]*0.8,'behavior':_0x39dc54(0x41c)});}),_0x433b5d[_0x3f980(0x513)](_0x3f980(0x361),function(){const _0x30af1b=_0x3f980;_0x382fa7[_0x30af1b(0x182)]({'left':_0x382fa7[_0x30af1b(0x26a)]*0.8,'behavior':_0x30af1b(0x41c)});}),_0x382fa7[_0x3f980(0x513)](_0x3f980(0x2be),_0x5982b9),window[_0x3f980(0x513)](_0x3f980(0x382),_0x5982b9),_0x382fa7[_0x3f980(0x513)](_0x3f980(0x48e),function(_0x594047){const _0x2c39bd=_0x3f980;Math[_0x2c39bd(0x1ab)](_0x594047[_0x2c39bd(0x21f)])>Math[_0x2c39bd(0x1ab)](_0x594047[_0x2c39bd(0x15e)])&&(_0x382fa7[_0x2c39bd(0x180)]+=_0x594047[_0x2c39bd(0x21f)],_0x594047[_0x2c39bd(0x392)]());},{'passive':![]}),_0x4b1d4d[_0x3f980(0x513)](_0x3f980(0x361),function(){const _0x422430=_0x3f980;_0x33839c(_0x40a05d[_0x422430(0x51d)][_0x422430(0x275)]('hidden'));}),_0x29218e['addEventListener'](_0x3f980(0x361),_0x462a2b),_0x2bc85f['addEventListener'](_0x3f980(0x361),_0x3c6853),_0x102bb7[_0x3f980(0x513)]('click',_0x3c6853),document['addEventListener']('keydown',function(_0x1a333a){const _0x3bf4e9=_0x3f980;if(_0x1a333a[_0x3bf4e9(0x2b4)]===_0x3bf4e9(0x272))_0x3c6853();}),_0x52f3df[_0x3f980(0x378)](_0x57520c=>{const _0x52f9a3=_0x3f980;_0x57520c['addEventListener'](_0x52f9a3(0x361),function(){const _0xdfaa64=_0x52f9a3,_0x49785b=this['dataset'][_0xdfaa64(0x2ad)];if(_0x49785b!==_0x56babd)_0x39026e(_0x49785b);});}),_0x393bff[_0x3f980(0x513)]('click',_0x2dfd67),_0x2acf06['addEventListener'](_0x3f980(0x361),_0x196aa3),_0x2f95c3[_0x3f980(0x513)](_0x3f980(0x361),_0x1e5655),_0x565d0e['addEventListener'](_0x3f980(0x361),_0x5995cc),_0x1f06d8[_0x3f980(0x513)](_0x3f980(0x361),_0x5ccc9a),_0x4c6653[_0x3f980(0x513)]('click',_0x4ac938),document[_0x3f980(0x3cd)](_0x3f980(0x24a))[_0x3f980(0x513)](_0x3f980(0x361),_0x55d69e),_0x4fed60(),_0x1febc2();}_0x88304f();}()));function _0x50e5(){const _0x33fbbc=['80.65%','appendChild','समाधान\x20में\x20H\x20=\x20230,000\x20और\x20R\x20=\x20200,000;\x20अतः\x20H/R\x20=\x201.15।','Neither\x20decreases\x20in\x20winter\x20nor\x20increases\x20in\x20summer','मेघालय','\x20cur','‘अंकुश’\x20का\x20पर्यायवाची\x20शब्द\x20चुनिए।','Skipped','तमिलनाडु','2011\x20की\x20जनगणना\x20के\x20अनुसार\x20दिए\x20गए\x20विकल्पों\x20में\x20किस\x20राज्य\x20का\x20लिंगानुपात\x20राष्ट्रीय\x20औसत\x20से\x20अधिक\x20था?','Usha\x20Mehta\x20and\x20associates','2385230EcPdOq','Culture\x20is\x20described\x20as\x20the\x20inner\x20quality\x20that\x20promotes\x20spiritual\x20development.','संयुक्त\x20अरब\x20अमीरात','Sales\x20rose\x20from\x20110\x20to\x20132,\x20an\x20increase\x20of\x2020%,\x20which\x20is\x20not\x20among\x20the\x20listed\x20options.','resultTitle','एक\x20फिल्म','निः\x20+\x20क्रोध','scrollWidth','पर्दा\x20:\x20वेद-संबंधी','palClose','अंकुश\x20can\x20mean\x20restraint,\x20control\x20or\x20रोक.','जहाँगीर','textContent','गद्यांश\x20के\x20अनुसार\x20अपने\x20सपनों\x20को\x20साकार\x20करने\x20के\x20लिए\x20हमें\x20क्या\x20करना\x20होगा?','20%\x20वृद्धि','मनुष्य\x20को\x20कलाकार\x20बनाने\x20वाला\x20गुण','Lala\x20Hardayal','Finding\x20fault\x20with\x20others','Where\x20was\x20India’s\x20first\x20ferret\x20research\x20facility\x20inaugurated\x20in\x20February\x202025?','submitBtn','What\x20is\x20the\x20angle\x20between\x20the\x20hour\x20and\x20minute\x20hands\x20at\x203:25?','242097yHaRyx','wrong-answer','8.46\x20का\x20भिन्नात्मक\x20रूप\x20ज्ञात\x20कीजिए।','BTBTN','सुभाषचंद्र\x20बोस','Dividing\x20into\x20equal\x20shares','schedule','open','Amer\x20Fort,\x20Jaipur','<style>','&gt;','0.625','Sister-in-law\x20of\x20father-in-law','\x20—\x20Report','P.\x20V.\x20N.\x20Rao\x20Committee','Which\x20of\x20these\x20traditional\x20dances\x20is\x20not\x20a\x20martial-art\x20form?','गद्यांश\x20सभ्यता\x20को\x20मानव\x20के\x20भौतिक\x20विकास\x20को\x20आगे\x20बढ़ाने\x20वाला\x20गुण\x20बताता\x20है।','Lothal','5\x20वर्ष','<meta\x20charset=\x22UTF-8\x22><meta\x20name=\x22viewport\x22\x20content=\x22width=device-width,\x20initial-scale=1.0\x22>','explanationBox','TRIFED','लोहा','सही\x20उत्तर','active','₹28,400','चौहानों\x20ने\x20दिल्ली\x20किससे\x20छीनी\x20थी?','कच्ची\x20कपास\x20ब्रिटेन\x20ले\x20जाई\x20जाती\x20थी\x20और\x20वहाँ\x20बने\x20वस्त्र\x20भारत\x20में\x20बेचे\x20जाते\x20थे।','.result-actions','IIT\x20रुड़की','देखा\x20नहीं','ब्राज़ील','कपास','none','सही\x20क्रिया\x20चुनिए:\x20“Timely\x20alerts\x20about\x20floods\x20in\x20Bhutan\x20____\x20a\x20blessing\x20to\x20Indian\x20villages.”','उन्नीसवीं\x20शताब्दी\x20में\x20अंग्रेज\x20भारत\x20से\x20ब्रिटेन\x20कौन-सी\x20वस्तु\x20ले\x20जाते\x20थे,\x20वहाँ\x20तैयार\x20करके\x20फिर\x20भारत\x20में\x20बेचते\x20थे?','div','82.60%','गद्यांश\x20के\x20अनुसार\x20‘संस्कृति’\x20का\x20अर्थ\x20क्या\x20है?','अमेरिका','&lt;','शुक्रवार\x20को\x20रेडियम\x20₹4,015\x20और\x20प्लूटोनियम\x20₹4,080\x20प्रति\x20ग्राम\x20है;\x20कुल\x20₹8,095।','stPlan','✅\x20सबमिट','wheel','Total\x20imports\x20=\x20508+615+556+925+828\x20=\x203,432;\x20average\x20=\x203,432/5\x20=\x20686.4.','8\x20August\x201942,\x20Bombay','पालतू\x20बनाया\x20हुआ','fromCharCode','हरि','निम्नलिखित\x20में\x20से\x20कौन-सी\x20समिति\x20पंचायती\x20राज\x20संस्थाओं\x20से\x20संबंधित\x20नहीं\x20है?','Where\x20were\x20the\x20officers\x20of\x20the\x20Indian\x20National\x20Army\x20tried\x20in\x201945?','दादी','answer','Increases\x20in\x20winter','विश्व\x20पर्यावरण\x20दिवस','Which\x20committee\x20is\x20not\x20related\x20to\x20Panchayati\x20Raj\x20institutions?','display','Lakshadweep','विशिष्ट\x20जीवन-दर्शन\x20पर\x20आधारित\x20संतुलित\x20जीवन','संदीप\x20मंगलवार\x20को\x203\x20ग्राम\x20प्लूटोनियम\x20और\x20बुधवार\x20को\x205\x20ग्राम\x20रेडियम\x20खरीदता\x20है।\x20चार्ट\x20के\x20अनुसार\x20कुल\x20भुगतान\x20ज्ञात\x20कीजिए।','भगवती\x20चरण\x20वोहरा','11\x20दिसंबर','82°30′\x20W','What\x20is\x20the\x20difference\x20between\x20total\x20C3\x20cars\x20produced\x20by\x20companies\x20E\x20and\x20G\x20together\x20and\x20B1\x20bikes\x20produced\x20by\x20company\x20H?','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22review-qtext\x22>','Which\x20is\x20the\x20apex\x20institution\x20for\x20rural\x20credit\x20in\x20India?','<span><i\x20class=\x22pal-dot\x22\x20style=\x22background:#298b5a\x22></i>','The\x20Diamond\x20Triangle\x20includes\x20Ratnagiri,\x20Udayagiri\x20and\x20Lalitagiri\x20in\x20Odisha.','नाबार्ड\x20कृषि\x20एवं\x20ग्रामीण\x20विकास\x20के\x20लिए\x20सर्वोच्च\x20विकास\x20वित्तीय\x20संस्था\x20है।','H\x20is\x20the\x20total\x20B2\x20bikes\x20produced\x20by\x20all\x20companies;\x20R\x20is\x20the\x20total\x20C1\x20cars\x20produced\x20by\x20F,\x20G\x20and\x20D.\x20Find\x20H/R.','🏆\x20Excellent!','फरवरी\x202025\x20में\x20भारत\x20की\x20पहली\x20फेरेट\x20अनुसंधान\x20सुविधा\x20का\x20उद्घाटन\x20कहाँ\x20हुआ?','आगरा\x20किला','floor','</body></html>','कोमल','18%','Thesego\x20Gaele','\x20ans','21\x20फरवरी','श्यामजी\x20कृष्ण\x20वर्मा\x20ने\x201905\x20में\x20लंदन\x20में\x20इंडिया\x20हाउस\x20की\x20स्थापना\x20की।','न\x20तो\x20I,\x20न\x20ही\x20II','आसान\x20रास्ता\x20अपनाना','सरदार\x20पटेल','center','Part\x20VI','गद्यांश\x20के\x20अनुसार\x20सबसे\x20बड़ी\x20आकांक्षा\x20हर\x20आँख\x20से\x20आँसू\x20मिटाना\x20थी।','A\x20balanced\x20life\x20based\x20on\x20a\x20particular\x20philosophy','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22review-status\x20','offsetWidth','निम्नलिखित\x20में\x20से\x20किस\x20केंद्रशासित\x20प्रदेश\x20का\x20राज्यसभा\x20में\x20प्रतिनिधित्व\x20है?','3×₹3,850\x20+\x205×₹3,450\x20=\x20₹11,550\x20+\x20₹17,250\x20=\x20₹28,800।','Question\x20Palette','What\x20percentage\x20is\x20the\x20total\x20number\x20of\x20bikes\x20produced\x20by\x20company\x20D\x20of\x20the\x20total\x20C1\x20cars\x20produced\x20by\x20company\x20G?','International\x20Migrants\x20Day\x20is\x20observed\x20on\x2018\x20December,\x20which\x20is\x20not\x20listed.','समाधान\x20में\x20दिए\x20अनुपात\x20a/b\x20=\x20√7/√3\x20को\x20रखने\x20और\x20सरल\x20करने\x20पर\x20विकल्प\x20(a)\x20प्राप्त\x20होता\x20है।','Plutonium\x20average\x20=\x20₹3,625\x20and\x20radium\x20average\x20=\x20₹3,475;\x20difference\x20=\x20₹150.','हुमायूँ','Volleyball','ऋतु\x20परिवर्तन\x20के\x20बावजूद\x20शरीर\x20का\x20सामान्य\x20आंतरिक\x20तापमान\x20एक\x20सीमित\x20दायरे\x20में\x20बना\x20रहता\x20है।','Paraguay','Tamil\x20Nadu','\x0a\x20\x20\x20\x20\x20\x20*\x20{\x20box-sizing:\x20border-box;\x20margin:\x200;\x20padding:\x200;\x20}\x0a\x20\x20\x20\x20\x20\x20body\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20font-family:\x20\x27Segoe\x20UI\x27,\x20Roboto,\x20system-ui,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20background:\x20#ffffff;\x0a\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#111827;\x0a\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2020px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2013px;\x0a\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20.quiz-wrapper\x20{\x20max-width:\x20100%;\x20margin:\x200;\x20padding:\x200;\x20background:\x20#fff;\x20}\x0a\x20\x20\x20\x20\x20\x20.pdf-header\x20{\x20display:\x20block\x20!important;\x20text-align:\x20center;\x20margin-bottom:\x2020px;\x20padding-bottom:\x2012px;\x20border-bottom:\x202px\x20solid\x20#38bdf8;\x20}\x0a\x20\x20\x20\x20\x20\x20.pdf-header\x20h1\x20{\x20color:\x20#0f172a;\x20font-size:\x201.4rem;\x20margin-bottom:\x204px;\x20}\x0a\x20\x20\x20\x20\x20\x20.pdf-header\x20p\x20{\x20color:\x20#475569;\x20font-size:\x200.82rem;\x20}\x0a\x20\x20\x20\x20\x20\x20.result-title\x20{\x20text-align:\x20center;\x20font-size:\x201.4rem;\x20font-weight:\x20700;\x20color:\x20#0f172a;\x20margin-bottom:\x204px;\x20}\x0a\x20\x20\x20\x20\x20\x20.result-sub\x20{\x20text-align:\x20center;\x20color:\x20#475569;\x20font-size:\x200.82rem;\x20margin-bottom:\x2018px;\x20}\x0a\x20\x20\x20\x20\x20\x20.score-circle\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20width:\x20110px;\x20height:\x20110px;\x20margin:\x200\x20auto\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2050%;\x20display:\x20flex;\x20align-items:\x20center;\x20justify-content:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20background:\x20conic-gradient(#22c55e\x20calc(var(--pct)\x20*\x201%),\x20#e2e8f0\x200);\x0a\x20\x20\x20\x20\x20\x20\x20\x20position:\x20relative;\x0a\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20.score-circle::before\x20{\x20content:\x20\x22\x22;\x20position:\x20absolute;\x20inset:\x209px;\x20border-radius:\x2050%;\x20background:\x20#ffffff;\x20}\x0a\x20\x20\x20\x20\x20\x20.score-inner\x20{\x20position:\x20relative;\x20z-index:\x201;\x20text-align:\x20center;\x20}\x0a\x20\x20\x20\x20\x20\x20.score-inner\x20.big\x20{\x20font-size:\x201.6rem;\x20font-weight:\x20800;\x20color:\x20#0f172a;\x20line-height:\x201.1;\x20}\x0a\x20\x20\x20\x20\x20\x20.score-inner\x20.small\x20{\x20font-size:\x200.72rem;\x20color:\x20#64748b;\x20letter-spacing:\x200.4px;\x20}\x0a\x20\x20\x20\x20\x20\x20.stats-grid\x20{\x20display:\x20grid;\x20grid-template-columns:\x20repeat(4,\x201fr);\x20gap:\x2010px;\x20margin-bottom:\x2024px;\x20}\x0a\x20\x20\x20\x20\x20\x20.stat-box\x20{\x20background:\x20#f1f5f9;\x20border-radius:\x2012px;\x20padding:\x2012px\x208px;\x20text-align:\x20center;\x20border:\x201px\x20solid\x20#e2e8f0;\x20}\x0a\x20\x20\x20\x20\x20\x20.stat-box\x20.val\x20{\x20font-size:\x201.2rem;\x20font-weight:\x20700;\x20color:\x20#0f172a;\x20}\x0a\x20\x20\x20\x20\x20\x20.stat-box\x20.lbl\x20{\x20font-size:\x200.68rem;\x20color:\x20#64748b;\x20margin-top:\x203px;\x20text-transform:\x20uppercase;\x20}\x0a\x20\x20\x20\x20\x20\x20.stat-box.green\x20.val\x20{\x20color:\x20#15803d;\x20}\x0a\x20\x20\x20\x20\x20\x20.stat-box.red\x20.val\x20{\x20color:\x20#b91c1c;\x20}\x0a\x20\x20\x20\x20\x20\x20.stat-box.blue\x20.val\x20{\x20color:\x20#1d4ed8;\x20}\x0a\x20\x20\x20\x20\x20\x20.stat-box.gold\x20.val\x20{\x20color:\x20#a16207;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-title\x20{\x20font-size:\x201rem;\x20font-weight:\x20700;\x20color:\x20#1e3a8a;\x20margin:\x2010px\x200\x2014px;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-list\x20{\x20display:\x20flex;\x20flex-direction:\x20column;\x20gap:\x2012px;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-item\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20background:\x20#f8fafc;\x20border-radius:\x2012px;\x20padding:\x2014px\x2016px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20border-left:\x204px\x20solid\x20#94a3b8;\x20font-size:\x200.82rem;\x20line-height:\x201.7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20page-break-inside:\x20avoid;\x0a\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20.review-item.correct\x20{\x20border-left-color:\x20#16a34a;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-item.wrong\x20{\x20border-left-color:\x20#dc2626;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-item.skipped\x20{\x20border-left-color:\x20#ca8a04;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-head\x20{\x20display:\x20flex;\x20justify-content:\x20space-between;\x20align-items:\x20center;\x20margin-bottom:\x2010px;\x20flex-wrap:\x20wrap;\x20gap:\x206px;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-qno\x20{\x20font-weight:\x20700;\x20color:\x20#0f172a;\x20font-size:\x200.85rem;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-status\x20{\x20font-size:\x200.68rem;\x20font-weight:\x20700;\x20padding:\x203px\x2010px;\x20border-radius:\x2030px;\x20}\x0a\x20\x20\x20\x20\x20\x20.status-correct\x20{\x20background:\x20#dcfce7;\x20color:\x20#166534;\x20}\x0a\x20\x20\x20\x20\x20\x20.status-wrong\x20{\x20background:\x20#fee2e2;\x20color:\x20#991b1b;\x20}\x0a\x20\x20\x20\x20\x20\x20.status-skipped\x20{\x20background:\x20#fef9c3;\x20color:\x20#854d0e;\x20}\x0a\x20\x20\x20\x20\x20\x20/*\x20CRITICAL:\x20white-space\x20pre-line\x20for\x20line\x20breaks\x20*/\x0a\x20\x20\x20\x20\x20\x20.review-qtext\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#334155;\x20margin-bottom:\x2012px;\x20line-height:\x201.8;\x0a\x20\x20\x20\x20\x20\x20\x20\x20border-left:\x203px\x20solid\x20#cbd5e1;\x20padding-left:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x200.8rem;\x20font-weight:\x20500;\x0a\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20pre-line;\x0a\x20\x20\x20\x20\x20\x20\x20\x20word-break:\x20break-word;\x0a\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20.review-ans\x20{\x20color:\x20#334155;\x20line-height:\x201.8;\x20font-size:\x200.8rem;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-ans\x20b\x20{\x20color:\x20#1d4ed8;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-ans\x20.correct-mark\x20{\x20color:\x20#15803d;\x20font-weight:\x20600;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-ans\x20.wrong-mark\x20{\x20color:\x20#b91c1c;\x20font-weight:\x20600;\x20}\x0a\x20\x20\x20\x20\x20\x20.review-ans\x20.exp\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20display:\x20block;\x20margin-top:\x2010px;\x20padding:\x2010px\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20background:\x20#fef9c3;\x20border-left:\x203px\x20solid\x20#eab308;\x0a\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x206px;\x20color:\x20#854d0e;\x0a\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x200.76rem;\x20line-height:\x201.7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20pre-line;\x0a\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20@media\x20print\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20body\x20{\x20padding:\x2010px;\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20.review-item\x20{\x20page-break-inside:\x20avoid;\x20}\x0a\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20','Feeling\x20deep\x20sympathy\x20for\x20the\x20needy','Ferocious\x20means\x20fierce,\x20violent\x20or\x20savage.','सही\x20संधि-विच्छेद\x20निः\x20+\x20करुण\x20है;\x20इसमें\x20विसर्ग\x20संधि\x20है।','The\x20answer\x20key\x20gives\x20Panama.','आयात/निर्यात\x20अनुपातों\x20में\x20Y1\x20का\x20508/465\x20≈\x201.09\x20सबसे\x20कम\x20है।','Conclusion\x20I\x20follows\x20from\x20“all\x20girls\x20are\x20humans”;\x20conclusion\x20II\x20does\x20not\x20follow.','Coal','querySelector','span','उत्तर\x20प्रदेश','कृषि\x20उपज\x20(ग्रेडिंग\x20एवं\x20मार्किंग)\x20अधिनियम\x20कब\x20लागू\x20किया\x20गया?','केवल\x201','#langToggle\x20button','ससुर\x20की\x20बहन','Cost-plus\x20approach','now','अपसारी\x20लेंस','has\x20proved','Woollen\x20cloth','श्यामजी\x20कृष्ण\x20वर्मा','₹100','remove','56,000','तुर्कमेनिस्तान','विश्व\x20सामाजिक\x20न्याय\x20दिवस\x2020\x20फरवरी\x20को\x20मनाया\x20जाता\x20है।','‘निष्करुण’\x20का\x20सही\x20संधि-विच्छेद\x20चुनिए।','₹7,825','दर्प','फरवरी\x202025\x20में\x20चर्चा\x20में\x20रहा\x20‘गदर-380’\x20किससे\x20संबंधित\x20है?','ईरान\x20की\x20मिसाइल','⏳\x20Preparing...','वाणिज्यिक\x20ऋण','₹200','यह\x20मानव\x20की\x20आस्था\x20में\x20रहती\x20है','When\x20was\x20the\x20Agricultural\x20Produce\x20(Grading\x20and\x20Marking)\x20Act\x20enacted?','stripToggle','Cricket','palPrev','MSP\x20निर्धारण\x20में\x20उत्पादन\x20लागत\x20के\x20साथ\x20मांग-आपूर्ति\x20तथा\x20अन्य\x20संबंधित\x20कारकों\x20पर\x20विचार\x20किया\x20जाता\x20है।','अंडमान\x20और\x20निकोबार\x20द्वीपसमूह','181:4','Chandigarh','कार्यपालिका','असम','₹29,200','15\x20अगस्त\x201942,\x20दिल्ली','मुद्रित\x20प्रश्न\x20में\x20आवर्ती\x20दशमलव\x20के\x20रूप\x20के\x20लिए\x20उत्तर-कुंजी\x20विकल्प\x20(d),\x20838/99,\x20चुनती\x20है।','The\x20answer\x20key\x20selects\x20the\x20relation\x20“Vedic-related\x20:\x20mirror”.','महाराष्ट्र','Maharashtra','8%\x20increase','Find\x20the\x20ratio\x20of\x20the\x20combined\x20Monday\x20price\x20per\x20gram\x20of\x20radium\x20and\x20plutonium\x20to\x20their\x20combined\x20Thursday\x20price.','उत्तर-कुंजी\x20में\x20सिक्किम\x20दिया\x20गया\x20है;\x20समाधान\x20में\x20नामची\x20स्थित\x20पीएम\x20श्री\x20सरकारी\x20वरिष्ठ\x20माध्यमिक\x20विद्यालय\x20का\x20उल्लेख\x20है।','12\x20दिसंबर','An\x20alloy\x20of\x20carbon','‘अंकुश’\x20का\x20अर्थ\x20रोक,\x20नियंत्रण\x20या\x20पाबंदी\x20हो\x20सकता\x20है।','चिली','Who\x20said,\x20“The\x20sword\x20of\x20revolution\x20is\x20sharpened\x20on\x20the\x20whetstone\x20of\x20ideas”?','Serving\x20one’s\x20leaders','What\x20is\x20the\x20basic\x20nature\x20of\x20culture?','इस\x20मुहावरे\x20का\x20अर्थ\x20किसी\x20के\x20प्रेम\x20में\x20गहराई\x20से\x20पड़ना\x20है।','Y1\x20का\x20आयात,\x20Y2\x20के\x20आयात\x20का\x20कितना\x20प्रतिशत\x20है?','कालीबंगा','उत्तर-कुंजी\x20में\x20पनामा\x20सही\x20उत्तर\x20है।','₹125','When\x20and\x20where\x20did\x20the\x20Quit\x20India\x20Movement\x20begin?','correct','2009\x20से\x202015\x20तक\x20कंपनी\x20की\x20औसत\x20बिक्री\x20कितनी\x20थी?','Iran','प्रश्न\x20सूची','व्याख्या','Puducherry','12\x20December','addEventListener','stSource','किस\x20मुगल\x20शासक\x20ने\x20लाला\x20कलावंत\x20से\x20हिंदुस्तानी\x20संगीत\x20की\x20शिक्षा\x20ली?','माँ\x20की\x20बहन','Y1\x20imports\x20are\x20what\x20percentage\x20of\x20Y2\x20imports?','TROPEX-25\x20is\x20the\x20Indian\x20Navy’s\x20major\x20biennial\x20theatre-level\x20operational\x20exercise.','फरवरी\x202025\x20में\x2015वीं\x20अंतरराष्ट्रीय\x20फार्माकोपिया\x20बैठक\x20कहाँ\x20आयोजित\x20हुई?','प्रतियोगिता\x20जीतना','Mizoram','अपने\x20आदर्श','classList','The\x20increase\x20from\x20Y3\x20exports\x20368\x20to\x20Y4\x20exports\x20628\x20is\x20the\x20greatest\x20percentage\x20rise\x20among\x20the\x20listed\x20comparisons.','₹30,200','8%\x20decrease','14\x20December','free','Treasury\x20bills\x20held\x20by\x20banks','The\x20Valley\x20of\x20the\x20Kings\x20is\x20in\x20Egypt,\x20near\x20ancient\x20Thebes.','📘\x20','BTTBN','ऊँट\x20के\x20मुँह\x20में\x20जीरा\x20—\x20आवश्यकता\x20से\x20बहुत\x20कम','Sukhdev','children','question','Promote\x20one’s\x20civilization\x20and\x20culture','यह\x20बैठक\x20नई\x20दिल्ली\x20के\x20अंबेडकर\x20इंटरनेशनल\x20सेंटर\x20में\x20आयोजित\x20हुई।','3526474ekzchq','Bhopal','📖\x20Keep\x20Learning!','BTNTB','length','7\x20जुलाई\x201942,\x20लाहौर','मानव\x20की\x20मानवता\x20किस\x20बात\x20में\x20निहित\x20है?','Become\x20a\x20great\x20filmmaker','बिक्री\x202014\x20के\x20175\x20करोड़\x20से\x202016\x20में\x20140\x20करोड़\x20हुई;\x20कमी\x20=\x2035/175×100\x20=\x2020%।','589.2','qCounter','छत्तीसगढ़','print','disabled','11\x20July\x20is\x20observed\x20each\x20year\x20as:','deltaX','The\x20calculated\x20angle\x20is\x2047.5°,\x20which\x20is\x20not\x20among\x20the\x20listed\x20numerical\x20options.','भारत\x20की\x20स्वतंत्रता\x20के\x20बाद\x20उत्खनित\x20पहला\x20हड़प्पा\x20स्थल\x20कौन-सा\x20था?','भूमिगत\x20कांग्रेस\x20रेडियो\x20का\x20संचालन\x20उषा\x20मेहता\x20और\x20उनके\x20सहयोगियों\x20से\x20जुड़ा\x20था।','प्रत्येक\x20युग\x20की\x20विशिष्टता','गोबी\x20मरुस्थल\x20मुख्यतः\x20मंगोलिया\x20और\x20चीन\x20में\x20फैला\x20है;\x20दिए\x20गए\x20विकल्पों\x20में\x20सही\x20उत्तर\x20नहीं\x20है।','offsetLeft','It\x20resides\x20in\x20human\x20faith','scrollIntoView','पनामा','Hockey','Only\x20I','Continuous\x20effort','यूनान','18–45','Taking\x20the\x20easy\x20route','चौहानों\x20ने\x20तोमर\x20शासकों\x20से\x20दिल्ली\x20पर\x20अधिकार\x20किया\x20था।','₹28,800','Choose\x20the\x20synonym\x20of\x20‘अंकुश’.','The\x20passage\x20says\x20India\x20never\x20forgot\x20its\x20ideals.','92°30′\x20E','L.\x20M.\x20Singhvi\x20Committee','“क्रांति\x20की\x20तलवार\x20विचारों\x20के\x20सान\x20पर\x20तेज\x20की\x20जाती\x20है”\x20किसने\x20कहा?','Being\x20doubtful','cloneNode','explanationText','निः\x20+\x20करुण','🕗\x20','कौन-सा\x20मुहावरा–अर्थ\x20युग्म\x20असंगत\x20है?','3×₹3,850\x20+\x205×₹3,450\x20=\x20₹11,550\x20+\x20₹17,250\x20=\x20₹28,800.','What\x20did\x20India\x20not\x20forget\x20during\x20its\x20endless\x20search?','विस्तृत\x20समाधान\x20के\x20अनुसार\x20मानवता\x20मन\x20के\x20विकारों\x20पर\x20नियंत्रण\x20का\x20प्रयास\x20करने\x20में\x20है;\x20मुद्रित\x20विकल्प/कुंजी\x20में\x20असंगति\x20दिखती\x20है।','महान\x20संगीतकार\x20बनना','ज्ञात\x20या\x20कल्पित\x20तथ्यों\x20के\x20आधार\x20पर\x20लिए\x20गए\x20निर्णय\x20के\x20लिए\x20उपयुक्त\x20शब्द\x20क्या\x20है?','scrollLeft','19\x20February','scrollBy','<span><i\x20class=\x22pal-dot\x22\x20style=\x22background:#56657a\x22></i>','यह\x20मनुष्यों\x20में\x20भेद\x20नहीं\x20करती','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22exp\x22><b>','54°','Raw\x20cotton\x20was\x20exported\x20to\x20Britain\x20and\x20manufactured\x20goods\x20were\x20sold\x20back\x20in\x20India.','चारों\x20दिनों\x20में\x20प्लूटोनियम\x20का\x20औसत\x20प्रति\x20ग्राम\x20मूल्य\x20रेडियम\x20के\x20औसत\x20मूल्य\x20से\x20कितना\x20अधिक\x20है?','What\x20was\x20the\x20greatest\x20aspiration\x20for\x20the\x20great\x20person\x20of\x20the\x20narrator’s\x20generation?','Judiciary','Kalaripayattu','statWrong','508/615\x20×\x20100\x20≈\x2082.60%.','reviewList','The\x20solution\x20gives\x20A\x20=\x20930,000\x20and\x20K\x20=\x2020,000;\x20ratio\x20=\x20930,000:20,000\x20=\x2093:2.','questions','stSubject','निष्क\x20+\x20रुण','1992','कृषि\x20उपज\x20की\x20ग्रेडिंग\x20एवं\x20मार्किंग\x20से\x20संबंधित\x20अधिनियम\x20का\x20वर्ष\x201937\x20दिया\x20गया\x20है।','Simple\x20past\x20uses\x20the\x20second\x20form\x20of\x20the\x20verb:\x20comes\x20→\x20came.','वश\x20में','नाबार्ड','बहुत\x20धन\x20इकट्ठा\x20करना','Chile','200%','दोनों\x20कथन\x20जिला\x20योजना\x20समिति\x20से\x20संबंधित\x20संवैधानिक\x20प्रावधानों\x20के\x20अनुरूप\x20हैं।','An\x20inner\x20quality\x20promoting\x20spiritual\x20development','💡\x20Explanation','₹175','82°30′\x20E','All','According\x20to\x20the\x20passage,\x20‘civilization’\x20is:','pal-btn\x20pal-mini','60,000','What\x20was\x20the\x20percentage\x20increase\x20in\x20company\x20sales\x20from\x202009\x20to\x202010?','30%','वित्त\x20वर्ष\x202023–24\x20में\x20अमेरिका\x20भारत\x20का\x20सबसे\x20बड़ा\x20निर्यात\x20गंतव्य\x20था।','In\x20which\x20state\x20is\x20the\x20first\x20‘Green\x20Rated’\x20school\x20of\x20Northeast\x20India\x20located?','\x20skip','Neither\x201\x20nor\x202','Both\x201\x20and\x202','abs','13\x20दिसंबर','scoreDisplay','Who\x20won\x20the\x20Miss\x20World\x20title\x20in\x20February\x202025?','None\x20of\x20these','A\x20distinctive\x20feature\x20of\x20each\x20age','The\x20meeting\x20was\x20held\x20at\x20the\x20Ambedkar\x20International\x20Centre\x20in\x20New\x20Delhi.','The\x20INA\x20trials\x20were\x20held\x20at\x20the\x20Red\x20Fort\x20in\x20Delhi\x20in\x20November\x201945.','A\x20train\x20hijacking\x20in\x20Balochistan','The\x20solution\x20totals\x20H\x20=\x20230,000\x20and\x20R\x20=\x20200,000;\x20H/R\x20=\x201.15.','finalScore','China','प्लूटोनियम\x20का\x20औसत\x20₹3,625\x20और\x20रेडियम\x20का\x20₹3,475\x20है;\x20अंतर\x20₹150\x20है।','World\x20Population\x20Day\x20is\x20observed\x20on\x2011\x20July.','Who\x20established\x20India\x20House\x20in\x20London?','7\x20August\x201942,\x20Wardha','92°30′\x20पूर्व','बराबर\x20हिस्सों\x20में\x20बाँटना','मन\x20के\x20विकारों\x20पर\x20नियंत्रण\x20का\x20प्रयास\x20करना','Which\x20item\x20did\x20the\x20British\x20export\x20from\x20India\x20to\x20Britain\x20in\x20the\x20nineteenth\x20century\x20to\x20manufacture\x20goods\x20and\x20sell\x20them\x20back\x20in\x20India?','</span>','Monday\x20total\x20=\x20₹7,350\x20and\x20Thursday\x20total\x20=\x20₹7,050;\x20ratio\x207350:7050\x20=\x2049:47.','भारत','पोलियो','ऊनी\x20वस्त्र','resetBtn','option-text','“दिया\x20तले\x20अँधेरा”\x20means\x20failing\x20to\x20notice\x20one’s\x20own\x20fault\x20or\x20a\x20nearby\x20problem,\x20not\x20merely\x20darkness\x20under\x20a\x20lamp.','Converging\x20lens','20%\x20decrease','scrollTo','47:49','Which\x20was\x20the\x20first\x20Harappan\x20site\x20excavated\x20after\x20India\x27s\x20independence?','Kamakhya\x20Temple\x20is\x20located\x20on\x20Nilachal\x20Hill\x20in\x20Guwahati,\x20Assam.','The\x20passage\x20says\x20future\x20citizens\x20must\x20continue\x20making\x20efforts.','Where\x20was\x20the\x2015th\x20International\x20Pharmacopoeia\x20meeting\x20held\x20in\x20February\x202025?','Choose\x20the\x20correct\x20verb:\x20“Timely\x20alerts\x20about\x20floods\x20in\x20Bhutan\x20____\x20a\x20blessing\x20to\x20Indian\x20villages.”','158','100\x20K','Red\x20Fort,\x20Delhi','The\x20seven\x20values\x20total\x201,092\x20crore;\x201,092/7\x20=\x20156\x20crore.','भाग\x20III','For\x20which\x20year\x20is\x20the\x20ratio\x20of\x20Chinese\x20imports\x20to\x20exports\x20the\x20lowest?',')</span>','बाँस-आधारित\x20बंकरों\x20के\x20विकास\x20हेतु\x20तकनीकी\x20विशेषज्ञता\x20के\x20लिए\x20IIT\x20गुवाहाटी\x20के\x20साथ\x20समझौता\x20किया\x20गया।','मौलिक\x20कर्तव्य\x20भाग\x20IVA\x20के\x20अनुच्छेद\x2051A\x20में\x20दिए\x20गए\x20हैं।','अपने\x20ईश्वर','इस\x20प्रश्न\x20के\x20उत्तर-कुंजी\x20में\x20यह\x20कथन\x20भगत\x20सिंह\x20से\x20संबंधित\x20दिया\x20गया\x20है।','What\x20was\x20the\x20percentage\x20change\x20in\x20company\x20sales\x20from\x202014\x20to\x202016?','The\x20Gobi\x20Desert\x20is\x20located\x20in\x20which\x20country/region?','Both\x20statements\x20align\x20with\x20the\x20provisions\x20relating\x20to\x20the\x20District\x20Planning\x20Committee.','padStart','Aksa\x20Thomas\x20came\x20to\x20attend\x20the\x20session\x20so\x20early.','अपने\x20नेताओं\x20की\x20सेवा\x20करना','Dehradun','The\x20passage\x20defines\x20service\x20as\x20helping\x20suffering\x20people\x20and\x20removing\x20poverty,\x20ignorance,\x20disease\x20and\x20inequality—not\x20serving\x20leaders.','_blank','‘दिया\x20तले\x20अँधेरा’\x20का\x20अर्थ\x20अपनी\x20निकट\x20की\x20कमी\x20न\x20देख\x20पाना\x20है,\x20न\x20कि\x20केवल\x20दीये\x20के\x20नीचे\x20अँधेरा\x20होना।','Gahadavalas','असंगत\x20जोड़ी\x20चुनिए।','गुर्जर-प्रतिहारों','Water\x20boils\x20at\x20100°C,\x20which\x20is\x20approximately\x20373\x20K.','गलत','₹31,400','skipped','If\x20MADRAS\x20is\x20coded\x20as\x20NBESBT,\x20how\x20will\x20ASSAM\x20be\x20coded\x20in\x20the\x20same\x20code?','Part\x20III','Ropar\x20in\x20Punjab\x20was\x20excavated\x20after\x20independence;\x20its\x20modern\x20name\x20is\x20Rupnagar.','FEROCIOUS\x20का\x20समानार्थी\x20शब्द\x20चुनिए।','In\x20the\x20federal\x20system,\x20which\x20institution\x20is\x20called\x20the\x20“balance\x20wheel\x20of\x20the\x20Constitution”?','₹225','The\x20Valley\x20of\x20the\x20Kings\x20is\x20located\x20in\x20which\x20country?','title','Russia','Mother’s\x20sister','2\x20years','8%\x20कमी','🎉\x20Quiz\x20Complete!','सात\x20वर्षों\x20की\x20बिक्री\x20का\x20योग\x201,092\x20करोड़\x20है;\x201,092/7\x20=\x20156\x20करोड़।','राजाओं\x20की\x20घाटी\x20मिस्र\x20में\x20प्राचीन\x20थीब्स\x20के\x20निकट\x20स्थित\x20है।','ग्वालियर\x20किला','प्रत्येक\x20वर्ष\x2011\x20जुलाई\x20को\x20कौन-सा\x20दिवस\x20मनाया\x20जाता\x20है?','दो-तिहाई\x20बहुमत','Subhas\x20Chandra\x20Bose','अंश','Aksa\x20Thomas\x20will\x20come\x20to\x20attend\x20the\x20session\x20so\x20early.','add','गद्यांश\x20कहता\x20है\x20कि\x20भविष्य\x20के\x20नागरिकों\x20को\x20निरंतर\x20प्रयास\x20करना\x20होगा।','Mexico','81.65%','किस\x20वर्ष\x20चीन\x20के\x20आयात\x20और\x20निर्यात\x20का\x20अनुपात\x20सबसे\x20कम\x20है?','TROPEX-25\x20भारतीय\x20नौसेना\x20का\x20प्रमुख\x20द्विवार्षिक\x20थिएटर-स्तरीय\x20परिचालन\x20अभ्यास\x20है।','✅\x20Submit','Curtain\x20:\x20Vedic-related','अकबर\x20ने\x20लाला\x20कलावंत\x20से\x20हिंदुस्तानी\x20संगीत\x20की\x20शिक्षा\x20प्राप्त\x20की\x20थी।','विश्व\x20सामाजिक\x20न्याय\x20दिवस\x20कब\x20मनाया\x20जाता\x20है?','₹150','पी.\x20वी.\x20एन.\x20राव\x20समिति','युगों\x20की\x20ऐश्वर्यपूर्ण\x20कहानी','toString','प्रेस','विश्व\x20जल\x20दिवस','Manipur',':</b>\x20','लागत-प्लस\x20दृष्टिकोण','कलाई\x20खुलना\x20—\x20सच्चाई\x20पता\x20चलना','छोड़ा','1.15','चीन','(7\x20+\x202√21)/(7\x20−\x202√21)','titleHindi','Vedic-related\x20:\x20mirror','Falling\x20deeply\x20in\x20love\x20with\x20someone','pdfSub','राज्य\x20विधानसभा\x20का\x20सामान्य\x20कार्यकाल\x20पाँच\x20वर्ष\x20होता\x20है।','The\x20solution\x20calculates\x20E+G\x20C3\x20cars\x20=\x20120,000\x20and\x20H\x20B1\x20bikes\x20=\x2080,000;\x20difference\x20=\x2040,000.','deltaY','Keep\x20making\x20plans','32°','पानी\x20के\x20अंदर\x20वायु\x20का\x20बुलबुला\x20किस\x20प्रकार\x20के\x20लेंस\x20जैसा\x20व्यवहार\x20करता\x20है?','palSheet','NCUI\x20का\x20पूरा\x20नाम\x20नेशनल\x20कोऑपरेटिव\x20यूनियन\x20ऑफ\x20इंडिया\x20है।','ऋण-प्लस\x20दृष्टिकोण','filter','USA','Import/export\x20ratios:\x20Y1\x20=\x20508/465\x20≈\x201.09,\x20Y2\x20≈\x201.20,\x20Y3\x20≈\x201.51,\x20Y4\x20≈\x201.47;\x20the\x20lowest\x20is\x20Y1.','पिछले\x20वर्ष\x20की\x20तुलना\x20में\x20किस\x20वर्ष\x20निर्यात\x20में\x20सबसे\x20अधिक\x20प्रतिशत\x20वृद्धि\x20हुई?','Meghalaya','Commercial\x20credit','Indore','विधायिका','Which\x20of\x20the\x20following\x20is\x20not\x20an\x20asset\x20of\x20commercial\x20banks?','createElement','quizWrapper','भारत\x20में\x20ग्रामीण\x20ऋण\x20की\x20सर्वोच्च\x20संस्था\x20कौन-सी\x20है?','(2\x20+\x202√21)/(2\x20−\x202√21)','1937','कठिन\x20परिश्रम\x20करना','Graphene\x20is\x20a\x20two-dimensional\x20sheet\x20of\x20carbon\x20atoms\x20arranged\x20in\x20a\x20hexagonal\x20lattice.','Two-thirds\x20majority','Which\x20Union\x20Territory\x20is\x20represented\x20in\x20the\x20Council\x20of\x20States\x20(Rajya\x20Sabha)?','Bhavai','1957','उपस्थित\x20और\x20मतदान\x20करने\x20वाले\x20सदस्यों\x20का\x20साधारण\x20बहुमत','Removing\x20inequality\x20of\x20opportunity','Both\x20I\x20and\x20II','भाग\x20VI','The\x20solution\x20section\x20identifies\x20the\x20Consumer\x20Protection\x20Act\x20as\x20the\x201986\x20Act;\x20none\x20of\x20the\x20listed\x20years\x20matches.','508/615\x20×\x20100\x20≈\x2082.60%।','संस्कृति\x20आदर्श\x20और\x20सभ्यता\x20यथार्थ\x20है','Next\x20▶','optionsContainer','निकिता\x20पोरवाल','भारत\x20छोड़ो\x20आंदोलन\x20के\x20दौरान\x20कांग्रेस\x20रेडियो\x20पर\x20नियमित\x20कार्यक्रम\x20कौन\x20प्रसारित\x20करता\x20था?','style','Total\x20=\x2075×5\x20=\x20375;\x20first\x20two\x20total\x20130\x20and\x20last\x20two\x20total\x20170,\x20so\x20the\x20third\x20mark\x20is\x20375−300\x20=\x2075.','hidden','Panama','प्रत्येक\x20अक्षर\x20के\x20स्थान\x20पर\x20वर्णमाला\x20का\x20अगला\x20अक्षर\x20लिखा\x20जाता\x20है:\x20ASSAM\x20→\x20BTTBN।','playBtn','डायमंड\x20ट्रायंगल\x20पुरातात्विक\x20क्षेत्र\x20किस\x20राज्य\x20से\x20संबंधित\x20है?','Which\x20Latin\x20American\x20country\x20announced\x20its\x20withdrawal\x20from\x20China’s\x20Belt\x20and\x20Road\x20Initiative?','NABARD\x20is\x20the\x20apex\x20development\x20financial\x20institution\x20for\x20agriculture\x20and\x20rural\x20development.','Only\x202','NCUI','कंपनी\x20D\x20द्वारा\x20निर्मित\x20कुल\x20बाइकों\x20की\x20संख्या,\x20कंपनी\x20G\x20द्वारा\x20निर्मित\x20C1\x20कारों\x20की\x20कुल\x20संख्या\x20का\x20कितना\x20प्रतिशत\x20है?','विश्लेषण\x20के\x20बिना\x20मॉडल\x20ठीक\x20करना','Your\x20Answer','उत्तर-कुंजी\x20में\x2092°30′\x20पूर्व\x20दिया\x20है,\x20लेकिन\x20विस्तृत\x20समाधान\x20में\x20भारत\x20की\x20मानक\x20मध्याह्न\x20रेखा\x2082°30′\x20पूर्व\x20बताई\x20गई\x20है।\x20यह\x20मुद्रित\x20कुंजी\x20की\x20त्रुटि\x20प्रतीत\x20होती\x20है;\x20सही\x20तथ्य\x2082°30′\x20पूर्व\x20है।','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22review-ans\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<b>','एक\x20विद्यार्थी\x20के\x20पाँच\x20विषयों\x20में\x20औसत\x20अंक\x2075\x20हैं।\x20पहले\x20दो\x20विषयों\x20का\x20औसत\x2065\x20और\x20अंतिम\x20दो\x20का\x2085\x20है।\x20तीसरे\x20विषय\x20के\x20अंक\x20ज्ञात\x20कीजिए।','उत्तर-कुंजी\x20में\x20थेसगो\x20गाएले\x20दिया\x20गया\x20है;\x20प्रश्न\x20में\x20आयोजन/तिथि\x20का\x20उल्लेख\x20विस्तृत\x20समाधान\x20से\x20असंगत\x20हो\x20सकता\x20है।','विस्तृत\x20समाधान\x20में\x20उपयुक्त\x20शब्द\x20‘अध्याहरण’\x20दिया\x20गया\x20है,\x20जो\x20विकल्पों\x20में\x20नहीं\x20है।','What\x20is\x20the\x20average\x20number\x20of\x20C1\x20cars\x20produced\x20by\x20the\x20five\x20companies?','Choose\x20the\x20synonym\x20of\x20FEROCIOUS.','Sales\x20fell\x20from\x20175\x20crore\x20in\x202014\x20to\x20140\x20crore\x20in\x202016:\x20decrease\x20=\x2035/175×100\x20=\x2020%.','The\x20solution\x20identifies\x20Ghadar-380\x20as\x20an\x20anti-warship\x20cruise\x20missile\x20tested\x20by\x20Iran.','सावधि\x20जमा\x20बैंक\x20की\x20देयता\x20है,\x20क्योंकि\x20बैंक\x20को\x20जमाकर्ताओं\x20को\x20यह\x20राशि\x20लौटानी\x20होती\x20है।','19\x20फरवरी','innerHTML','The\x20detailed\x20solution\x20gives\x20‘अध्याहरण’\x20as\x20the\x20suitable\x20term,\x20which\x20is\x20not\x20among\x20the\x20listed\x20options.','World\x20Day\x20of\x20Social\x20Justice\x20is\x20observed\x20on:','निवेश-प्लस\x20दृष्टिकोण','समाधान\x20के\x20अनुसार\x20इस\x20सुविधा\x20का\x20उद्घाटन\x203\x20फरवरी\x202025\x20को\x20हरियाणा\x20के\x20फरीदाबाद\x20में\x20हुआ।','Which\x20organization\x20represents\x20the\x20entire\x20cooperative\x20movement\x20in\x20India?','toggle','Parliament\x20can\x20amend\x20provisions\x20relating\x20to\x20the\x20official\x20language\x20by\x20what\x20majority?','Friday\x20prices\x20are\x20₹4,015\x20for\x20radium\x20and\x20₹4,080\x20for\x20plutonium;\x20total\x20=\x20₹8,095.','World\x20Health\x20Day','Shyamji\x20Krishna\x20Varma\x20established\x20India\x20House\x20in\x20London\x20in\x201905.','संदेहशील\x20होना','clientWidth','चंडीगढ़','World\x20Population\x20Day','1945\x20में\x20आज़ाद\x20हिंद\x20फ़ौज\x20के\x20अधिकारियों\x20पर\x20मुकदमा\x20कहाँ\x20चलाया\x20गया?','New\x20area\x20factor\x20=\x201.15×0.80\x20=\x200.92,\x20hence\x20an\x208%\x20decrease.','रूस','0.8%\x20decrease','अपनी\x20प्रभुता','Escape','statCorrect','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20','contains','अपनी\x20संपन्नता','Diverging\x20lens','If\x20a\x20rectangle’s\x20length\x20increases\x20by\x2015%\x20and\x20breadth\x20decreases\x20by\x2020%,\x20what\x20is\x20the\x20percentage\x20change\x20in\x20area?','उग्र/भयंकर','Madhya\x20Pradesh','Humayun','Shah\x20Jahan','IDBI','The\x20term\x20“smasher”\x20is\x20associated\x20with\x20which\x20sport?','समाधान\x20में\x20A\x20=\x20930,000\x20और\x20K\x20=\x2020,000;\x20अनुपात\x20930,000:20,000\x20=\x2093:2।','className','7\x20अगस्त\x201942,\x20वर्धा','The\x20answer\x20key\x20selects\x20three\x20years.','Neither\x20I\x20nor\x20II','अगला\x20▶','13\x20December','मिजोरम','your','संस्कृति\x20को\x20मानव\x20की\x20आध्यात्मिक\x20उन्नति\x20बढ़ाने\x20वाला\x20आंतरिक\x20गुण\x20बताया\x20गया\x20है।','Guwahati','₹7,755','Increases\x20in\x20summer','बलूचिस्तान\x20में\x20ट्रेन\x20अपहरण','सही','सामान्य\x20भूतकाल\x20में\x20क्रिया\x20का\x20दूसरा\x20रूप\x20आता\x20है:\x20comes\x20→\x20came।','Jayaprakash\x20Narayan','100%','Gurjara-Pratiharas','block','Fixing\x20models\x20without\x20analysis','Your\x20Performance','Three-fourths\x20majority','Akbar','नाइजीरिया','चंदेलों','&amp;','विश्व\x20जनसंख्या\x20दिवस\x2011\x20जुलाई\x20को\x20मनाया\x20जाता\x20है।','Virendranath\x20Chattopadhyaya','France','अवसरों\x20की\x20असमानता\x20मिटाना','बनावली','correct-answer','कोयला','The\x20Minimum\x20Support\x20Price\x20policy\x20follows\x20which\x20approach?','चंद्रशेखर\x20आज़ाद','expLabel','रेडियम\x20और\x20प्लूटोनियम\x20के\x20सोमवार\x20के\x20संयुक्त\x20प्रति\x20ग्राम\x20मूल्य\x20का\x20गुरुवार\x20के\x20संयुक्त\x20मूल्य\x20से\x20अनुपात\x20ज्ञात\x20कीजिए।','93:2','20%\x20increase','Enjoying\x20abundantly','58,000','\x20pal-mini','optionsHindi','The\x20answer\x20key\x20marks\x20option\x20(a),\x20P.\x20V.\x20N.\x20Rao\x20Committee.','भूमि-प्लस\x20दृष्टिकोण','lang','A\x20सभी\x20कंपनियों\x20द्वारा\x20निर्मित\x20वाहनों\x20की\x20कुल\x20संख्या\x20है;\x20K,\x20कंपनी\x20H\x20की\x20C3\x20कारों\x20और\x20कंपनी\x20E\x20की\x20B3\x20बाइकों\x20के\x20बीच\x20अंतर\x20है।\x20A:K\x20ज्ञात\x20कीजिए।','Gujarat','2\x20वर्ष','Tame','तुर्की','\x20|\x20','key','गुजरात','क्रय\x20किए\x20गए\x20बिल','योजनाएँ\x20बनाते\x20रहना','The\x20answer\x20key\x20associates\x20the\x20term\x20with\x20volleyball.','बलवंत\x20राय\x20मेहता\x20समिति','source','review-item','querySelectorAll','📌\x20','scroll','पानी\x20100°C\x20पर\x20उबलता\x20है,\x20जो\x20लगभग\x20373\x20K\x20है।','Unseen','Using\x20a/b\x20=\x20√7/√3\x20as\x20printed\x20in\x20the\x20solution,\x20substitution\x20and\x20simplification\x20gives\x20option\x20(a).','(2\x20+\x202√21)/(−2\x20−\x202√21)','संघीय\x20व्यवस्था\x20में\x20किस\x20संस्था\x20को\x20‘संविधान\x20का\x20संतुलन-चक्र’\x20कहा\x20जाता\x20है?','On\x20Friday,\x20both\x20radium\x20and\x20plutonium\x20prices\x20per\x20gram\x20increase\x20over\x20Thursday\x20by\x2010%\x20and\x2020%,\x20respectively.\x20Find\x20their\x20combined\x20Friday\x20price.','The\x20passage\x20states\x20that\x20culture\x20grows\x20through\x20exchange\x20between\x20societies.','सभी','BCG\x20vaccine\x20is\x20used\x20primarily\x20to\x20prevent\x20which\x20disease?','◀\x20Prev','वॉलीबॉल','विक्रय\x20मूल्य\x20₹13,800\x20और\x20₹17,600\x20हैं;\x20कुल\x20₹31,400\x20है।','Underground\x20Congress\x20Radio\x20was\x20associated\x20with\x20Usha\x20Mehta\x20and\x20her\x20colleagues.','बिक्री\x20110\x20से\x20132\x20हुई,\x20अर्थात\x2020%\x20वृद्धि;\x20यह\x20विकल्पों\x20में\x20नहीं\x20है।','एक-तिहाई\x20सदस्यों\x20का\x20समर्थन','65°','Culture\x20is\x20extremely\x20subtle\x20compared\x20with\x20civilization','Mirror\x20:\x20concealment','नाक-भौं\x20सिकोड़ना\x20—\x20कमियाँ\x20निकालना','Kamakhya\x20Temple\x20is\x20located\x20in\x20which\x20city?','Uttar\x20Pradesh','मन\x20के\x20विकारों\x20पर\x20नियंत्रण\x20का\x20प्रयास\x20न\x20करना','Aksa\x20Thomas\x20may\x20come\x20to\x20attend\x20the\x20session\x20so\x20early.','International\x20Migrants\x20Day\x20is\x20observed\x20on:','11\x20December','Choose\x20the\x20meaning\x20of\x20“Between\x20Scylla\x20and\x20Charybdis”.','startScreen','0\x20K','मानव\x20के\x20भौतिक\x20विकास\x20का\x20विधायक\x20गुण','25%\x20कमी','झारखंड\x20का\x20लिंगानुपात\x20949\x20था,\x20जो\x20राष्ट्रीय\x20औसत\x20943\x20से\x20अधिक\x20था।','Fundamental\x20Duties\x20are\x20included\x20in\x20which\x20Part\x20of\x20the\x20Indian\x20Constitution?','are\x20proved','समाधान\x20के\x20अनुसार\x20E+G\x20की\x20C3\x20कारें\x20120,000\x20और\x20H\x20की\x20B1\x20बाइकें\x2080,000\x20हैं;\x20अंतर\x2040,000\x20है।','Iron','अपनी\x20सभ्यता\x20और\x20संस्कृति\x20का\x20प्रचार\x20करना','272\x20K','The\x20judiciary,\x20especially\x20the\x20Supreme\x20Court,\x20safeguards\x20the\x20constitutional\x20balance.','</head><body>','भवाई\x20पारंपरिक\x20लोकनृत्य\x20है;\x20उत्तर-कुंजी\x20में\x20इसे\x20मार्शल\x20आर्ट\x20का\x20रूप\x20नहीं\x20माना\x20गया\x20है।','Culture\x20is\x20more\x20extensive\x20and\x20clear','have\x20proved','₹28,600','पाँच\x20वर्षों\x20में\x20चीन\x20के\x20आयात\x20का\x20औसत\x20वार्षिक\x20मूल्य\x20(करोड़\x20रुपये\x20में)\x20कितना\x20है?','₹8,095','palTitle','Press','Jharkhand\x27s\x20sex\x20ratio\x20was\x20949,\x20above\x20the\x20national\x20average\x20of\x20943.','165','Assam','According\x20to\x20the\x20passage,\x20what\x20must\x20we\x20do\x20to\x20realize\x20our\x20dreams?','ग्राफीन\x20कार्बन\x20परमाणुओं\x20की\x20षट्कोणीय\x20जालक\x20वाली\x20द्विविमीय\x20परत\x20है।','palGrid','prevBtn','Change\x20into\x20simple\x20past:\x20“Aksa\x20Thomas\x20comes\x20to\x20attend\x20the\x20session\x20so\x20early.”','World\x20Environment\x20Day','(2\x20−\x202√21)/(2\x20+\x202√21)','185:4','1952','A\x20film','What\x20is\x20the\x20boiling\x20point\x20of\x20water\x20on\x20the\x20Kelvin\x20scale?','palNext',':</b>\x20<span\x20class=\x22correct-mark\x22>','91:2','RBI','resultSub','1985','तोमरों','भारतीय\x20संविधान\x20के\x20किस\x20भाग\x20में\x20मौलिक\x20कर्तव्य\x20शामिल\x20हैं?','निरंतर\x20प्रयास\x20करना','गद्यांश\x20में\x20वर्णित\x20पीढ़ी\x20के\x20महान\x20व्यक्ति\x20की\x20सबसे\x20बड़ी\x20आकांक्षा\x20क्या\x20थी?','For\x20which\x20year\x20is\x20the\x20ratio\x20of\x20exports\x20to\x20imports\x20the\x20highest?','replace','explanationHindi','How\x20does\x20normal\x20human\x20body\x20temperature\x20vary\x20with\x20seasons?','अरुणाचल\x20प्रदेश','निम्नलिखित\x20में\x20से\x20कौन-सा\x20पारंपरिक\x20नृत्य\x20मार्शल\x20आर्ट\x20का\x20रूप\x20नहीं\x20है?','कामाख्या\x20मंदिर\x20किस\x20शहर\x20में\x20स्थित\x20है?','नाक\x20भौं\x20सिकोड़ना\x20—\x20कमियाँ\x20निकालना','explanation','Somalia','गर्मियों\x20में\x20बढ़ता\x20है','Sandeep\x20buys\x203\x20g\x20of\x20plutonium\x20on\x20Tuesday\x20and\x205\x20g\x20of\x20radium\x20on\x20Wednesday.\x20Using\x20the\x20chart,\x20find\x20the\x20total\x20amount\x20paid.','838/99','<span><i\x20class=\x22pal-dot\x22\x20style=\x22background:#b8434b\x22></i>','write','The\x20answer\x20key\x20counts\x20five\x20years.','प्रश्न\x20','The\x20answer\x20key\x20names\x20Sikkim\x20and\x20the\x20solution\x20identifies\x20PM\x20Shri\x20Government\x20Senior\x20Secondary\x20School,\x20Namchi.','अभी\x20यहाँ','practice_set_21','18\x20February','अन्य\x20जोड़ियों\x20में\x20दोनों\x20संख्याओं\x20के\x20अंकों\x20का\x20योग\x20बराबर\x20है,\x20लेकिन\x2029–82\x20में\x202+9\x20=\x2011\x20और\x208+2\x20=\x2010\x20है।','The\x20answer\x20key\x20identifies\x20Ambika\x20as\x20the\x20sister\x20of\x20Rituraj’s\x20father-in-law.','Normal\x20core\x20body\x20temperature\x20is\x20maintained\x20within\x20a\x20narrow\x20range\x20despite\x20seasonal\x20changes.','ट्राइफेड','Executive','यदि\x20आयत\x20की\x20लंबाई\x2015%\x20बढ़ती\x20है\x20और\x20चौड़ाई\x2020%\x20घटती\x20है,\x20तो\x20क्षेत्रफल\x20में\x20प्रतिशत\x20परिवर्तन\x20क्या\x20होगा?','फ्रांस','In\x20February\x202025,\x20the\x20Indian\x20Army\x20signed\x20an\x20agreement\x20with\x20which\x20IIT\x20to\x20develop\x20bamboo-based\x20bunkers?','मैक्सिको','स्थानीय\x20स्वशासन\x20पर\x20कथन:\x201.\x20जिला\x20योजना\x20समिति\x20जिले\x20की\x20विकास\x20योजना\x20का\x20प्रारूप\x20तैयार\x20करती\x20है।\x202.\x20राज्य\x20विधानमंडल\x20कानून\x20द्वारा\x20इसकी\x20संरचना\x20निर्धारित\x20करता\x20है।\x20सही\x20विकल्प\x20चुनिए।','Bhagwati\x20Charan\x20Vohra','2014\x20से\x202016\x20तक\x20कंपनी\x20की\x20बिक्री\x20में\x20कितना\x20प्रतिशत\x20परिवर्तन\x20हुआ?','Investment-plus\x20approach','15\x20August\x201942,\x20Delhi','20\x20फरवरी','NFCSF','किस\x20वर्ष\x20निर्यात\x20और\x20आयात\x20का\x20अनुपात\x20सबसे\x20अधिक\x20है?','A\x20quality\x20that\x20enables\x20material\x20development','Which\x20was\x20India’s\x20top\x20export\x20destination\x20in\x20financial\x20year\x202023–24?','पुदुचेरी','₹250','1990','487','कुल\x20आयात\x203,432\x20करोड़\x20रुपये;\x20औसत\x203,432/5\x20=\x20686.4\x20करोड़\x20रुपये।','💡\x20व्याख्या','Egypt','आध्यात्मिक\x20उन्नति\x20बढ़ाने\x20वाला\x20आंतरिक\x20गुण','In\x20how\x20many\x20years\x20was\x20the\x20company’s\x20sales\x20greater\x20than\x20its\x20sales\x20in\x202011?','29–82','Iran’s\x20missile','गद्यांश\x20में\x20वादों\x20और\x20सपनों\x20को\x20पूरा\x20करने\x20के\x20लिए\x20निरंतर\x20कठिन\x20परिश्रम\x20पर\x20बल\x20दिया\x20गया\x20है।','close','An\x20Iranian\x20satellite','क्षय\x20रोग','किस\x20लैटिन\x20अमेरिकी\x20देश\x20ने\x20चीन\x20की\x20बेल्ट\x20एंड\x20रोड\x20इनिशिएटिव\x20से\x20बाहर\x20निकलने\x20की\x20घोषणा\x20की?','समाधान\x20में\x20गदर-380\x20को\x20ईरान\x20द्वारा\x20परीक्षण\x20की\x20गई\x20एंटी-वारशिप\x20क्रूज़\x20मिसाइल\x20बताया\x20गया\x20है।','The\x20answer\x20key\x20identifies\x20a\x20simple\x20majority.','कार्बन\x20का\x20नैनो-रूप','मुक्केबाजी','Chhattisgarh','#quizScreen','केवल\x202','उत्तर-कुंजी\x20के\x20अनुसार\x20सही\x20विकल्प\x20साधारण\x20बहुमत\x20है।','छिपाना\x20:\x20पर्दा','1\x20और\x202\x20दोनों','₹8,460','Removing\x20ignorance\x20and\x20disease','भारत\x20छोड़ो\x20आंदोलन\x20कब\x20और\x20कहाँ\x20शुरू\x20हुआ?','296964XrPPxq','\x20/\x20','Choose\x20the\x20meaning\x20of\x20“Falling\x20head\x20over\x20heels”.','वाक्य\x20को\x20सामान्य\x20भूतकाल\x20में\x20बदलिए:\x20“Aksa\x20Thomas\x20comes\x20to\x20attend\x20the\x20session\x20so\x20early.”','उत्तर-कुंजी\x20के\x20अनुसार\x20पाँच\x20वर्ष।','The\x20correct\x20split\x20is\x20निः\x20+\x20करुण;\x20it\x20involves\x20visarga\x20sandhi.','Fixed\x20deposits\x20are\x20liabilities\x20of\x20banks\x20because\x20they\x20are\x20amounts\x20owed\x20to\x20depositors.','बरकतुल्लाह','42,000','10\x20October\x202026,\x2008:00\x20PM','‘आर्ष\x20:\x20आरसी’\x20के\x20लिए\x20सही\x20शब्द-युग्म\x20संबंध\x20चुनिए।','45:47','Arunachal\x20Pradesh','Typhoid','The\x20Namchik–Namphuk\x20coalfield\x20is\x20in\x20Arunachal\x20Pradesh.','Make\x20no\x20effort\x20to\x20control\x20inner\x20defects','Concealment\x20:\x20curtain','Agra\x20Fort','Ashok\x20Mehta\x20Committee','BCG\x20का\x20पूरा\x20नाम\x20बैसिलस\x20कैलमेट–गुएरिन\x20है;\x20यह\x20क्षय\x20रोग,\x20विशेषकर\x20बच्चों\x20के\x20गंभीर\x20रूपों\x20से\x20सुरक्षा\x20देता\x20है।','इस\x20मुहावरे\x20का\x20अर्थ\x20दो\x20अप्रिय\x20विकल्पों\x20में\x20से\x20किसी\x20एक\x20को\x20चुनने\x20की\x20मजबूरी\x20है।','inline-flex','click','💪\x20Need\x20More\x20Practice!','अनुमोदन','Choose\x20the\x20correct\x20word-pair\x20relation\x20for\x20‘आर्ष\x20:\x20आरसी’.','In\x20what\x20way\x20is\x20culture\x20different\x20from\x20civilization?','बगदाद\x20इराक\x20की\x20राजधानी\x20है,\x20जो\x20दिए\x20गए\x20विकल्पों\x20में\x20नहीं\x20है।','join','36–27','Kalibangan','0.8%\x20वृद्धि','अशोक\x20मेहता\x20समिति','₹31,800','palBar','जापान','The\x20solution\x20states\x20that\x20the\x20facility\x20was\x20inaugurated\x20in\x20Faridabad,\x20Haryana,\x20on\x203\x20February\x202025.','NCUI\x20stands\x20for\x20National\x20Cooperative\x20Union\x20of\x20India.','Bills\x20purchased','उत्तर\x20दिया','Boxing','राज्य\x20की\x20विधानसभा,\x20यदि\x20पहले\x20भंग\x20न\x20हो,\x20तो\x20अपनी\x20पहली\x20बैठक\x20से\x20कितने\x20समय\x20तक\x20चलती\x20है?','The\x20Namchik–Namphuk\x20coalfield\x20is\x20located\x20in\x20which\x20state?','Y3\x20के\x20368\x20से\x20Y4\x20के\x20628\x20तक\x20निर्यात\x20में\x20वृद्धि\x20दिए\x20गए\x20वर्षों\x20में\x20सबसे\x20अधिक\x20प्रतिशत\x20वृद्धि\x20है।','document','forEach','The\x20idiom\x20means\x20being\x20forced\x20to\x20choose\x20between\x20two\x20undesirable\x20alternatives.','Baghdad\x20is\x20the\x20capital\x20of:','प्रश्न','85.66%','status-skipped','समतल-उत्तल\x20लेंस','40,000','It\x20makes\x20no\x20distinction\x20between\x20people','वीरेंद्रनाथ\x20चट्टोपाध्याय','resize','<!DOCTYPE\x20html><html><head><title>','लाला\x20हरदयाल','pageTitle','BCG\x20टीके\x20का\x20उपयोग\x20मुख्यतः\x20किस\x20रोग\x20की\x20रोकथाम\x20के\x20लिए\x20किया\x20जाता\x20है?','Shyamji\x20Krishna\x20Varma','47:45','दिया\x20तले\x20अँधेरा\x20—\x20दीये\x20के\x20पास\x20अँधेरा\x20होता\x20है','गद्यांश\x20के\x20अनुसार\x20‘सभ्यता’\x20क्या\x20है?','दो\x20सुखद\x20विकल्पों\x20में\x20चुनाव','Jahangir','कुल\x20अंक\x2075×5\x20=\x20375;\x20पहले\x20दो\x20के\x20130\x20और\x20अंतिम\x20दो\x20के\x20170\x20अंक\x20हैं।\x20तीसरे\x20विषय\x20के\x20अंक\x20375−300\x20=\x2075\x20हैं।','यह\x20केवल\x20एक\x20समुदाय\x20में\x20जीवित\x20रहती\x20है','न्यूनतम\x20समर्थन\x20मूल्य\x20नीति\x20किस\x20दृष्टिकोण\x20का\x20अनुसरण\x20करती\x20है?','आपका\x20उत्तर','subject','preventDefault','3298308HwBQyk','options','पाँचों\x20कंपनियों\x20द्वारा\x20निर्मित\x20C1\x20प्रकार\x20की\x20कारों\x20की\x20औसत\x20संख्या\x20कितनी\x20है?','Balwant\x20Rai\x20Mehta\x20Committee','timerDisplay','5\x20years','H\x20सभी\x20कंपनियों\x20द्वारा\x20निर्मित\x20B2\x20बाइकों\x20की\x20कुल\x20संख्या\x20है;\x20R,\x20F,\x20G\x20और\x20D\x20द्वारा\x20निर्मित\x20C1\x20कारों\x20की\x20कुल\x20संख्या\x20है।\x20H/R\x20ज्ञात\x20कीजिए।','राजाओं\x20की\x20घाटी\x20(Valley\x20of\x20the\x20Kings)\x20किस\x20देश\x20में\x20स्थित\x20है?','23–14','0.8%\x20कमी','कंपनी\x20D\x20की\x20बाइकें\x20200,000\x20और\x20कंपनी\x20G\x20की\x20C1\x20कारें\x20100,000\x20हैं;\x20अनुपात\x20200%\x20है।','General\x20Studies,\x20Reasoning,\x20Quantitative\x20Aptitude,\x20English\x20and\x20Hindi','एल.\x20एम.\x20सिंहवी\x20समिति','फरवरी\x202025\x20में\x20मिस\x20वर्ल्ड\x20का\x20खिताब\x20किसने\x20जीता?','भवाई','अंतरराष्ट्रीय\x20प्रवासी\x20दिवस\x20कब\x20मनाया\x20जाता\x20है?','</style>','आनंद\x20मनाने\x20की\x20विशेष\x20विधि','I\x20और\x20II\x20दोनों','महान\x20फिल्मकार\x20बनना','Culture\x20is\x20integrative\x20while\x20civilization\x20is\x20original','The\x20Diamond\x20Triangle\x20archaeological\x20site\x20is\x20associated\x20with\x20which\x20state?','रोपड़','विश्व\x20स्वास्थ्य\x20दिवस','Compared\x20with\x20the\x20previous\x20year,\x20in\x20which\x20year\x20did\x20exports\x20show\x20the\x20greatest\x20percentage\x20increase?','897534ALHfPw','Removing\x20poverty','आई.डी.बी.आई.','केवल\x20II','UAE','plan','The\x20answer\x20key\x20selects\x20option\x20(d),\x20838/99,\x20for\x20the\x20recurring-decimal\x20form\x20shown\x20in\x20the\x20printed\x20question.','789587iAJEAf','It\x20lives\x20only\x20in\x20one\x20community','A\x203D\x20material','Its\x20ideals','168ETFUhv','Polio','The\x20plural\x20subject\x20“alerts”\x20takes\x20“have\x20proved”.','निष्\x20+\x20करुण','थेसगो\x20गाएले','विश्व\x20जनसंख्या\x20दिवस','846/99','Accumulate\x20immense\x20wealth','आईना\x20:\x20छिपाना','कितने\x20वर्षों\x20में\x20कंपनी\x20की\x20बिक्री\x20₹10\x20करोड़\x20का\x20गुणज\x20थी?','Aman\x20buys\x202\x20g\x20each\x20of\x20radium\x20and\x20plutonium\x20on\x20Wednesday\x20and\x20sells\x20them\x20on\x20Thursday’s\x20prices.\x20Find\x20his\x20profit.','Choice\x20between\x20two\x20pleasant\x20alternatives','गद्यांश\x20के\x20अनुसार\x20संस्कृतियाँ\x20समाजों\x20के\x20बीच\x20आदान-प्रदान\x20से\x20विकसित\x20होती\x20हैं।','India','Culture\x20is\x20ideal\x20while\x20civilization\x20is\x20real','quizScreen','Using\x20the\x20company\x20totals\x20and\x20ratios\x20in\x20the\x20table,\x20the\x20answer\x20key\x20gives\x2062,000.','उषा\x20मेहता\x20और\x20उनके\x20सहयोगी','scheduleHindi','‘स्मैशर’\x20शब्द\x20किस\x20खेल\x20से\x20संबंधित\x20है?','status-correct','Fixed\x20deposits','getElementById','गद्यांश\x20में\x20सेवा\x20का\x20अर्थ\x20पीड़ितों\x20की\x20मदद\x20और\x20गरीबी,\x20अज्ञानता,\x20बीमारी\x20तथा\x20असमानता\x20मिटाना\x20है,\x20नेताओं\x20की\x20सेवा\x20करना\x20नहीं।','IIT\x20Guwahati','वित्त\x20वर्ष\x202023–24\x20में\x20भारत\x20का\x20सबसे\x20बड़ा\x20निर्यात\x20गंतव्य\x20देश\x20कौन-सा\x20था?','बगदाद\x20किस\x20देश\x20की\x20राजधानी\x20है?','BCG\x20stands\x20for\x20Bacillus\x20Calmette–Guérin\x20and\x20is\x20used\x20against\x20tuberculosis,\x20especially\x20severe\x20childhood\x20forms.','--pct','1965','normal','देहरादून','resultScreen','focus','महान\x20गायक\x20बनना','62,000','न्यायपालिका','Lazim','नामचिक–नामफुक\x20कोयला\x20क्षेत्र\x20किस\x20राज्य\x20में\x20स्थित\x20है?','Andaman\x20and\x20Nicobar\x20Islands','Statements:\x20All\x20girls\x20are\x20humans.\x20Some\x20animals\x20are\x20humans.\x20Conclusions:\x20I.\x20Some\x20humans\x20are\x20girls.\x20II.\x20All\x20animals\x20are\x20girls.\x20Which\x20conclusion\x20follows?','20%\x20कमी','156','लेज़िम','The\x20Chauhans\x20took\x20control\x20of\x20Delhi\x20from\x20the\x20Tomaras.','pal-btn','2AiYEuv','The\x20United\x20States\x20was\x20India’s\x20largest\x20export\x20destination\x20in\x20FY\x202023–24.','त्रिविमीय\x20पदार्थ','Biconvex\x20lens','Grandmother','सिक्किम','Choose\x20the\x20inconsistent\x20pair.','Current','न\x20तो\x201,\x20न\x20ही\x202','\x20Report</title>','The\x20Chauhans\x20wrested\x20Delhi\x20from\x20whom?','Each\x20letter\x20is\x20replaced\x20by\x20the\x20next\x20letter\x20in\x20the\x20alphabet:\x20ASSAM\x20→\x20BTTBN.','686.4','questionHindi','Cristina\x20Pîzková','निम्नलिखित\x20में\x20से\x20कौन\x20वाणिज्यिक\x20बैंकों\x20की\x20परिसंपत्ति\x20नहीं\x20है?','fill','हॉकी','IIT\x20गुवाहाटी','सावधि\x20जमा','NABARD','📝\x20','भविष्य\x20के\x20भारतवासियों\x20के\x20लिए\x20क्या\x20आवश्यक\x20है?','3\x20years','निर्यात/आयात\x20अनुपात\x20Y1\x20में\x20465/508\x20≈\x200.915\x20सबसे\x20अधिक\x20है।','pdfTitle','गणना\x20से\x20कोण\x2047.5°\x20आता\x20है,\x20जो\x20दिए\x20गए\x20संख्यात्मक\x20विकल्पों\x20में\x20नहीं\x20है।','Aksa\x20Thomas\x20has\x20come\x20to\x20attend\x20the\x20session\x20so\x20early.','Support\x20of\x20one-third\x20of\x20members','According\x20to\x20the\x202011\x20Census,\x20which\x20state\x20had\x20a\x20sex\x20ratio\x20above\x20the\x20national\x20average\x20among\x20the\x20options?','is\x20proved','statSkipped','भारत\x20की\x20मानक\x20मध्याह्न\x20रेखा\x20कौन-सी\x20है?','45.5°','Attended','1.35','Across\x20the\x20four\x20days,\x20by\x20how\x20much\x20is\x20the\x20average\x20price\x20per\x20gram\x20of\x20plutonium\x20higher\x20than\x20that\x20of\x20radium?','उत्तर-कुंजी\x20में\x20विकल्प\x20(a),\x20पी.\x20वी.\x20एन.\x20राव\x20समिति,\x20सही\x20है।','Which\x20idiom–meaning\x20pair\x20is\x20inconsistent?','50%','A\x20State\x20Legislative\x20Assembly,\x20unless\x20sooner\x20dissolved,\x20continues\x20for\x20how\x20long\x20from\x20its\x20first\x20meeting?','विक्टोरिया\x20थेलविग','लोथल','World\x20Day\x20of\x20Social\x20Justice\x20is\x20observed\x20on\x2020\x20February.','संस्कृति\x20सभ्यता\x20की\x20तुलना\x20में\x20अत्यंत\x20सूक्ष्म\x20है','Part\x20IVA','गरीबी\x20मिटाना','बैंकों\x20के\x20पास\x20रखे\x20ट्रेजरी\x20बिल','6\x20years','The\x20answer\x20key\x20marks\x2092°30′\x20E;\x20however\x20the\x20detailed\x20explanation\x20on\x20the\x20following\x20pages\x20states\x20India\x27s\x20standard\x20meridian\x20is\x2082°30′\x20E.\x20This\x20appears\x20to\x20be\x20a\x20printed-key\x20inconsistency;\x20the\x20scientifically\x20correct\x20answer\x20is\x2082°30′\x20E.','कंपनी\x20E\x20और\x20G\x20की\x20कुल\x20C3\x20कारों\x20तथा\x20कंपनी\x20H\x20की\x20B1\x20बाइकों\x20की\x20संख्या\x20में\x20कितना\x20अंतर\x20है?','option-prefix','समाधान\x20भाग\x20में\x20उपभोक्ता\x20संरक्षण\x20अधिनियम,\x201986\x20बताया\x20गया\x20है;\x20दिए\x20गए\x20विकल्पों\x20में\x201986\x20नहीं\x20है।','टाइफाइड','यदि\x20किसी\x20कूट\x20भाषा\x20में\x20MADRAS\x20को\x20NBESBT\x20लिखा\x20जाता\x20है,\x20तो\x20ASSAM\x20को\x20कैसे\x20लिखा\x20जाएगा?','smooth','Only\x201','49:47','पानी\x20में\x20वायु\x20का\x20बुलबुला\x20अपसारी\x20अर्थात\x20अवतल\x20लेंस\x20जैसा\x20व्यवहार\x20करता\x20है।','इनमें\x20से\x20कोई\x20नहीं','अपठित','The\x20detailed\x20solution\x20indicates\x20the\x20correct\x20idea\x20is\x20trying\x20to\x20control\x20the\x20defects\x20present\x20in\x20one’s\x20mind;\x20the\x20answer\x20key\x20marks\x20option\x20(e),\x20apparently\x20due\x20to\x20a\x20printing/options\x20issue.','44,000','उत्तर-कुंजी\x20में\x20‘वेद-संबंधी\x20:\x20आईना’\x20वाला\x20युग्म\x20सही\x20है।','button','The\x20digit\x20sums\x20match\x20in\x20the\x20other\x20pairs,\x20but\x202+9\x20=\x2011\x20and\x208+2\x20=\x2010\x20for\x2029–82.','The\x20passage\x20says\x20culture\x20is\x20subtler\x20than\x20civilization.','थाईलैंड','जयप्रकाश\x20नारायण','पराग्वे','‘सभी\x20लड़कियाँ\x20मनुष्य\x20हैं’\x20से\x20निष्कर्ष\x20I\x20निकलता\x20है;\x20निष्कर्ष\x20II\x20नहीं\x20निकलता।','IIT\x20मद्रास','What\x20was\x20the\x20company’s\x20average\x20sales\x20from\x202009\x20to\x202015?','Only\x20II','<span><i\x20class=\x22pal-dot\x22\x20style=\x22background:transparent;outline:2px\x20solid\x20#8fcbff\x22></i>','48,000','Cost\x20=\x202×₹3,450\x20+\x202×₹3,500\x20=\x20₹13,900;\x20sale\x20=\x202×₹3,650\x20+\x202×₹3,400\x20=\x20₹14,100;\x20profit\x20=\x20₹200.','Tuberculosis','A\x20magnificent\x20story\x20of\x20ages','मध्य\x20प्रदेश','8\x20अगस्त\x201942,\x20बंबई','क्रिकेट','गद्यांश\x20के\x20अनुसार\x20संस्कृति,\x20सभ्यता\x20की\x20तुलना\x20में\x20अधिक\x20सूक्ष्म\x20होती\x20है।','पाबंदी','92°30′\x20W','अनुमान','15%','Keep\x20thinking\x20continuously','outerHTML','कथन:\x20सभी\x20लड़कियाँ\x20मनुष्य\x20हैं।\x20कुछ\x20जानवर\x20मनुष्य\x20हैं।\x20निष्कर्ष:\x20I.\x20कुछ\x20मनुष्य\x20लड़कियाँ\x20हैं।\x20II.\x20सभी\x20जानवर\x20लड़कियाँ\x20हैं।\x20कौन-सा\x20निष्कर्ष\x20निकलता\x20है?','In\x20which\x20year\x20was\x20the\x20Consumer\x20Protection\x20Act\x20referred\x20to\x20in\x20this\x20question\x20enacted?','तालिका\x20में\x20कंपनियों\x20के\x20कुल\x20उत्पादन\x20और\x20अनुपातों\x20के\x20आधार\x20पर\x20उत्तर-कुंजी\x2062,000\x20देती\x20है।','मिस्र'];_0x50e5=function(){return _0x33fbbc;};return _0x50e5();}</script>
+  </body>
+</html>
