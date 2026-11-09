@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<title>महिलाओं के समक्ष प्रमुख समस्याएँ | अध्ययन नोट्स</title>
+<style>
+:root{
+  --bg:#f4f6fb;--surface:#fff;--ink:#172033;--muted:#657089;--line:#e7eaf2;
+  --accent:#7657e8;--accent2:#e95f9b;--shadow:0 12px 34px rgba(30,42,75,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Devanagari","Segoe UI",sans-serif;line-height:1.65}
+button,input{font:inherit}
+.hero{position:relative;overflow:hidden;background:linear-gradient(120deg,#111b32,#30245d 58%,#754d9f);color:#fff;padding:48px 22px 42px}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;background:#ffffff10}
+.hero:before{width:310px;height:310px;right:-80px;top:-160px}
+.hero:after{width:190px;height:190px;left:48%;bottom:-145px}
+.hero-inner{max-width:1120px;margin:auto;position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff40;border-radius:99px;padding:5px 12px;font-size:.82rem;color:#e7ddff;background:#ffffff0c}
+h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.25;margin:16px 0 10px;letter-spacing:-.6px}
+.hero p{max-width:760px;color:#e0dff0;margin:0;font-size:1rem}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill{border:1px solid #ffffff35;border-radius:99px;padding:6px 12px;font-size:.82rem;background:#ffffff0c}
+.wrap{max-width:1120px;margin:0 auto;padding:26px 20px 60px}
+.toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.search{flex:1;min-width:230px;position:relative}
+.search input{width:100%;padding:13px 16px 13px 44px;border:1px solid var(--line);border-radius:14px;background:var(--surface);outline:none;box-shadow:0 3px 12px #26314d08;color:var(--ink)}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #7657e822}
+.search span{position:absolute;left:15px;top:9px;font-size:1.2rem}
+.actions{display:flex;gap:8px}
+.action{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:10px 14px;border-radius:12px;cursor:pointer;transition:.2s}
+.action:hover{transform:translateY(-2px);border-color:#c9c0f4}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:2px 0 14px;scrollbar-width:thin}
+.filter{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:8px 13px;border-radius:99px;cursor:pointer;font-size:.9rem}
+.filter.active{background:#eeeaff;border-color:#d7cdfd;color:#563bc5;font-weight:650}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 5px 18px #26314d05}
+.stat strong{display:block;font-size:1.45rem;color:var(--accent);line-height:1.3}
+.stat span{font-size:.82rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:19px;padding:20px;box-shadow:var(--shadow);transition:transform .22s,box-shadow .22s;animation:rise .45s both}
+.card:hover{transform:translateY(-4px);box-shadow:0 17px 38px #26314d12}
+.card-head{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,#f0edff,#ffeaf3);font-size:1.55rem;flex:none}
+.card h2{font-size:1.12rem;line-height:1.4;margin:0}
+.card small{color:var(--muted);font-size:.78rem}
+.items{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.items li{position:relative;padding-left:22px;color:#303b51;font-size:.94rem}
+.items li:before{content:"";position:absolute;left:1px;top:.7em;width:7px;height:7px;border-radius:50%;background:var(--dot,#8b70e8)}
+.items b{color:#202a40;font-weight:650}
+.no-results{display:none;text-align:center;padding:35px;background:var(--surface);border:1px dashed var(--line);border-radius:16px;color:var(--muted)}
+.footer{text-align:center;color:var(--muted);font-size:.83rem;margin-top:26px}
+body.dark{--bg:#0d1422;--surface:#151f31;--ink:#edf1fb;--muted:#a5b0c7;--line:#29364d;--shadow:0 12px 34px #0003}
+body.dark .items li{color:#cbd4e5}body.dark .items b{color:#f1f4fb}
+body.dark .filter.active{background:#30285a;border-color:#51428c;color:#d8ccff}
+body.dark .icon{background:linear-gradient(135deg,#30294f,#4a2b45)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){
+ .hero{padding:35px 18px 30px}.wrap{padding:19px 14px 40px}
+ .grid{grid-template-columns:1fr;gap:12px}.card{padding:17px;border-radius:16px}
+ .stats{gap:8px}.stat{padding:11px}.stat strong{font-size:1.2rem}.stat span{font-size:.75rem}
+ .toolbar{align-items:stretch}.actions{width:100%}.action{flex:1}
+}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.card{padding:21px}}
+@media print{
+ body{background:#fff;color:#111}.hero{background:#fff;color:#111;padding:15px 0}.hero p,.eyebrow{color:#333}
+ .toolbar,.filters,.footer .no-print{display:none!important}.wrap{padding:10px 0}
+ .grid{grid-template-columns:repeat(2,1fr);gap:10px}.card{box-shadow:none;break-inside:avoid;border:1px solid #ccc;padding:13px}
+ .hero-meta{display:none}.card h2,.items b{color:#111}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+ <div class="hero-inner">
+  <span class="eyebrow">📘 सामाजिक मुद्दे • अध्ययन सामग्री</span>
+  <h1>👩 महिलाओं के समक्ष अन्य प्रमुख समस्याएँ</h1>
+  <p>महिलाओं के सामाजिक, आर्थिक, सुरक्षा, शिक्षा, स्वास्थ्य और उभरती चुनौतियों का व्यवस्थित अध्ययन। परीक्षा की तैयारी और त्वरित पुनरावृत्ति के लिए।</p>
+  <div class="hero-meta"><span class="pill">📚 6 प्रमुख आयाम</span><span class="pill">🧭 35+ मुद्दे</span><span class="pill">🇮🇳 भारतीय समाज</span></div>
+ </div>
+</header>
+<main class="wrap">
+ <div class="toolbar">
+  <label class="search"><span>🔎</span><input id="search" type="search" placeholder="किसी समस्या को खोजें… (जैसे दहेज, एनीमिया)"></label>
+  <div class="actions"><button class="action" id="themeBtn" type="button">🌙 डार्क मोड</button><button class="action" type="button" onclick="window.print()">🖨️ प्रिंट / PDF</button></div>
+ </div>
+ <nav class="filters" aria-label="विषय फ़िल्टर">
+  <button class="filter active" data-filter="all">सभी विषय</button>
+  <button class="filter" data-filter="social">⚖️ सामाजिक</button>
+  <button class="filter" data-filter="economic">💼 आर्थिक</button>
+  <button class="filter" data-filter="safety">🚨 सुरक्षा</button>
+  <button class="filter" data-filter="education">📚 शिक्षा</button>
+  <button class="filter" data-filter="health">🏥 स्वास्थ्य</button>
+  <button class="filter" data-filter="emerging">🌍 उभरती चुनौतियाँ</button>
+ </nav>
+ <section class="stats" aria-label="सामग्री का सार">
+  <div class="stat"><strong>06</strong><span>समस्या के प्रमुख आयाम</span></div>
+  <div class="stat"><strong id="visibleCount">6</strong><span>दिखाए जा रहे विषय</span></div>
+  <div class="stat"><strong>35+</strong><span>महत्वपूर्ण उप-विषय</span></div>
+ </section>
+ <section class="grid" id="cards">
+  <article class="card" data-category="social" style="--dot:#9877e8">
+   <div class="card-head"><div class="icon">⚖️</div><div><h2>1. सामाजिक एवं पारिवारिक समस्याएँ</h2><small>Social & Family Issues</small></div></div>
+   <ul class="items">
+    <li><b>पुत्र वरीयता (Son Preference)</b> – लड़कों को लड़कियों की तुलना में अधिक महत्व देना।</li>
+    <li><b>बाल विवाह (Child Marriage)</b> – कम उम्र में विवाह से शिक्षा एवं स्वास्थ्य प्रभावित होना।</li>
+    <li><b>घरेलू हिंसा (Domestic Violence)</b> – शारीरिक, मानसिक एवं आर्थिक प्रताड़ना।</li>
+    <li><b>दहेज प्रथा (Dowry System)</b> – दहेज के कारण उत्पीड़न एवं दहेज मृत्यु।</li>
+    <li><b>सामाजिक रूढ़ियाँ (Social Stereotypes)</b> – महिलाओं की भूमिकाओं को घर एवं परिवार तक सीमित करना।</li>
+    <li><b>एकल मातृत्व की चुनौतियाँ (Single Motherhood)</b> – आर्थिक एवं सामाजिक कठिनाइयाँ।</li>
+   </ul>
+  </article>
+  <article class="card" data-category="economic" style="--dot:#e4a34c">
+   <div class="card-head"><div class="icon">💼</div><div><h2>2. आर्थिक समस्याएँ</h2><small>Economic Issues</small></div></div>
+   <ul class="items">
+    <li><b>वेतन असमानता (Gender Pay Gap)</b> – समान कार्य के लिए महिलाओं को कम वेतन मिलना।</li>
+    <li><b>अवैतनिक देखभाल कार्य (Unpaid Care Work)</b> – बच्चों, बुजुर्गों एवं परिवार की देखभाल का असमान बोझ।</li>
+    <li><b>श्रमबल में कम भागीदारी (Low Female Labour Force Participation)।</b></li>
+    <li><b>संपत्ति एवं भूमि पर सीमित अधिकार (Limited Property Ownership)।</b></li>
+    <li><b>काँच की छत (Glass Ceiling)</b> – उच्च पदों तक पहुँचने में अदृश्य बाधाएँ।</li>
+    <li><b>असंगठित क्षेत्र में शोषण (Exploitation in Informal Sector)।</b></li>
+   </ul>
+  </article>
+  <article class="card" data-category="safety" style="--dot:#e36c83">
+   <div class="card-head"><div class="icon">🚨</div><div><h2>3. सुरक्षा एवं हिंसा संबंधी समस्याएँ</h2><small>Safety & Violence</small></div></div>
+   <ul class="items">
+    <li><b>यौन उत्पीड़न (Sexual Harassment)।</b></li>
+    <li><b>बलात्कार एवं यौन हिंसा (Rape and Sexual Violence)।</b></li>
+    <li><b>मानव तस्करी (Human Trafficking)।</b></li>
+    <li><b>साइबर उत्पीड़न (Cyber Harassment)।</b></li>
+    <li><b>पीछा करना (Stalking)।</b></li>
+    <li><b>ऑनर किलिंग (Honour Killing)।</b></li>
+    <li><b>कार्यस्थल पर उत्पीड़न (Workplace Harassment)।</b></li>
+   </ul>
+  </article>
+  <article class="card" data-category="education" style="--dot:#55a9a1">
+   <div class="card-head"><div class="icon">📚</div><div><h2>4. शिक्षा एवं राजनीतिक समस्याएँ</h2><small>Education & Political Issues</small></div></div>
+   <ul class="items">
+    <li><b>बालिका शिक्षा में बाधाएँ (Barriers to Girls' Education)।</b></li>
+    <li><b>उच्च शिक्षा में लैंगिक अंतर (Gender Gap in Higher Education)।</b></li>
+    <li><b>डिजिटल लैंगिक विभाजन (Digital Gender Divide)।</b></li>
+    <li><b>राजनीतिक प्रतिनिधित्व की कमी (Low Political Representation)।</b></li>
+    <li><b>निर्णय लेने की प्रक्रिया में सीमित भागीदारी (Limited Decision-making Power)।</b></li>
+   </ul>
+  </article>
+  <article class="card" data-category="health" style="--dot:#5b9bd5">
+   <div class="card-head"><div class="icon">🏥</div><div><h2>5. स्वास्थ्य एवं पोषण संबंधी समस्याएँ</h2><small>Health & Nutrition Issues</small></div></div>
+   <ul class="items">
+    <li><b>एनीमिया (Anaemia) एवं कुपोषण (Malnutrition)।</b></li>
+    <li><b>मातृ मृत्यु दर (Maternal Mortality)।</b></li>
+    <li><b>प्रजनन स्वास्थ्य संबंधी समस्याएँ (Reproductive Health Issues)।</b></li>
+    <li><b>मासिक धर्म स्वच्छता (Menstrual Hygiene) से जुड़ी चुनौतियाँ।</b></li>
+    <li><b>मानसिक स्वास्थ्य समस्याएँ (Mental Health Issues)।</b></li>
+    <li><b>स्वास्थ्य सेवाओं तक असमान पहुँच (Unequal Access to Healthcare)।</b></li>
+   </ul>
+  </article>
+  <article class="card" data-category="emerging" style="--dot:#6eaa72">
+   <div class="card-head"><div class="icon">🌍</div><div><h2>6. उभरती हुई चुनौतियाँ</h2><small>Emerging Challenges</small></div></div>
+   <ul class="items">
+    <li><b>जलवायु परिवर्तन का असमान प्रभाव (Gendered Impact of Climate Change)।</b></li>
+    <li><b>AI एवं तकनीकी क्षेत्र में लैंगिक अंतर।</b></li>
+    <li><b>डीपफेक एवं मॉर्फ्ड इमेज के माध्यम से उत्पीड़न।</b></li>
+    <li><b>प्रवासी महिला श्रमिकों का शोषण।</b></li>
+    <li><b>आपदा एवं संघर्ष की स्थितियों में महिलाओं की बढ़ती असुरक्षा।</b></li>
+   </ul>
+  </article>
+ </section>
+ <div class="no-results" id="empty">🔍 कोई परिणाम नहीं मिला। कृपया दूसरा शब्द खोजें।</div>
+ <p class="footer">✨ विषयवार अध्ययन • मोबाइल और डेस्कटॉप के लिए अनुकूलित</p>
+</main>
+<script>
+const search=document.getElementById('search');
+const cards=[...document.querySelectorAll('.card')];
+const filters=[...document.querySelectorAll('.filter')];
+let active='all';
+function update(){
+ const q=search.value.trim().toLocaleLowerCase('hi');
+ let count=0;
+ cards.forEach(card=>{
+  const matchCategory=active==='all'||card.dataset.category===active;
+  const matchText=card.innerText.toLocaleLowerCase('hi').includes(q);
+  const show=matchCategory&&matchText;
+  card.style.display=show?'':'none';
+  if(show)count++;
+ });
+ document.getElementById('visibleCount').textContent=count;
+ document.getElementById('empty').style.display=count?'none':'block';
+}
+filters.forEach(btn=>btn.addEventListener('click',()=>{
+ filters.forEach(x=>x.classList.remove('active'));
+ btn.classList.add('active');active=btn.dataset.filter;update();
+}));
+search.addEventListener('input',update);
+document.getElementById('themeBtn').addEventListener('click',()=>{
+ document.body.classList.toggle('dark');
+ const dark=document.body.classList.contains('dark');
+ document.getElementById('themeBtn').textContent=dark?'☀️ लाइट मोड':'🌙 डार्क मोड';
+});
+</script>
+</body>
+</html>
